@@ -1,0 +1,10 @@
+
+asm.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <_START>:
+   0:	e3a01001 	mov	r1, #1
+   4:	e3a02002 	mov	r2, #2
+   8:	e0813002 	add	r3, r1, r2
