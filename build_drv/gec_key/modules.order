@@ -1,0 +1,2 @@
+kernel//opt/build_drv/gec_key/char_drv.ko
+kernel//opt/build_drv/gec_key/char_dev.ko

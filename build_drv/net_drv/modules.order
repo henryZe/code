@@ -1,0 +1,3 @@
+kernel//opt/build_drv/net_drv/net_drv.ko
+kernel//opt/build_drv/net_drv/net_dev.ko
+kernel//opt/build_drv/net_drv/just_try.ko

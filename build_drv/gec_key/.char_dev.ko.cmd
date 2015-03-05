@@ -1,0 +1,1 @@
+cmd_/opt/build_drv/gec_key/char_dev.ko := /usr/local/arm/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /opt/build_kernel/teacher/android-kernel-samsung-dev/scripts/module-common.lds --build-id -o /opt/build_drv/gec_key/char_dev.ko /opt/build_drv/gec_key/char_dev.o /opt/build_drv/gec_key/char_dev.mod.o

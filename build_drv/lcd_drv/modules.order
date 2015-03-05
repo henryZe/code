@@ -1,0 +1,2 @@
+kernel//opt/build_drv/lcd_drv/lcd_drv.ko
+kernel//opt/build_drv/lcd_drv/lcd_dev.ko

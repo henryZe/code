@@ -1,0 +1,1 @@
+cmd_/opt/build_drv/practice/module.ko := /usr/local/arm/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /opt/build_kernel/teacher/android-kernel-samsung-dev/scripts/module-common.lds --build-id -o /opt/build_drv/practice/module.ko /opt/build_drv/practice/module.o /opt/build_drv/practice/module.mod.o
