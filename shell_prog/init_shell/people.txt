@@ -1,0 +1,6 @@
+Jack	is 18-year old, he comes from US.
+Mike	is 16years old, he comes from Canada.
+Chen	is 21-year old, he comes from China.
+Lau	is 18-year old, he comes from HongKong.
+Michael	is 20-year old, he comes from UK.
+Phoebe	is 18-year old,she comes from Australie.
