@@ -145,7 +145,16 @@ if 0:
         buf = i * "*"
         print(buf.center(value, " "))
 
-if 1:
-    
+if 0:
+    buf = input()
+    t = ""
 
+    for c in buf:
+        if 'A' <= c <= 'Z':
+            t += chr((ord(c) - ord('A') + 3) % 26 + ord('A'))
+        elif 'a' <= c <= 'z':
+            t += chr((ord(c) - ord('a') + 3) % 26 + ord('a'))
+        else:
+            t += c
 
+    print(t)
