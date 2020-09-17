@@ -1,0 +1,8 @@
+#GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+GCC = /zhsa022/usrhome/henry.zeng/tmp/3922_master/buildroot/output/host/usr/bin/arm-linux-gnueabihf-gcc
+#GCC = /zhsa022/usrhome/henry.zeng/tmp/3702/buildroot/output/host/usr/bin/mips-linux-gnu-gcc
+
+all:
+	$(GCC) netlink_app.c -I$(INCLUDE_DIR) -Wall -o netlink_app
+	$(GCC) netlink_kobject_app.c -I$(INCLUDE_DIR) -Wall -o netlink_kobject_app
+	mv *_app ~/nfs/

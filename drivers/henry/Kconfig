@@ -1,0 +1,94 @@
+menuconfig HENRY
+	tristate "Henry Driver Set"
+	help
+		HENRY Driver menu switch
+
+if HENRY
+
+config ALI_HENRY
+    tristate "ALi Henry Driver"
+	default n
+	help
+		It is the major test driver by Henry.
+
+config MEM_TEST
+    bool "Memory test for ALi Henry Driver"
+	depends on ALI_HENRY
+	default n
+	help
+		It enables the malloc func test in ALi Henry Driver.
+
+config HENRY_FIFO
+	tristate "kernel fifo example"
+	default n
+	help
+		kernel fifo example
+
+config HENRY_USUAL
+	tristate "Henry usual Driver"
+	default n
+	help
+		It is the usual char driver.
+
+config GLOBAL_MEM
+	tristate "global memory driver"
+	default n
+	help
+		It is the global memory driver.
+
+menuconfig GLOBAL_FIFO
+	tristate "global memory ordering by fifo sequence"
+	default n
+	help
+		It is the global memory ordering by fifo sequence.
+
+if GLOBAL_FIFO
+
+choice
+	prompt "Select the bus type"
+	default GLOBAL_FIFO_PLATFORM
+
+config GLOBAL_FIFO_NOBUS
+	bool "module without bus"
+	help
+		It is the driver without bus.
+
+config GLOBAL_FIFO_PLATFORM
+	bool "module with platform bus"
+	help
+		It is the driver with platform bus.
+
+config GLOBAL_FIFO_MISC
+	bool "module with platform bus in misc frame"
+	help
+		It is the driver with platform bus in misc frame.
+
+endchoice
+
+endif
+
+config HENRY_GPIO
+	tristate "gpio driver"
+	default n
+	help
+		It is the gpio driver.
+
+config SECOND_DEVICE
+	tristate "second device driver"
+	default n
+	help
+		It is the second device driver.
+
+config VMEM_DISK
+	tristate "virtual memory disk in block driver"
+	default n
+	help
+		It is the virtual memory disk in block driver.
+
+config PROC_EXAMPLE
+	bool "variable read/write operation in proc fs"
+	default n
+	help
+		It is a variable read/write operation in proc fs
+
+endif # HENRY

@@ -1,0 +1,6 @@
+GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+
+all:
+	$(GCC) i2c_rw.c -I$(INCLUDE_DIR) -Wall -EL -o i2c_rw_app
+	$(GCC) i2c_ioctl.c -I$(INCLUDE_DIR) -Wall -EL -o i2c_ioctl_app
+	mv *_app ~/nfs/

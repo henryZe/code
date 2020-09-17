@@ -1,0 +1,384 @@
+/*
+ * CAP210 internal DTS
+ * Copyright(C) 2014 ALi Corporation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/ {
+	compatible = "ali,cap210";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	interrupt-parent = <&cpuintc>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "";
+			reg = <0>;
+		};
+	};
+
+	cpuintc: cpuintc@0 {
+		#address-cells = <0>;
+		#interrupt-cells = <1>;
+		interrupt-controller;
+		compatible = "mips,cpu-interrupt-controller";
+	};
+
+	soc {
+		#address-cells	= <1>;
+		#size-cells	= <1>;
+		device_type	= "soc";
+
+		interrupt-parent = <&intc>;
+
+		ranges; /* child and parent address space 1:1 mapped */
+		compatible = "ali,cap210", "simple-bus";
+
+		pll0: oscillator {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-output-names = "pll0";
+		};
+
+
+		intc: intc@0x18000030 {
+			compatible="alitech,generic-intc";
+			reg = <0x18000030 0x14 0x18040030 0x0c>;
+			interrupt-controller;
+			#interrupt-cells=<1>;
+			interrupt-parent = <&cpuintc>;
+			interrupts = <3>;
+		};
+
+		rstc: reset-controller@18000080 {
+			#reset-cells = <1>;
+			compatible = "alitech,reset";
+			reg = <0x18000080 0x8>;
+		};
+		gpio0: gpio@18000044 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000044 0x20>;
+			interrupts = <0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			interrupt-parent=<&intc>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 0 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio1: gpio@180000C4 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x180000C4 0x20>;
+			interrupts = <0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			interrupt-parent=<&intc>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 32 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio2: gpio@180000E4 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x180000E4 0x20>;
+			interrupts = <0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			interrupt-parent=<&intc>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 64 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio3: gpio@18000344 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000344 0x20>;
+			interrupts = <0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <1>;
+			interrupt-parent=<&intc>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 97 1>;
+			#interrupt-cells = <1>;
+		};
+		otp: otp@0x18042000 {
+			compatible = "alitech,otp";
+			reg = <0x18042000 0x508>;
+			status = "okay";
+			/* cell
+			 * 0: OTP address,
+			 * 1: first bit position,
+			 * 2: number of bits
+			 */
+			#otp-cells = <3>;
+		};
+		rpcng@a5fff000 {
+			interrupt-parent=<&intc>;
+			compatible = "alitech,rpcng";
+			reg = <0xa5fff000 0x1000>;
+			interrupts = <63 62 61 60>;
+			status = "okay";
+		};
+		spi@1802E000 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "alitech,spictrl";
+			reg = <0x1802E000 0xE0>, <0x1fc00000 0x1000>,
+				<0x1ec00000 0x1000>;
+			interrupts = <35>;
+			mem_clk = <108>;
+			ctrl_clk_select = <54>;
+			dma_mode = <1>;
+			pinctrl-0 = <&spinor0_pin_mux &spinor1_pin_mux>;
+			pinctrl-names = "default";
+			num-cs = <3>;
+			status = "disabled";
+		};
+
+		osc24M: osc24M {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <24000000>;
+			clock-output-names="osc24M";
+		};
+		wdt_clk: wdt_clk {
+			 #clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <27000000>;
+			clock-output-names="wdt_clk";
+		};
+		f100: f100 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <100000000>;
+			clock-output-names="f100";
+		};
+		f300: f300 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <300000000>;
+			clock-output-names="f300";
+		};
+		f400: f400 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <400000000>;
+			clock-output-names="f400";
+		};
+		f600: f600 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <600000000>;
+			clock-output-names="f600";
+		};
+		f266: f266 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <266000000>;
+			clock-output-names="f266";
+		};
+		f333: f333 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <333000000>;
+			clock-output-names="f333";
+		};
+		f533: f533 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <533000000>;
+			clock-output-names="f533";
+		};
+		dpll: dpll@180004A4 {
+			#clock-cells = <0>;
+			compatible = "alitech,cap210-dpll-clk";
+			reg = <0x180004A0 0x4>;
+			clocks = <&osc24M>;
+			clock-frequency = <624000000>;
+			clock-output-names="dpll";
+		};
+		cap210_clk: cap210_clk@18000074 {
+			#clock-cells = <1>;
+			compatible = "alitech,cap210-clk";
+			reg = <0x18000074 0x4 0x1800007c 0x4>;
+			reg-names = "strap_pin_reg", "clk_ctrl_reg";
+			clocks = <&f100>, <&f300>, <&f400>,
+				 <&f600>, <&dpll>, <&f266>,
+				 <&f333>, <&f400>, <&f533>;
+			clock-output-names="see_clk",
+					   "cpu_clk",
+					   "dram_clk";
+		};
+		cap210_clks_gate0: cap210_clks_gate@18000060 {
+			#clock-cells = <1>;
+			compatible = "alitech,cap210-clks-gate";
+			reg = <0x18000060 0x4>;
+			gate-mask = <0x0FF80000>;
+			ignore-unused-mask = <0x01C80000>;
+			clocks = <&dpll>;
+			clock-output-names = "ts_ip_clk", "scr1_clk", "scr2_clk", "tm_mod_0",
+				"wdt_clk_gate", "uart_clk", "scb_clk", "tm_mod_1", "usb_clk";
+		};
+		cap210_clks_gate1: cap210_clks_gate@18000064 {
+			#clock-cells = <1>;
+			compatible = "alitech,cap210-clks-gate";
+			reg = <0x18000064 0x4>;
+			gate-mask = <0x8A13F0EF>;
+			ignore-unused-mask = <0x8A02402D>;
+			clocks = <&dpll>;
+			clock-output-names = "bootrom_clk", "cert_ip_clk", "dsc_clk", "otp_ctrl_clk",
+				"sflash_ctrl_clk", "emmc_ctrl_clk", "sdio_ctrl_clk", "sgdma0_clk",
+				"sgdma1_clk", "hwchk_clk", "scramble_clk", "kl_clk", "dsc_kl",
+				"mac_clk", "sb_clk", "bootrom_sram_ctrl_clk", "see_clk_gate";
+		};
+
+		pinctrl: pinctrl@0x18000088 {
+			compatible = "alitech,pinctrl-cap210";
+			reg = <0x18000088 0x4>, <0x18000430 0x10>;
+			pctrl_i2c: func_i2c {
+				ali-pmx,groups = "i2c_sel";
+			};
+			pctrl_uart: func_uart {
+				ali-pmx,groups = "uart_sel",
+						 "uart_hw_sel";
+			};
+			pctrl_smc1: func_smc {
+				ali-pmx,groups = "smc1_sel",
+						 "smc2_sel",
+						 "smc2_ex_sel";
+			};
+			pctrl_spinor: func_spinor {
+				ali-pmx,groups = "spinor_sel",
+						 "spinor1_sel",
+						 "spinor2_sel";
+			};
+			pctrl_ci: func_ci {
+				ali-pmx,groups = "ci_sel";
+			};
+			pctrl_rgmii: func_rgmii {
+				ali-pmx,groups = "rgmii_sel";
+			};
+			pctrl_emmc: func_emmc {
+				ali-pmx,groups = "emmc_sel";
+			};
+			pctrl_sdio: func_sdio {
+				ali-pmx,groups = "sdio_sel";
+			};
+			pctrl_clkout: func_clkout {
+				ali-pmx,groups = "clkout_sel";
+			};
+			i2c_pin_mux: i2c_pin_mux {
+				ali-pmx,function = "func_i2c";
+				ali-pmx,group = "i2c_sel";
+			};
+			emmc_pin_mux: emmc_pin_mux {
+				ali-pmx,function = "func_emmc";
+				ali-pmx,group = "emmc_sel";
+			};
+			sdio_pin_mux: sdio_pin_mux {
+				ali-pmx,function = "func_sdio";
+				ali-pmx,group = "sdio_sel";
+			};
+			eth_pin_mux: eth_pin_mux {
+				ali-pmx,function = "func_rgmii";
+				ali-pmx,group = "rgmii_sel";
+			};
+			smc0_pin_mux: smc0_pin_mux {
+				ali-pmx,function = "func_smc";
+				ali-pmx,group = "smc1_sel";
+			};
+			smc1_pin_mux: smc1_pin_mux {
+				ali-pmx,function = "func_smc";
+				ali-pmx,group = "smc2_ex_sel";
+			};
+			spinor0_pin_mux: spinor0_pin_mux {
+				ali-pmx,function = "func_spinor";
+				ali-pmx,group = "spinor_sel";
+			};
+			spinor1_pin_mux: spinor1_pin_mux {
+				ali-pmx,function = "func_spinor";
+				ali-pmx,group = "spinor1_sel";
+			};
+		};
+
+		sgdma@1800F000 {
+			compatible = "alitech,cap210-sgdma";
+			reg = <0x1800F000 0x200>;
+			interrupts = <12>;
+			clocks = <&cap210_clks_gate1 7>;
+			clock-names = "sgdma0_clk";
+		};
+	};
+
+	see_bus@0 {
+		compatible = "alitech,see-bus", "simple-bus";
+
+		reg = <0x1800020C 0x4>; /* CPU0TO1_MAILBOX3, SYS_FIRST_BOOT_REG */
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		DSC@0 {
+			compatible = "alitech,dsc";
+			clocks = <&cap210_clks_gate1 2>;
+			clock-names = "dsc_clk";
+			reg = <0>;
+			dev-index = <0>;
+		};
+
+		TRNG@1 {
+			compatible = "alitech,trng";
+			reg = <1>;
+		};
+
+		SCR@3 {
+			compatible = "alitech,dsc";
+			clocks = <&cap210_clks_gate1 15>;
+			clock-names = "scramble_clk";
+			reg = <3>;
+			dev-index = <1>;
+		};
+
+		SHA@4 {
+			compatible = "alitech,sha";
+			reg = <4>;
+		};
+
+		CRC32@5 {
+			compatible = "alitech,crc32";
+			reg = <5>;
+		};
+
+		CERT@6 {
+			compatible = "alitech,cert";
+			reg = <6>;
+			cert-disable = <&otp 0x8c 19 1>;
+			asa-disable = <&otp 0x8c 0 1>;
+			clocks = <&cap210_clks_gate1 1>;
+			clock-names = "cert_ip_clk";
+		};
+
+		MONITOR@7 {
+			compatible = "alitech,monitor";
+			reg = <7>;
+		};
+
+		HENRY@8 {
+			compatible = "alitech,henry";
+			reg = <8>;
+		};
+	};
+};

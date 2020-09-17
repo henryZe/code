@@ -1,0 +1,5 @@
+GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+
+all:
+	$(GCC) sched_syscall.c -I$(INCLUDE_DIR) -Wall -EL -o sched_syscall_app
+	mv *_app ~/nfs/

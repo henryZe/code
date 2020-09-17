@@ -1,0 +1,5 @@
+GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+
+all:
+	$(GCC) second_app.c -I$(INCLUDE_DIR) -Wall -EL -o second_app
+	mv *_app ~/nfs/

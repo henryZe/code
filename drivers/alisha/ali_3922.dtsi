@@ -1,0 +1,1275 @@
+/*
+ * Copyright (c) 2014 MundoReader S.L.
+ * Author: Matthias Brugger <matthias.bgg@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/ {
+	compatible = "alitech,3922";
+	interrupt-parent = <&gic>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a7";
+			enable-method = "alitech,3922-smp";
+			cpu-idle-states = <&CPU_SLEEP_0>;
+			reg = <0x0>;
+			clock-frequency = <1000000000>;
+			clocks = <&core_clk>;		
+			clock-latency = <244144>; /* 8 32k periods */
+			cpu-supply = <&vdd_cpu>;			
+			operating-points = <
+				/* kHz	  uV */
+				1000000 1003440
+				 900000 1003440
+				 800000 994400
+				 700000 994400
+				 600000 985360
+				 500000 985360
+				 400000 985360
+			>;			
+			voltage-tolerance = <5>;
+			cooling-min-level = <4>;
+			cooling-max-level = <2>;
+			#cooling-cells = <2>; /* min followed by max */
+			dynamic-power-coefficient = <400>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a7";
+			enable-method = "alitech,3922-smp";
+			cpu-idle-states = <&CPU_SLEEP_0>;
+			reg = <0x1>;
+			clock-frequency = <1000000000>;
+		};
+		
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a7";
+			enable-method = "alitech,3922-smp";
+			cpu-idle-states = <&CPU_SLEEP_0>;
+			reg = <0x2>;
+			clock-frequency = <1000000000>;
+		};
+		
+		cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a7";
+			enable-method = "alitech,3922-smp";
+			cpu-idle-states = <&CPU_SLEEP_0>;
+			reg = <0x3>;
+			clock-frequency = <1000000000>;
+		};
+		
+		idle-states {
+            CPU_SLEEP_0: cpu-sleep-0 {
+    			compatible = "arm,idle-state";
+    			local-timer-stop;
+    			entry-latency-us = <200>;
+    			exit-latency-us = <100>;
+    			min-residency-us = <400>;
+    			wakeup-latency-us = <250>;
+    		};
+        };
+	};
+	
+	gic: interrupt-controller@1bf01000 {
+		compatible = "arm,cortex-a7-gic";
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		reg = <0x1bf01000 0x1000>,
+		      <0x1bf02000 0x1000>,
+		      <0x1bf04000 0x2000>,
+		      <0x1bf06000 0x2000>;
+	};
+	
+	inc: interrupt-controller@18000020 {
+		compatible = "alitech,inc";
+		interrupt-controller;
+		#interrupt-cells = <3>;		
+		max-irqs = <128>;
+		reg = <0x18000020 0x4>,
+		      <0x18000024 0x4>,
+		      <0x18000028 0x4>,
+		      <0x1800002c 0x4>,
+		      <0x18000040 0x4>,
+		      <0x18000044 0x4>,
+		      <0x18000048 0x4>,
+		      <0x1800004c 0x4>;
+	};
+	
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+		clock-frequency = <27000000>;
+		arm,cpu-registers-not-fw-configured;
+	};
+
+	clocks {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		ranges;
+		
+		f800: f800 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <800000000>;
+			clock-output-names="f800";
+		};
+		f900: f900 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <900000000>;
+			clock-output-names="f900";
+		};
+		f1000: f1000 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1000000000>;
+			clock-output-names="f1000";
+		};
+		f1100: f1100 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1100000000>;
+			clock-output-names="f1100";
+		};
+		f1200: f1200 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1200000000>;
+			clock-output-names="f1200";
+		};
+		f1300: f1300 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1300000000>;
+			clock-output-names="f1300";
+		};
+		f1400: f1400 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1400000000>;
+			clock-output-names="f1400";
+		};
+		f1500: f1500 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1500000000>;
+			clock-output-names="f1500";
+		};
+		f1600: f1600 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1600000000>;
+			clock-output-names="f1600";
+		};
+		f660: f660 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <660000000>;
+			clock-output-names="f660";
+		};
+		f726: f726 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <726000000>;
+			clock-output-names="f726";
+		};
+		f792: f792 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <792000000>;
+			clock-output-names="f792";
+		};
+		f858: f858 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <858000000>;
+			clock-output-names="f858";
+		};
+		f924: f924 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <924000000>;
+			clock-output-names="f924";
+		};
+		f990: f990 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <990000000>;
+			clock-output-names="f990";
+		};
+		f1056: f1056 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1056000000>;
+			clock-output-names="f1056";
+		};
+		f1122: f1122 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1122000000>;
+			clock-output-names="f1122";
+		};			
+		f1188: f1188 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1188000000>;
+			clock-output-names="f1188";
+		};
+		f1254: f1254 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1254000000>;
+			clock-output-names="f1254";
+		};
+		f1320: f1320 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1320000000>;
+			clock-output-names="f1320";
+		};
+		f33: f33 {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <33000000>;
+			clock-output-names="f33";
+		};
+		base_clk{
+			compatible = "alitech,base-clk";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+			
+			cpll_clk: cpll_clk@18000074 {
+			    #clock-cells = <0>;
+			    compatible = "alitech,cpll-clk";
+			    reg = <0x18000074 0x4>, <0x18000078 0x4>;
+			    reg-names = "strap_pin_con_reg", "strap_pin_trig_reg";
+			    shift = /bits/ 8 <8>;
+			    width = /bits/ 8 <3>;
+			    trig  = /bits/ 8 <2>;
+			    clocks = <&f800>, <&f900>, <&f1000>,<&f1100>,
+			    		 <&f1200>,<&f1300>,<&f1400>,<&f1500>,<&f1600>;					 	 
+			    clock-output-names = "cpll_clk";
+		    };
+
+		    dpll_clk: dpll_clk@18000074 {
+			    #clock-cells = <0>;
+			    compatible = "alitech,dpll-clk";
+			    reg = <0x18000074 0x4>, <0x18000078 0x4>;
+			    reg-names = "strap_pin_con_reg", "strap_pin_trig_reg";
+			    shift = /bits/ 8 <4>;
+			    width = /bits/ 8 <3>;
+			    trig  = /bits/ 8 <1>;
+			    clocks = <&f660>, <&f726>, <&f792>, <&f858>, 
+			    		 <&f924>, <&f990>, <&f1056>,<&f1122>, 
+			    		 <&f1188>, <&f1254>, <&f1320>,<&f33>;
+			    clock-output-names = "dpll_clk";		    
+			};
+		};
+		
+		dividers {
+			compatible = "alitech,dividers";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+			
+			core_clk: core_clk@18000320 {
+				#clock-cells = <0>;
+				compatible = "alitech,core-clk";
+				reg = <0x18000320 0x4>;
+				shift = /bits/ 8 <0>;
+				width = /bits/ 8 <2>;
+				val = <0>, <1>, <2>;
+				div = <1>, <2>, <4>;
+				clocks = <&cpll_clk>;
+				clock-output-names = "core_clk";	
+			};
+		};
+		
+		gates {
+			compatible = "alitech,gates";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+			
+			vdec_gate: vdec_gate@18000200 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000200 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="vdec_gate";
+			};
+			
+			fxde_gate: fxde_gate@18000204 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000204 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="fxde_gate";
+			};
+
+			tvenc_gate: tvenc_gate@18000208 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000208 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="tvenc_gate";
+			};
+
+			venc_gate: venc_gate@18000210 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000210 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="venc_gate";
+			};
+
+			sgdma_gate: sgdma_gate@18000214 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000214 0x4>;
+				gate-mask = <0x00000700>;
+				ignore-unused-mask = <0x00000700>;
+				clock-output-names="sgdma1_gate","sgdma2_gate","sgdma3_gate";
+			};
+
+			ge_gate: ge_gate@18000218 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000218 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="ge_gate";
+			};
+
+			md_gate: md_gate@1800021C {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x1800021C 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="md_gate";
+			};
+
+			audio_gate: audio_gate@18000220 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000220 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="audio_gate";
+			};
+
+			hdmi_gate: hdmi_gate@18000234 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000234 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="hdmi_gate";
+			};
+
+			qam1_gate: qam1_gate@18000240 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000240 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="qam1_gate";
+			};
+
+			qam2_gate: qam2_gate@18000244 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000244 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="qam2_gate";
+			};
+
+			ifcp_gate: ifcp_gate@18000250 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000250 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="ifcp_gate";
+			};
+
+			sdio_emmc_gate: sdio_emmc_gate@18000260 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000260 0x4>;
+				gate-mask = <0x00000300>;
+				ignore-unused-mask = <0x00000300>;
+				clock-output-names="sdio_gate","emmc_gate";
+			};
+
+			otp_gate: otp_gate@18000264 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000264 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="otp_gate";
+			};
+
+			dsc_gate: dsc_gate@18000268 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000268 0x4>;
+				gate-mask = <0x00000F00>;
+				ignore-unused-mask = <0x00000F00>;
+				clock-output-names="dsc_gate","ali0_gate","sec_sram_gate","hwchk_gate";
+			};
+			
+			sflash_gate: sflash_gate@1800026C {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x1800026C 0x4>;
+				gate-mask = <0x00000300>;
+				ignore-unused-mask = <0x00000300>;
+				clock-output-names="sflash_gate","bootrom_gate";
+			};
+			
+			tsio_gate: tsio_gate@18000270 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000270 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="tsio_gate";
+			};
+			
+			pmu_gate: pmu_gate@18000278 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000278 0x4>;
+				gate-mask = <0x00000500>;
+				ignore-unused-mask = <0x00000500>;
+				clock-output-names="pmu_gate","psb_gate";
+			};
+
+			demux_tsi_tso_gate: demux_tsi_tso_gate@18000280 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000280 0x4>;
+				gate-mask = <0x0000FF00>;
+				ignore-unused-mask = <0x0000FF00>;
+				clock-output-names="demux1_gate","demux2_gate","demux3_gate","demux4_gate",
+								   "demux5_gate","demux6_gate","tsi_gate","tsg_gate";
+			};			
+
+			south_gate0: south_gate0@18000288 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000288 0x4>;
+				gate-mask = <0x0000FF00>;
+				ignore-unused-mask = <0x0000FF00>;
+				clock-output-names="i2c1_gate","i2c2_gate","i2c3_gate",
+								   "uart1_gate","uart2_gate","uart3_gate",
+								   "sc1_gate","sc2_gate";
+			};			
+
+			south_gate1: south_gate1@1800028C {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x1800028C 0x4>;
+				gate-mask = <0x00000F00>;
+				ignore-unused-mask = <0x00000F00>;
+				clock-output-names="wdt_gate","rtc_gate","irx_gate","sb_gate";
+			};
+
+			nflash_gate: nflash_gate@18000290 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000290 0x4>;
+				gate-mask = <0x00000300>;
+				ignore-unused-mask = <0x00000300>;
+				clock-output-names="nf_ip_gate","nf_gate";
+			};
+
+			gmac_gate: gmac_gate@18000294 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000294 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="gmac_gate";
+			};
+
+			usb2_gate: usb2_gate@180002F8 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x180002F8 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="usb2_gate";
+			};
+
+			usb3_gate: usb3_gate@180002FC {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x180002FC 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="usb3_gate";
+			};
+
+			gpu_gate: gpu_gate@18000310 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000310 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="gpu_gate";
+			};
+
+			aud_gate: aud_gate@18000314 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000314 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="aud_gate";
+			};
+
+			see_gate: see_gate@18000318 {
+				#clock-cells = <1>;
+				compatible = "alitech,clks-gate";
+				reg = <0x18000318 0x4>;
+				gate-mask = <0x00000100>;
+				ignore-unused-mask = <0x00000100>;
+				clock-output-names="see_gate";
+			};						
+		};	
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&inc>;
+		ranges;
+		uart0:uart@18018300 {
+			compatible = "ns16550a";
+			reg = <0x18018300 0x0C>;
+			interrupts = <0 73 4>;
+			clock-frequency = <1843200>;
+			current-speed = <115200>;
+			reg-offset = <0>;
+			reg-shift = <0>;
+			fifo-size = <16>;
+			reg-io-width = <1>;
+			interrupt-parent = <&inc>;
+			pinctrl-0 = <&pinctrl_uart_sel>;
+			pinctrl-names = "default";
+		};
+		uart1:uart@18018600 {
+			compatible = "ns16550a";
+			reg = <0x18018600 0x0C>;
+			interrupts = <0 72 4>;
+			clock-frequency = <1843200>;
+			current-speed = <115200>;
+			reg-offset = <0>;
+			reg-shift = <0>;
+			fifo-size = <16>;
+			reg-io-width = <1>;
+			interrupt-parent = <&inc>;
+			pinctrl-0 = <&pinctrl_uart2_sel>;
+			pinctrl-names = "default";
+		};
+		uartio0:uartio@18018300 {
+			compatible = "alitech,uartio";
+			reg = <0x18018300 0x0C>;
+		};
+		gpio0: gpio@18000100 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000100 0x1C>;
+			interrupts = <0 66 4>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			gpio-base = <0>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 0 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio1: gpio@18000120 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000120 0x1C>;
+			interrupts = <0 66 4>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			gpio-base = <32>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 32 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio2: gpio@18000140 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000140 0x1C>;
+			interrupts = <0 66 4>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			gpio-base = <64>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 64 32>;
+			#interrupt-cells = <1>;
+		};
+		gpio3: gpio@18000160 {
+			compatible = "alitech,ali-gpio";
+			reg = <0x18000160 0x1C>;
+			interrupts = <0 66 4>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpio = <32>;
+			gpio-base = <96>;
+			interrupt-controller;
+			gpio-ranges = <&pinctrl 0 96 32>;
+			#interrupt-cells = <1>;
+		};
+        gpio_i2c0:i2c@0{ 
+				#address-cells = <1>;
+				#size-cells = <0>;
+				compatible = "i2c-gpio";
+				gpios = <&gpio3 25 0 /*sda GPIO PIN = 3*32+25 = 121 */
+		         		&gpio3 24 0 /*scl GPIO PIN = 3*32+24 = 120 */
+		        		>;
+				sda-open-drain = <0>;
+				scl-open-drain = <0>;
+				scl_is_output_only = <1>;
+		};
+		i2c1: i2c@18018200 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				compatible = "alitech,i2c";
+				clock-names = "scb_clk";
+				reg = <0x18018200 0x20>;
+				interrupts = <0 76 4>;/*1:low-to-high 2:high-to-low 4:high level 8:low level*/
+				interrupt-parent = <&inc>;
+				clock-frequency = <100000>; /* 400KHz is our max, 100KHz is the processor min */
+				pinctrl-0 = <&pinctrl_i2c_sel>;
+				pinctrl-names = "default";
+				
+			    vdd_cpu: regulator@0 {
+		            compatible = "eta1459";
+			        reg = <0x48>;
+			        regulator-name = "eta1459";	
+			        regulator-always-on;
+			        regulator-boot-on;
+			        R1-ohm = <130>;
+			        R2-ohm = <1000>;
+			    };
+		};
+		i2c2: i2c@18018700 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				compatible = "alitech,i2c";
+				clock-names = "scb_clk";
+				reg = <0x18018700 0x20>;
+				interrupts = <0 75 4>;/*1:low-to-high 2:high-to-low 4:high level 8:low level*/
+				interrupt-parent = <&inc>;
+				clock-frequency = <40000>; /* 400KHz is our max, 100KHz is the processor min */
+				pinctrl-0 = <&pinctrl_i2c2_sel>;
+				pinctrl-names = "default";
+		};
+		i2c3: i2c@18018B00 { /*use for HDMI rename HDMI_SCL/HDMI_SDA*/
+				#address-cells = <1>;
+				#size-cells = <1>;
+				compatible = "alitech,i2c";
+				clock-names = "scb_clk";
+				reg = <0x18018B00 0x20>;
+				interrupts = <0 74 4>;/*1:low-to-high 2:high-to-low 4:high level 8:low level*/
+				interrupt-parent = <&inc>;
+				clock-frequency = <100000>; /* 400KHz is our max, 100KHz is the processor min */
+				//pinctrl-0 = <&pinctrl_i2c3_sel>;
+				pinctrl-names = "default";
+		};
+		spi@1802E000 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "alitech,spictrl";
+			reg = <0x1802E000 0xE0>, <0x0fc00000 0x1000>,
+				<0x0ec00000 0x1000>;
+			interrupts = <0 41 4>;
+			ctrl_clk_select = <13>;
+			dma_mode = <1>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_sf_sel>;
+			num-cs = <3>;
+			status = "disabled";
+		};
+		wdt@18018500 {
+            		compatible = "alitech,wdt";
+            		reg = <0x18018500 0x100>;
+            		clock-frequency = <27000000>;
+            		timeout-sec = <10>;
+            		nowayout = <0>;
+            		wdt_mode = <32>;
+		};
+		pinctrl: pinctrl@0x18000080 {
+			compatible = "alitech,pinctrl";
+			reg = <0x18000080 0x0c>;
+			pins = "XGPIO_0",		/* mux_GPIO_0 */
+				"XGPIO_1",		/* mux_GPIO_1 */
+				"XGPIO_2",		/* mux_GPIO_2 */
+				"XGPIO_3",		/* mux_GPIO_3 */
+				"XGPIO_4",		/* mux_GPIO_4 */
+				"XGPIO_5",		/* mux_GPIO_5 */
+				"XGPIO_6",		/* only GPIO_6 */
+				"XPMU_GPIO_3",		/* mux_GPIO_7 */
+				"XPMU_GPIO_4",		/* mux_GPIO_8 */
+				"XPMU_GPIO_5",		/* mux_GPIO_9 */
+				"XPMU_GPIO_6",		/* mux_GPIO_10 */
+				"XPMU_GPIO_7",		/* mux_GPIO_11 */
+				"XPMU_GPIO_8",		/* mux_GPIO_12 */
+				"XTSPI_DATA_5",		/* mux_GPIO_13 */
+				"XTSPI_DATA_4",		/* mux_GPIO_14 */
+				"XTSPI_DATA_3",		/* mux_GPIO_15 */
+				"XCI_VCC_ENJ",		/* mux_GPIO_16 */
+				"XCI_CD1J",		/* mux_GPIO_17 */
+				"XCI_DATA_3",		/* mux_GPIO_18 */
+				"XCI_MDI_3",		/* mux_GPIO_19 */
+				"XCI_DATA_4",		/* mux_GPIO_20 */
+				"XCI_MDI_4",		/* mux_GPIO_21 */
+				"XCI_DATA_5",		/* mux_GPIO_22 */
+				"XCI_MDI_5",		/* mux_GPIO_23 */
+				"XCI_DATA_6",		/* mux_GPIO_24 */
+				"XCI_MDI_6",		/* mux_GPIO_25 */
+				"XCI_DATA_7",		/* mux_GPIO_26 */
+				"XCI_MDI_7",		/* mux_GPIO_27 */
+				"XCI_CE1J",		/* mux_GPIO_28 */
+				"XCI_ADDR_10",		/* mux_GPIO_29 */
+				"XCI_IORDJ",		/* mux_GPIO_30 */
+				"XCI_OEJ",		/* mux_GPIO_31 */
+				"XCI_ADDR_11",		/* mux_GPIO_32 */
+				"XCI_IOWRJ",		/* mux_GPIO_33 */
+				"XCI_ADDR_9",		/* mux_GPIO_34 */
+				"XCI_MOSTART",		/* mux_GPIO_35 */
+				"XCI_ADDR_8",		/* mux_GPIO_36 */
+				"XCI_MDO_0",		/* mux_GPIO_37 */
+				"XCI_ADDR_13",		/* mux_GPIO_38 */
+				"XCI_MDO_1",		/* mux_GPIO_39 */
+				"XCI_ADDR_14",		/* mux_GPIO_40 */
+				"XCI_MDO_2",		/* mux_GPIO_41 */
+				"XCI_WEJ",		/* mux_GPIO_42 */
+				"XCI_MDO_3",		/* mux_GPIO_43 */
+				"XCI_RDY",		/* mux_GPIO_44 */
+				"XCI_MDO_4",		/* mux_GPIO_45 */
+				"XCI_MDO_5",		/* mux_GPIO_46 */
+				"XCI_MOVALA",		/* mux_GPIO_47 */
+				"XCI_MOCLK",		/* mux_GPIO_48 */
+				"XCI_MDO_6",		/* mux_GPIO_49 */
+				"XCI_ADDR_12",		/* mux_GPIO_50 */
+				"XCI_MDO_7",		/* mux_GPIO_51 */
+				"XCI_ADDR_7",		/* mux_GPIO_52 */
+				"XCI_MICLK",		/* mux_GPIO_53 */
+				"XCI_ADDR_6",		/* mux_GPIO_54 */
+				"XCI_RSTA",		/* mux_GPIO_55 */
+				"XCI_ADDR_5",		/* mux_GPIO_56 */
+				"XCI_ADDR_4",		/* mux_GPIO_57 */
+				"XCI_WAITJ",		/* mux_GPIO_58 */
+				"XCI_ADDR_3",		/* mux_GPIO_59 */
+				"XCI_REGJ",		/* mux_GPIO_60 */
+				"XCI_ADDR_2",		/* mux_GPIO_61 */
+				"XCI_MIVALA",		/* mux_GPIO_62 */
+				"XCI_ADDR_1",		/* mux_GPIO_63 */
+				"XCI_MISTART",		/* mux_GPIO_64 */
+				"XCI_ADDR_0",		/* mux_GPIO_65 */
+				"XCI_MDI_0",		/* mux_GPIO_66 */
+				"XCI_DATA_0",		/* mux_GPIO_67 */
+				"XCI_MDI_1",		/* mux_GPIO_68 */
+				"XCI_DATA_1",		/* mux_GPIO_69 */
+				"XCI_MDI_2",		/* mux_GPIO_70 */
+				"XCI_DATA_2",		/* mux_GPIO_71 */
+				"XCI_CD2J",		/* mux_GPIO_72 */
+				"XDFTTM",		/* mux_GPIO_73 */
+				"XSDA_3",		/* mux_GPIO_74 */
+				"XSCL_3",		/* mux_GPIO_75 */
+				"XPCM_TCK",		/* mux_GPIO_76 */
+				"XPCM_TFS",		/* mux_GPIO_77 */
+				"XPCM_DO",		/* mux_GPIO_78 */
+				"XPCM_RCK",		/* mux_GPIO_79 */
+				"XPCM_RFS",		/* mux_GPIO_80 */
+				"XPCM_DI",		/* mux_GPIO_81 */
+				"XTSPI_DATA_2",		/* mux_GPIO_82 */
+				"XTSPI_DATA_1",		/* mux_GPIO_83 */
+				"XTSPI_DATA_0",		/* mux_GPIO_84 */
+				"XUART_TX",		/* mux_GPIO_85 */
+				"XIF_AGC_PDM",		/* mux_GPIO_86 */
+				"XPMU_GPIO_0",		/* mux_GPIO_87 */
+				"XUART_RX",		/* mux_GPIO_88 */
+				"XSDA_2",		/* mux_GPIO_89 */
+				"XSCL_2",		/* mux_GPIO_90 */
+				"XSDA_1",		/* mux_GPIO_91 */
+				"XSCL_1",		/* mux_GPIO_92 */
+				"XSMWRJ",		/* mux_GPIO_93 */
+				"XSMALE",		/* mux_GPIO_94 */
+				"XSMCLE",		/* mux_GPIO_95 */
+				"XSMCEJ0",		/* mux_GPIO_96 */
+				"XSMRDJ",		/* mux_GPIO_97 */
+				"XSMCEJ1",		/* mux_GPIO_98 */
+				"XSMWPJ",		/* mux_GPIO_99 */
+				"XSMD_7",		/* mux_GPIO_100 */
+				"XSMD_6",		/* mux_GPIO_101 */
+				"XSMD_5",		/* mux_GPIO_102 */
+				"XSMD_4",		/* mux_GPIO_103 */
+				"XSMD_3",		/* mux_GPIO_104 */
+				"XSMD_2",		/* mux_GPIO_105 */
+				"XSMD_1",		/* mux_GPIO_106 */
+				"XSMD_0",		/* mux_GPIO_107 */
+				"XEJ_TCLK",		/* mux_GPIO_108 */
+				"XEJ_TMS",		/* mux_GPIO_109 */
+				"XEJ_TDO",		/* mux_GPIO_110 */
+				"XEJ_TDI",		/* mux_GPIO_111 */
+				"XEJ_TRST",		/* mux_GPIO_112 */
+				"XEJ_SELECT",		/* mux_GPIO_113 */
+				"XSPDIF",		/* mux_GPIO_114 */
+				"XTSPI_ERROR",		/* mux_GPIO_115 */
+				"XTSPI_SYNC",		/* mux_GPIO_116 */
+				"XTSPI_VALID",		/* mux_GPIO_117 */
+				"XPMU_GPIO_1",		/* mux_GPIO_118 */
+				"XPMU_GPIO_2",		/* mux_GPIO_119 */
+				"XGPIO_PCM1",		/* mux_GPIO_120 */
+				"XGPIO_PCM2",		/* mux_GPIO_121 */
+				"XTSPI_DATA_6",		/* mux_GPIO_122 */
+				"XIR_RX",		/* only GPIO_123 */
+				"XCEC",			/* only GPIO_124 */
+				"XUNKNOWN_0",		/* Never found it 125 */
+				"XUNKNOWN_1",		/* Never found it 126 */
+				"XGPIO_127",		/* mux_GPIO_127 */
+				"XSC1_CLK",		/* un_GPIO 128 */
+				"XSC1_POWENJ",		/* un_GPIO 129 */
+				"XSC1_DATA",		/* un_GPIO 130 */
+				"XSC1_RST",		/* un_GPIO 131 */
+				"XSC1_PRESJ",		/* un_GPIO 132 */
+				"XTSPI_CLK",		/* un_GPIO 133 */
+				"XTSPI_DATA_7";		/* un_GPIO 134 */
+			groups {
+				pingrp_sc_sel {
+					name = "pingrp_sc_sel";
+					pins = <128 129 130 131 132>;
+					reg-offset = <0 4>;
+					reg-mask = <0x1 0x800000>;
+				};
+				pingrp_sc_sel2 {
+					name = "pingrp_sc_sel2";
+					pins = <0 3 9 10 86>;
+					reg-offset = <0 4>;
+					reg-mask = <0x800081 0x2e08100>;
+				};
+				pingrp_sc2_sel {
+					name = "pingrp_sc2_sel";
+					pins = <31 32 33 34 35>;
+					reg-offset = <0>;
+					reg-mask = <0x100>;
+				};
+				pingrp_sc2_sel2 {
+					name = "pingrp_sc2_sel2";
+					pins = <40 41 42 43 44>;
+					reg-offset = <0 4>;
+					reg-mask = <0x60002 0x14140002>;
+				};
+				pingrp_i2c_sel {
+					name = "pingrp_i2c_sel";
+					pins = <36 37>;
+					reg-offset = <0>;
+					reg-mask = <0x40000200>;
+				};
+				pingrp_i2c2_sel {
+					name = "pingrp_i2c2_sel";
+					pins = <38 39>;
+					reg-offset = <0>;
+					reg-mask = <0x80000400>;
+				};
+				pingrp_i2c3_sel {
+					name = "pingrp_i2c3_sel";
+					pins = <74 75>;
+					reg-offset = <0 4>;
+					reg-mask = <0x4000 0x400>;
+				};
+				pingrp_ci_sel {
+					name = "pingrp_ci_sel";
+					pins = <16 17 18 19 20 21 22 23 24 25
+						26 27 28 29 30 31 32 33 34 35
+						36 37 38 39 40 41 42 43 44 45
+						46 47 48 49 50 51 52 53 54 55
+						56 57 58 59 60 61 62 63 64 65
+						66 67 68 69 70 71 72>;
+					reg-offset = <0 4>;
+					reg-mask = <0x60022 0x15142812>;
+				};
+				pingrp_emmc_boot_sel {
+					name = "pingrp_emmc_boot_sel";
+					pins = <11 12 13 14 15 16 17 18 19 80 81 82>;
+					reg-offset = <0 4 8>;
+					reg-mask = < 0x00000007 0x00000C18 0x00000015>;
+				};
+				pingrp_emmc_sel2 {
+					name = "pingrp_emmc_sel2";
+					pins = <6 42 43 79 84 85 86 87 88 89 90 91>;					
+					reg-offset = <0 4 8>;
+					reg-mask = <0x0A2C0000 0x00000100 0x0000000A>;
+				};
+				pingrp_sdio_sel1 {
+					name = "pingrp_sdio_sel1";
+					pins = <3 26 27 28 29 30>;
+					reg-offset = <0 4>;
+					reg-mask = <0x00800080 0x10001C40>;
+				};
+				pingrp_sdio_sel2 {
+					name = "pingrp_sdio_sel2";
+					pins = <56 57 58 59 60 61>;
+					reg-offset = <0 4>;
+					reg-mask = <0x00002000 0x01680020>;
+				};
+				pingrp_nf_sel {
+					name = "pingrp_nf_sel";
+					pins = <93 94 95 96 97 98 99 100 101
+						102 103 104 105 106 107>;
+					reg-offset = <0 4 8>;
+					reg-mask = <0x5 0x1408 0x3>;
+				};
+				pingrp_sf_sel {
+					name = "pingrp_sf_sel";
+					pins = <98 100 101 102 103 104>;
+					reg-offset = <0 4 8>;
+					reg-mask = <0x1000 0x2 0x8>;
+				};
+				pingrp_spi_sel {
+					name = "pingrp_spi_sel";
+					pins = <115 116>;
+					reg-offset = <0 4>;
+					reg-mask = <0x200010 0x4040>;
+				};
+				pingrp_sflash_sel {
+					name = "pingrp_sflash_sel";
+					pins = <98 100 101 102 103 104>;
+					reg-offset = <0  4>;
+					reg-mask = <0x80000  0x80000000>;
+				};
+				pingrp_spdif_sel {
+					name = "pingrp_spdif_sel";
+					pins = <114>;
+					reg-offset = <0 4>;
+					reg-mask = <0x4000 0x400>;
+				};
+				pingrp_spdif_sel2 {
+					name = "pingrp_spdif_sel2";
+					pins = <1>;
+					reg-offset = <0 4>;
+					reg-mask = <0x8000 0x400>;
+				};
+                		pingrp_uart_sel {
+					name = "pingrp_uart_sel";
+					pins = <40 41>;
+					reg-offset = <0>;
+					reg-mask = <0>;
+				};
+                		pingrp_uart2_sel {
+					name = "pingrp_uart2_sel";
+					pins = <0 1>;
+					reg-offset = <0>;
+					reg-mask = <0>;
+				};
+                		pingrp_assi2_sel {
+					name = "pingrp_assi2_sel";
+					pins = <83 84 86 87 88 89>;
+					reg-offset = <0>;
+					reg-mask = <0>;
+				};
+				pingrp_if_agc_pdm_sel {
+					name = "pingrp_if_agc_pdm_sel";
+					pins = <68>;
+					reg-offset = <0>;
+					reg-mask = <0>;
+				};
+				pingrp_if_agc2_pdm_sel {
+					name = "pingrp_if_agc2_pdm_sel";
+					pins = <69>;
+					reg-offset = <0>;
+					reg-mask = <0>;
+				};
+
+			};
+			gpio-groups {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				pinctrl_gpioa: GPIO_A@gpio-group1 {
+					name = "GPIO_A";
+					pins = <0 1 2 3 4 5 6 7 8 9 10 11 12 13
+						14 15 16 17 18 19 20 21 22 23
+						24 25 26 17 28 29 30 31>;
+					reg = <0x1800011C 0x4>;
+				};
+				pinctrl_gpiob: GPIO_B@gpio-group2 {
+					name = "GPIO_B";
+					pins = <32 33 34 35 36 37 38 39 40 41
+						42 43 44 44 46 47 48 49 50 51
+						52 53 54 55 56 57 58 59 60 61
+						62 63>;
+					reg = <0x1800013C 0x4>;
+				};
+				pinctrl_gpioc: GPIO_C@gpio-group3 {
+					name = "GPIO_C";
+					pins = <64 65 66 67 68 69 70 71 72 73
+						74 75 76 77 78 79 80 81 82 83
+						84 85 86 87 88 89 90 91 92 93
+						94 95>;
+					reg = <0x1800015C 0x4>;
+				};
+				pinctrl_gpiod: GPIO_D@gpio-group4 {
+					name = "GPIO_D";
+					pins = <96 97 98 99 100 101 102 103 104
+						105 106 107 108 109 110 111 112
+						113 114 115 116 117 118 119 120
+						121 122 123 124 125 126 127>;
+					reg = <0x1800017C 0x4>;
+				};
+			};
+			functions {
+				pinctrl_sc_sel: pinctrl_sc_sel {
+					name = "pinctrl_sc_sel";
+					groups = "pingrp_sc_sel";
+					field-value-0 = <0x1 0x0>;
+				};
+				pinctrl_sc_sel2: pinctrl_sc_sel2 {
+					name = "pinctrl_sc_sel2";
+					groups = "pingrp_sc_sel2";
+					field-value-0 = <0x1 0x0>;
+				};
+				pinctrl_sc2_sel: pinctrl_sc2_sel {
+					name = "pinctrl_sc2_sel";
+					groups = "pingrp_sc2_sel";
+					field-value-0 = <0x100>;
+				};
+				pinctrl_sc2_sel2: pinctrl_sc2_sel2 {
+					name = "pinctrl_sc2_sel2";
+					groups = "pingrp_sc2_sel2";
+					field-value-0 = <0x0 0x2>;
+				};
+				pinctrl_ci_sel: pinctrl_ci_sel {
+					name = "pinctrl_ci_sel";
+					groups = "pingrp_ci_sel";
+					field-value-0 = <0x2 0x0>;
+				};
+				pinctrl_emmc_boot_sel: pinctrl_emmc_boot_sel {
+					name = "pinctrl_emmc_boot_sel";
+					groups = "pingrp_emmc_boot_sel";
+					field-value-0 = < 0x00000001 0x00000000 0x00000015>;
+				};			
+				pinctrl_emmc_sel2: pinctrl_emmc_sel2 {
+					name = "pinctrl_emmc_sel2";
+					groups = "pingrp_emmc_sel2";
+					field-value-0 = <0x00200000 0x00000000 0x0000000A>;
+				};
+				pinctrl_sdio_sel1: pinctrl_sdio_sel1 {
+					name = "pinctrl_sdio_sel1";
+					groups = "pingrp_sdio_sel1";
+					field-value-0 = <0x00800000 0x00000000>;
+				};
+				pinctrl_sdio_sel2: pinctrl_sdio_sel2 {
+					name = "pinctrl_sdio_sel2";
+					groups = "pingrp_sdio_sel2";
+					field-value-0 = <0x00800000 0x00200000>;
+				};
+				pinctrl_nf_sel: pinctrl_nf_sel {
+					name = "pinctrl_nf_sel";
+					groups = "pingrp_nf_sel";
+					field-value-0 = <0x4 0x0 0x3>;
+				};
+				pinctrl_sf_sel: pinctrl_sf_sel {
+					name = "pinctrl_sf_sel";
+					groups = "pingrp_sf_sel";
+					field-value-0 = <0x0 0x2 0x8>;
+				};
+				pinctrl_spi_sel: pinctrl_spi_sel {
+					name = "pinctrl_spi_sel";
+					groups = "pingrp_spi_sel";
+					field-value-0 = <0x10 0x0>;
+				};
+				pinctrl_i2c_sel: pinctrl_i2c_sel {
+					name = "pinctrl_i2c_sel";
+					groups = "pingrp_i2c_sel";
+					field-value-0 = <0x200>;
+				};
+				pinctrl_i2c2_sel: pinctrl_i2c2_sel {
+					name = "pinctrl_i2c2_sel";
+					groups = "pingrp_i2c2_sel";
+					field-value-0 = <0x400>;
+				};
+				pinctrl_i2c3_sel: pinctrl_i2c3_sel {
+					name = "pinctrl_i2c3_sel";
+					groups = "pingrp_i2c3_sel";
+					field-value-0 = <0x4000 0x0>;
+				};
+				pinctrl_spdif_sel: pinctrl_spdif_sel {
+					name = "pinctrl_spdif_sel";
+					groups = "pingrp_spdif_sel";
+					field-value-0 = <0x2000 0x0>;
+				};
+				pinctrl_spdif_sel2: pinctrl_spdif_sel2 {
+					name = "pinctrl_spdif_sel2";
+					groups = "pingrp_spdif_sel2";
+					field-value-0 = <0x8000 0x0>;
+				};
+				pinctrl_uart_sel: pinctrl_uart_sel {
+					name = "pinctrl_uart_sel";
+					groups = "pingrp_uart_sel";
+					field-value-0 = <0x800>;
+				};
+				pinctrl_uart2_sel: pinctrl_uart2_sel {
+					name = "pinctrl_uart2_sel";
+					groups = "pingrp_uart2_sel";
+					field-value-0 = <0x04000000>;
+				};
+                		pinctrl_assi2_sel: pinctrl_assi2_sel {
+					name = "pinctrl_assi2_sel";
+					groups = "pingrp_assi2_sel";
+					field-value-0 = <0x400000>;
+				};
+                		pinctrl_if_agc_pdm_sel: pinctrl_if_agc_pdm_sel {
+					name = "pinctrl_if_agc_pdm_sel";
+					groups = "pingrp_if_agc_pdm_sel";
+					field-value-0 = <0x8000>;
+				};
+						pinctrl_if_agc2_pdm_sel: pinctrl_if_agc2_pdm_sel {
+					name = "pinctrl_if_agc2_pdm_sel";
+					groups = "pingrp_if_agc2_pdm_sel";
+					field-value-0 = <0x10000>;
+				};
+			};
+			funcmutex {
+				pinctrl_yyy: yyy{
+					name = "yyy";
+				};
+				pinctrl_flashmutex: flashmutex{
+					name = "flashmutex";
+				};
+				pinctrl_xxxxx: xxxxx{
+					name = "xxxxx";
+				};
+			};
+		};
+		pinctrltest0 { /* Only for pinctrl test */
+			compatible = "alitech,pinctrltest";
+			pinctrl-names = "default","active";
+			pinctrl-0 = <>;
+			pinctrl-1 = <&pinctrl_uart_sel >;
+		};
+
+		rpc@a5fff000 {
+			compatible = "alitech,rpc";
+			interrupt-parent = <&inc>;
+			interrupts = <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>,<GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>;
+		};
+		mmc_rstc: reset-controller@18000260 {
+			#reset-cells = <1>;
+			compatible = "alitech,reset";
+			reg = <0x18000260 0x4>;
+		};
+	        tsg@0x18026000 {
+	            compatible = "alitech,ali-tsg";
+	            reg = <0x18026000 0x34>;
+	            interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
+	        };
+	        
+	        tsi@0x1801a000 {
+	            compatible = "alitech,ali-tsi";
+	            reg = <0x1801a000 0x1c>;
+	        };
+	        
+	        demux@18022000 {
+	            compatible = "alitech,ali-demux";
+	            reg = <0x18022000 0x364 0x18024000 0x364 0x18046000 0x364 0x18048000 0x364 0x1804a000 0x364 0x1804c000 0x364>;
+	            interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
+	        };
+	        
+		fb0@18006900 {
+			compatible = "alitech,fb";
+			reg = <0x18006000 0x1000 0x1800A000 0x1000>;	
+			interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+		};	
+		  
+		fb1@18006700 {
+			compatible = "alitech,fb";
+			reg = <0x18006000 0x1000>;	
+		};   
+		
+		fb2@18006A00 {
+			compatible = "alitech,fb";
+			reg = <0x18006000 0x1000 0x1800A000 0x1000>;	
+			interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+		};
+		
+		sgdma1@1800F000 {
+			compatible = "alitech,sgdma";
+			reg = <0x1800F000 0x200>;
+			interrupts = <GIC_SPI 1 IRQ_TYPE_LEVEL_HIGH>;
+		};
+		ali_pmu:ali_pmu@18050000{
+			compatible = "alitech, pmu";
+			reg = <0x18050000 0x10000>;
+			interrupts = <0 83 4>;
+			interrupt-parent = <&inc>;
+			clock-frequency = <27000000>;
+			reg-offset = <0>;
+			reg-shift = <0>;
+			fifo-size = <16>;
+			reg-io-width = <1>;
+		};
+		gpu@1A200000 {
+			compatible = "arm,mali-400";
+			reg = <0x1A200000 0xC000>;
+			/*MALI_GPU_RESOURCES_MALI400_MP2_PMU(MALI_IO_BASE, 40, 39, 47, 46, 45, 42), minus the SPI offset 32*/
+			interrupts = <0 8 4>, <0 7 4>, <0 15 4>, <0 14 4>, <0 13 4>, <0 10 4>;
+			/*interrupts = <0 40 4>, <0 39 4>, <0 47 4>, <0 46 4>, <0 45 4>, <0 42 4>;*/
+			interrupt-names = "IRQGP", "IRQGPMMU", "IRQPP0", "IRQPPMMU0", "IRQPP1", "IRQPPMMU1";
+			interrupt-parent = <&inc>;
+		};
+		tsio: tsio@0x18038000 {
+			cmqd-mode;
+			compatible = "alitech, tsio";
+			reg = <0x18038000 0x114>, <0x18000270 4>;
+			ip-reset = <0>;
+			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "tsio_dma_int", "tsio_event_int";
+			max-channels = <8>;
+			num-pages-per-buf = <4>;
+		};
+		h_sha: h_sha@0x18034000 {
+			compatible = "alitech, h_sha";
+			reg = <0x18034000 0x370>, <0x18000268 4>;
+			ip-reset = <1>;
+			interrupts = <GIC_SPI 45 IRQ_TYPE_LEVEL_HIGH>;
+		};
+	};
+};

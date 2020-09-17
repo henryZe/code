@@ -1,0 +1,7 @@
+#GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+GCC = /zhsa022/usrhome/henry.zeng/tmp/3922_master/buildroot/output/host/usr/bin/arm-linux-gnueabihf-gcc
+
+all:
+	$(GCC) segment_app.c -I$(INCLUDE_DIR) -Wall -o segment_app
+	$(GCC) splice_app.c -I$(INCLUDE_DIR) -Wall -o splice_app
+	mv *_app ~/nfs/

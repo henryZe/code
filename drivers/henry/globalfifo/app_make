@@ -1,0 +1,8 @@
+GCC = /zhsa022/usrhome/henry.zeng/cap210_release/buildroot/output/host/usr/bin/mipsel-buildroot-linux-uclibc-gcc
+
+all:
+	$(GCC) select_app.c -I$(INCLUDE_DIR) -Wall -EL -o select_app
+	$(GCC) epoll_app.c -I$(INCLUDE_DIR) -Wall -EL -o epoll_app
+	$(GCC) async_app.c -I$(INCLUDE_DIR) -Wall -EL -o async_app
+	$(GCC) libaio_app.c -I$(INCLUDE_DIR) -Wall -EL -laio -o libaio_app
+	mv *_app ~/nfs/
