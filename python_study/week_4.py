@@ -81,7 +81,7 @@ if 0:
     print("pi = {}".format(pi))
     print("interval = {}".format(perf_counter() - start))
 
-if 1:
+if 0:
     str = ""
     for i in range(100, 1000):
         a = i % 10
@@ -94,3 +94,27 @@ if 1:
 
     print(str[:-1])
 
+if 0:
+    while True:
+        for i in range(3):
+            name = input()
+            password = input()
+
+            if name == "Kate" and password == "666666":
+                print("登录成功！")
+                break
+        else:
+            print("3次用户名或者密码均有误！退出程序。")
+            break
+
+if 0:
+    sum = 0
+    for i in range(2, 100):
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:
+            sum += i
+            print("test {}".format(i))
+
+    print("{}".format(sum))
