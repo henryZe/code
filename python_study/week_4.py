@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 
 if 0:
+    print("{}".format(10 // 3))
+    print("{}".format(round(20 / 3, 3)))
+    points = [1, 4, 2, 9, 7, 8, 9, 3, 1]
+    print("{}".format(points.count(9)))
+    str = "-"
+    seq = ("a", "b", "c")
+    print("{}".format(str.join(seq)))
+
+if 0:
     guess = eval(input())
     print("猜{}了".format("对" if guess == 99 else "错"))
 
