@@ -100,8 +100,3 @@ if 0:
 
     hanoi(10, "src", "dst", "mid")
     print("count:{}".format(count))
-
-if 1:
-    
-
-
