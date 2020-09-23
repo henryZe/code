@@ -100,3 +100,76 @@ if 0:
 
     hanoi(10, "src", "dst", "mid")
     print("count:{}".format(count))
+
+if 0:
+    import random
+
+    def genpwd(length):
+        return random.randint(pow(10, length - 1), pow(10, length))
+
+    length = eval(input())
+    random.seed(17)
+    for i in range(3):
+        print(genpwd(length))
+
+if 0:
+    def prime(m):
+        for i in range(2, m):
+            if m % i == 0:
+                break
+        else:
+            return True
+
+        return False
+
+    def select_prime(start):
+        count = 0
+        s = ""
+        while True:
+            if prime(start):
+                count += 1
+                s += "{},".format(start)
+                if count == 5:
+                    break
+
+            start += 1
+        return s
+
+    n = eval(input())
+    m = n if int(n) == n else int(n) + 1
+    s = select_prime(m)
+    print(s[:-1])
+
+if 0:
+    import turtle
+    def koch(size, n):
+        if n == 0:
+            turtle.fd(size)
+        else:
+            for angle in [0, 60, -120, 60]:
+                turtle.left(angle)
+                koch(size / 3, n - 1)
+
+    def main(level):
+        turtle.setup(600,600)
+        turtle.penup()
+        turtle.goto(-200, 100)
+        turtle.pendown()
+        turtle.pensize(2)
+        koch(600, level)
+        turtle.done()
+
+    try:
+        level = eval(input("请输入科赫曲线的阶: "))
+        main(level)
+    except:
+        print("输入错误")
+
+if 0:
+    def cmul(*b):
+        ret = 1
+        for i in b:
+            ret *= i
+        return ret
+
+    print(eval("cmul({})".format(input())))
