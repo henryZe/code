@@ -182,5 +182,10 @@ if 0:
 
     d.clear()
 
-if 1:
-    
+if 0:
+    import jieba
+
+    print(jieba.lcut("中国是一个伟大的国家"))
+    print(jieba.lcut("中国是一个伟大的国家", cut_all=True))
+    print(jieba.lcut_for_search("中华人民共和国是伟大的"))
+    jieba.add_word("蟒蛇语言")
