@@ -10,7 +10,7 @@ if 0:
         print(line)
     fd.close()
 
-if 1:
+if 0:
     import turtle as t
 
     t.title("自动轨迹绘制")
@@ -22,6 +22,7 @@ if 1:
     f = open("data.txt")
     for line in f:
         line = line.replace("\n", "")
+        # 2D-array
         datals.append(list(map(eval, line.split(","))))
     f.close()
 
@@ -34,3 +35,48 @@ if 1:
         else:
             t.left(datals[i][2])
     t.done()
+
+if 0:
+    fname = input("file:")
+    # read CSV(comma seperated values) file
+    fd = open(fname)
+    ls = []
+    for line in fd:
+        line = line.replace("\n", "")
+        ls.append(line.split(","))
+    fd.close()
+
+    fd = open(fname, "w")
+    for item in ls:
+        fd.write(",".join(item) + "\n")
+    fd.close()
+
+if 0:
+    import wordcloud
+    w = wordcloud.WordCloud(width=600, height=400)
+    w.generate(open("hamlet.txt").read())
+    w.to_file("output.png")
+
+if 0:
+    import wordcloud, jieba
+    w = wordcloud.WordCloud(width=1000, height=700, font_path="msyh.ttc")
+    txt = open("threekingdoms.txt", encoding="utf-8").read()
+    w.generate(" ".join(jieba.lcut(txt)))
+    w.to_file("output.png")
+
+if 0:
+    import wordcloud, jieba, imageio
+
+    # f = open("Chinese_socialism.txt", encoding="utf-8")
+    f = open("country_develop.txt", encoding="utf-8")
+    t = f.read()
+    f.close()
+
+    mask = imageio.imread("fivestar.png")
+
+    ls = jieba.lcut(t)
+    txt = " ".join(ls)
+    w = wordcloud.WordCloud(font_path="msyh.ttc", width=1000, height=700, \
+                            background_color="white", mask=mask)
+    w.generate(txt)
+    w.to_file("output.png")
