@@ -34,6 +34,7 @@ for word in words:
 
     counts[word] = counts.get(word, 0) + 1
 
+# transfer type from dict to list
 items = list(counts.items())
 items.sort(key = lambda x:x[1], reverse=True)
 
