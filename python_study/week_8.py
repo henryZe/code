@@ -11,7 +11,7 @@ if 0:
         printSummary(winsA, winsB)
 
     def printIntro():
-        print("predict games: playerA & playerB")
+        print("predict games result: playerA & playerB")
 
     def getInputs():
         a = eval(input("A value(0-1):"))
@@ -57,3 +57,40 @@ if 0:
         print("Player B {}, {:0.1%}".format(winsB, winsB / n))
 
     main()
+
+if 0:
+    import os.path, time
+
+    # absolute path
+    print(os.path.abspath("./week_8.py"))
+    # relate path
+    print(os.path.relpath("./week_8.py"))
+    # directory name
+    print(os.path.dirname("./week_8.py"))
+    # file name
+    print(os.path.basename("./week_8.py"))
+
+    # access
+    print(time.ctime(os.path.getatime("./week_8.py")))
+    # modify
+    print(time.ctime(os.path.getmtime("./week_8.py")))
+    # create
+    print(time.ctime(os.path.getctime("./week_8.py")))
+
+    print(os.path.getsize("./week_8.py"))
+
+if 0:
+    import os
+
+    os.system("C:\Windows\System32\calc.exe")
+    os.system("C:\Windows\System32\mspaint.exe ./output.png")
+
+if 0:
+    import os
+
+    # change directory
+    os.chdir("D:\\")
+    print(os.getcwd())
+    print(os.getlogin())
+    print(os.cpu_count())
+    print(os.urandom(10))
