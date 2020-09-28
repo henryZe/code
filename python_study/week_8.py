@@ -94,3 +94,11 @@ if 0:
     print(os.getlogin())
     print(os.cpu_count())
     print(os.urandom(10))
+
+if 0:
+    num = input()
+    try:
+        if complex(num) == complex(eval(num)):
+            print(eval(num) ** 2)
+    except:
+        print("输入有误")
