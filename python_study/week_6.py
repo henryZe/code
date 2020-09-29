@@ -189,3 +189,15 @@ if 0:
     print(jieba.lcut("中国是一个伟大的国家", cut_all=True))
     print(jieba.lcut_for_search("中华人民共和国是伟大的"))
     jieba.add_word("蟒蛇语言")
+
+if 0:
+    # reverse dictionary
+    d = eval(input())
+    dic = {}
+    try:
+        for i in d:
+            dic[d[i]] = i
+    except:
+        print("输入错误")
+    else:
+        print(dic)
