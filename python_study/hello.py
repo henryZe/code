@@ -8,6 +8,8 @@ __author__ = 'henry zeng'
 import sys
 
 def test():
+	print(__name__)
+
 	args = sys.argv
 	if len(args) == 1:
 		print('hello world')
