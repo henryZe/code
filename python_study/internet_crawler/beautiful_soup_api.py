@@ -7,6 +7,7 @@ Created on Fri Nov 27 22:13:17 2020
 
 import requests
 from bs4 import BeautifulSoup
+import re
 
 if 0:
     url = "https://python123.io/ws/demo.html"
@@ -104,6 +105,7 @@ if 0:
 
 if 0:
     # xml, extensible markup language
+    '''
     <img src="china.jpg" size="10"> </img>
     name: img
     attr: src, size
@@ -113,16 +115,20 @@ if 0:
 
     <!-- This is a comment, very useful -->
     Comment
+    '''
 
     # json, JavaScript Object Notation
+    '''
     "name": "Peking University"
     "name": ["henry", "eilene"]
     "name": {
         "male"  : "henry",
         "female": "eilene"
     }
+    '''
 
     # yaml, YAML ain't markup language 
+    '''
     name: henry
     name: #Comment
     -henry
@@ -130,9 +136,67 @@ if 0:
     name:
         male: henry
         female: eilene
+    '''
 
-if 1:
-    soup = BeautifulSoup(open("./person.xml"), "xml.parser")
-    print(soup.name)
-    print(soup.attr)
+if 0:
+    url = "https://python123.io/ws/demo.html"
+    r = requests.get(url, timeout = 30)
 
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # find_all(name, attribute, recursive, string, ...)
+    for link in soup.find_all("a"):
+        print(link.get('href'))
+
+    for link in soup.find_all(['a', 'b']):
+        print(link.get('href'))
+
+    for tag in soup.find_all(True):
+        print(tag.name)
+
+    for tag in soup.find_all(re.compile('b')):
+        print(tag.name)
+
+    for tag in soup.find_all(re.compile('b')):
+        print(tag.name)
+
+if 0:
+    url = "https://python123.io/ws/demo.html"
+    r = requests.get(url, timeout = 30)
+
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    for tag in soup.find_all('p', 'course'):
+        print(tag.name)
+        print(tag.attrs)
+
+    for tag in soup.find_all(id = 'link1'):
+        print(tag)
+        print(tag.string)
+
+    for tag in soup.find_all(id = re.compile('link')):
+        print(tag)
+
+    for tag in soup.find_all('a', recursive=False):
+        print(tag)
+
+    for tag in soup.find_all('a', recursive=False):
+        print(tag)
+
+    for tag in soup.find_all(string = 'Basic Python'):
+        print(tag)
+
+    for tag in soup.find_all(string = re.compile('python')):
+        print(tag)
+
+    # find(): return first result
+    # find_all(): return all results
+
+    # find_parents(): return all results in parent
+    # find_parent(): return first result in parent
+
+    # find_next_siblings()
+    # find_next_sibling()
+
+    # find_previous_siblings()
+    # find_previous_sibling()
