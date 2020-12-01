@@ -23,7 +23,7 @@ def getHTMLText(url):
 
 def fillUnivList(ulist, html):
     soup = BeautifulSoup(html, "html.parser")
-    
+
     for tr in soup.find("tbody").children:
         if isinstance(tr, bs4.element.Tag):
             tds = tr('td')
@@ -35,11 +35,11 @@ def fillUnivList(ulist, html):
                           tds[4].text.strip()])
 
 def printUnivList(ulist, num):
-    f = "{:^10}\t{:^20}\t{:^10}"
-    print(f.format("Rating", "University", "Score"))
+    f = "{0:^10}\t{1:{3}^10}\t{2:^10}"
+    print(f.format("排名", "大学名称", "得分", chr(12288)))
     for i in range(num):
         u = ulist[i]
-        print(f.format(u[0], u[1], u[4]))
+        print(f.format(u[0], u[1], u[4], chr(12288)))
 
 def main():
     uinfo = []
