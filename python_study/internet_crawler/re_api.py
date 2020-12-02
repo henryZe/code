@@ -44,13 +44,16 @@ import re
 # 250 - 255 : 25[0-5]
 # (([1-9]?\d | 1\d{2} | 2[0-4]\d | 25[0-5]).){3} ([1-9]?\d | 1\d{2} | 2[0-4]\d | 25[0-5])
 
-if 1:
+if 0:
+    # return the first match one
     # pattern, string,
     # flags(re.I(GNORECASE), re.M(ULTILINE) '^'每行当作匹配开始, re.S/re.DOTALL '.'匹配所有字符(包括'\n'))
     match = re.search(r'[1-9]\d{5}', 'BIT 100081')
     if match:
+        print(type(match))
         print(match.group(0))
 
+if 0:
     # match from the first character in string
     match = re.match(r'[1-9]\d{5}', 'BIT 100081')
     if match:
@@ -58,14 +61,75 @@ if 1:
 
     match = re.match(r'[1-9]\d{5}', '100081 BIT')
     if match:
+        print(type(match))
         print(match.group(0))
 
+if 0:
     # return all matched sub-string
-    j
+    ls = re.findall(r'[1-9]\d{5}', 'BIT100081 TSU100084')
+    if ls:
+        print(type(ls))
+        for i in range(len(ls)):
+            print(ls[i])
 
-    # re.findall()
-    # re.split()
-    # re.finditer()
-    # re.sub()
+if 0:
+    # return split string, maxsplit: regard residue string as the last element
+    ls = re.split(r'[1-9]\d{5}', 'BIT100081 TSU100084')
+    if ls:
+        print(type(ls))
+        for i in range(len(ls)):
+            print(ls[i])
 
+    ls = re.split(r'[1-9]\d{5}', 'BIT100081 TSU100084', maxsplit = 1)
+    if ls:
+        for i in range(len(ls)):
+            print(ls[i])
 
+if 0:
+    # equal to findall
+    for match in re.finditer(r'[1-9]\d{5}', 'BIT100081 TSU100084'):
+        if match:
+            print(type(match))
+            print(match.group(0))
+
+if 0:
+    # replace match sub-strings, and return result
+    # repl: replace string
+    # count: replace limited times
+    str = re.sub(r'[1-9]\d{5}', ':zipcode', 'BIT100081 TSU100084')
+    print(type(str))
+    print(str)
+
+if 0:
+    # Object program
+    # compile: pattern, flag
+    pattern = re.compile(r'[1-9]\d{5}')
+    result = pattern.search('BIT 100081')
+
+if 0:
+    match = re.search(r'[1-9]\d{5}', 'BIT100081 TSU100084')
+    if match:
+        print(type(match))
+        print(match.group(0))
+        print(match.string)
+        print(match.re)
+        print(match.pos)
+        print(match.endpos)
+        print(match.group(0))
+        print(match.start())
+        print(match.end())
+        print(match.span())
+
+if 0:
+    # default: 贪婪匹配
+    match = re.search(r'PY.*N', 'PYANBNCNDN')
+    print(match.group(0))
+
+    # 最小匹配
+    match = re.search(r'PY.*?N', 'PYANBNCNDN')
+    print(match.group(0))
+
+    # *? : 0 to infinite, 最小匹配
+    # +? : 1 to infinite, 最小匹配
+    # ?? : 0 or 1, 最小匹配
+    # {m, n}?: m to n, 最小匹配
