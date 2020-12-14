@@ -30,6 +30,19 @@ def parsePage(info_list, html):
 
         info_list.append([title, price])
 
+    # RE method
+    #
+    # "price":"123.456"
+    # prices = re.findall(r'\"price\"\:\"[\d\.]*\"', html)
+    #
+    # "title":"xxxx" (with '?' : minimum match)
+    # titles = re.findall(r'\"title\":\".*?\"', html)
+    #
+    # for i in range(len(prices)):
+    #     price = eval(prices[i].split(':')[1])
+    #     title = eval(titles[i].split(':')[1])
+    #     info_list.append([title, price])
+
 def printGoodsList(info_list, goods):
     template = "{:4}\t{:64}\t{:8}\n"
 
@@ -38,13 +51,6 @@ def printGoodsList(info_list, goods):
     for i, item in enumerate(info_list):
         print(template.format(str(i + 1), item[0], item[1]))
 
-    # ctx = "序号,商品名称,价格"
-    # for i, item in enumerate(info_list):
-    #     ctx += "{},{},{}\n".format(str(i + 1), item[0], item[1])
-
-    # with open(os.path.join('./', goods + '.csv'), 'w') as f:
-    #     f.write(ctx)
-   
 def main():
     goods = "书包"
     depth = 2
