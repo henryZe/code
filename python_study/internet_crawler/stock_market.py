@@ -5,17 +5,18 @@ Created on Thu Dec 10 19:06:20 2020
 @author: user
 """
 
+import time
 import requests
 import re
 import os
 from bs4 import BeautifulSoup
 import traceback
 
-def getHTMLText(url):
+def getHTMLText(url, code = 'utf-8'):
     try:
         r = requests.get(url, timeout = 10)
         r.raise_for_status()
-        r.encoding = r.apparent_encoding
+        r.encoding = code
         return r.text
     except:
         return ""
@@ -41,8 +42,14 @@ def getStockList(lst, stockURL):
 
 def getStockInfo(lst, stockURL, fpath):
     infoDict = {}
+    count = 0
+
+    with open(fpath, 'w', encoding = 'utf-8') as f:
+        f.write(time.strftime('%Y-%m-%d', time.localtime(time.time())) + '\n')
 
     for stock in lst:
+        count += 1
+
         try:
             html = getHTMLText(stockURL + stock + '/')
             if html == "":
@@ -58,7 +65,6 @@ def getStockInfo(lst, stockURL, fpath):
 
             infoDict.update({ 'ID' : stock })
             infoDict['Stock Name'] = h1.text
-            print(stock)
 
             for i in range(len(keyList)):
                 key = keyList[i].text
@@ -67,6 +73,7 @@ def getStockInfo(lst, stockURL, fpath):
 
             with open(fpath, 'a', encoding = 'utf-8') as f:
                 f.write(str(infoDict) + '\n')
+                print("\rProcessing: {:.2f}%".format(count * 100 / len(lst)), end = "")
 
         except:
             traceback.print_exc()
