@@ -31,7 +31,6 @@ class StocksSpider(scrapy.Spider):
 
         hd = response.css('header.stock_title')
         h1 = hd.css('h1').extract()[0]
-        print(h1)
         infoDict['Stock Name'] = re.findall(r'>.*</h1>', h1)[0][1:-5]
 
         div = response.css('div.s_date')
