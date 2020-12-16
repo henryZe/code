@@ -15,7 +15,3 @@
 
 3 scrapy crawl demo1
 > start the spider
-
-## 3 CSS selector
-
-* <html>.css().extract()
