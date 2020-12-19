@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云端留言板 首页</title>
+</head>
+<body>
+    <h1>提交留言功能区</h1>
+    <form action="/msggate/" method="post">
+        {% csrf_token %}
+        sender <input type="text" name="userA" /> <br>
+        receiver <input type="text" name="userB" /> <br>
+        message <input type="text" name="msg" /> <br>
+        <input type="submit" value="commit" />
+    </form>
+</body>
+</html>
