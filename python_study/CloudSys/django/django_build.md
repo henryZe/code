@@ -23,7 +23,13 @@
 * python manage.py runserver
 > run web server
 
-## 2
+## 2 MTV Development Mode
 
+* Model: data structure
+* Template: display strategy
+* View: deal user requests
 
+urls.py: specify path
+models.py: specific model
+views.py: response views
 
