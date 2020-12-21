@@ -11,7 +11,29 @@
         sender <input type="text" name="userA" /> <br>
         receiver <input type="text" name="userB" /> <br>
         message <input type="text" name="msg" /> <br>
-        <input type="submit" value="commit" />
+        <input type="submit" value="留言提交" />
     </form>
+    <h1>获取留言功能区</h1>
+    <form action="/msggate/" method="get">
+        receiver <input type="text" name="userC" /> <br>
+        <input type="submit" value="留言获取">
+    </form>
+    <table border="1">
+        <thead>
+            <th>留言时间</th>
+            <th>留言来源</th>
+            <th>留言信息</th>
+        </thead>
+        <br>
+        <tbody>
+            {% for line in data %}
+            <tr>
+                <td>{{ line.time }}</td>
+                <td align="center">{{ line.userA }}</td>
+                <td>{{ line.msg }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

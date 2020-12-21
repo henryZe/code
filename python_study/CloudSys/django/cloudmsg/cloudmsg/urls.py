@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from msgapp import views as msgappviews
 
 urlpatterns = [
+    path('', msgappviews.homeproc),
     path('admin/', admin.site.urls),
+    path('msggate/', include('msgapp.urls')),
+    path('playground/', msgappviews.pgproc),
 ]

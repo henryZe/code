@@ -33,3 +33,43 @@ urls.py: specify path
 models.py: specific model
 views.py: response views
 
+## 3 Django Template Language (DTL)
+
+### 3.1 Comment
+
+a. single line comment
+~~~
+{# single line comment #}
+~~~
+
+b. multiple line comments
+~~~
+{% comment %}
+    comment line 1
+    comment line 2
+{% endcomment %}
+~~~
+
+### 3.2 Variable
+
+~~~
+{{ name }}
+{{ a_dict.key }}
+{{ a_list.0 }}
+{{ a_object.attribute }}
+~~~
+
+### 3.3 Tag
+
+~~~
+{% for line in f %}
+    ...
+{% endfor %}
+~~~
+
+### 3.4 Filter
+
+key words: lower, escape, linebreaks, date, length
+~~~
+{{ name|lower }}
+~~~
