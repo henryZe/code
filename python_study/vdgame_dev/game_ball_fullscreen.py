@@ -2,22 +2,17 @@ import pygame, sys
 
 pygame.init()
 
-icon = pygame.image.load("PYG03-withered-flower.png")
-pygame.display.set_icon(icon)
-
 speed = [1, 1]
 BLACK = 0, 0, 0
 vInfo = pygame.display.Info()
-size = width, height = 600, 400
+size = width, height = vInfo.current_w, vInfo.current_h
 # screen = pygame.display.set_mode(size)
-screen = pygame.display.set_mode(size, pygame.RESIZABLE)
+# screen = pygame.display.set_mode(size, pygame.RESIZABLE)
 # screen = pygame.display.set_mode(size, pygame.NOFRAME)
-# screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
-
-pygame.display.set_caption("Amazing Ball 1.0")
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+pygame.display.set_caption("Ball 1.0")
 ball = pygame.image.load("PYG02-ball.gif")
 ballrect = ball.get_rect()
-
 # frames per second
 fps = 100
 fclock = pygame.time.Clock()
@@ -39,7 +34,6 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 speed_tone(0, -1)
@@ -51,10 +45,6 @@ while True:
                 speed_tone(1, 1)
             elif event.key == pygame.K_ESCAPE:
                 sys.exit()
-
-        elif event.type == pygame.VIDEORESIZE:
-            size = width, height = event.size[0], event.size[1]
-            screen = pygame.display.set_mode(size, pygame.RESIZABLE)
 
     ballrect = ballrect.move(speed[0], speed[1])
     if ballrect.left < 0 or ballrect.right > width:
