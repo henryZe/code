@@ -38,6 +38,8 @@ def speed_tone(axis, direct):
     speed[axis] = (abs(speed[axis]) + direct) * sign(speed[axis])
 
 while True:
+    # for event in pygame.event.get(type):
+    # for event in pygame.event.get(typelist):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
