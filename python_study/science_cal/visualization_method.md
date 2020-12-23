@@ -15,6 +15,35 @@ Download from https://www.lfd.uci.edu/~gohlke/pythonlibs/
 
 * VTK
 * numpy
-* traits
+* traits: trait为 Python 对象的属性增加了类型定义的功能
+    1. 初始化：每个trait属性都定义有自己的缺省值，这个缺省值用来初始化属性。
+    2. 验证：基于trait的属性都有明确的类型定义，只有满足定义的值才能赋值给属性。
+    3. 委托：trait属性的值可以委托给其他对象的属性。
+    4. 监听：trait属性的值的改变可以触发指定的函数的运行。
+    5. 可视化：拥有trait属性的对象可以很方便地提供一个用户界面交互式地改变trait属性的值。
 * mayavi
 * PyQt4
+
+## 2 Pipeline
+
+* pipeline 技术：
+
+    - tvtk.CubeSource：引入长方体三维数据源
+    - tvtk.PolyDataMapper：转化为图形数据
+    - tvtk.Actor：创建实体
+    - tvtk.Renderer：创建渲染器
+    - tvtk.RenderWindow：设置背景
+    - tvtk.RenderWindowInteractor：创建交互窗口
+
+* visualization pipeline
+![visualization](Y:\code\python_study\science_cal\visualization_ppl.png)
+    - tvtk.CubeSource：引入长方体三维数据源
+    - tvtk.PolyDataMapper：转化为图形数据
+
+* graphic pipeline
+![graphic](Y:\code\python_study\science_cal\graphic_ppl.png)
+    - tvtk.Actor：创建实体
+    - tvtk.Renderer：创建渲染器
+    - tvtk.RenderWindow：设置背景
+    - tvtk.RenderWindowInteractor：创建交互窗口
+
