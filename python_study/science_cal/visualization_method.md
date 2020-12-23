@@ -36,14 +36,15 @@ Download from https://www.lfd.uci.edu/~gohlke/pythonlibs/
     - tvtk.RenderWindowInteractor：创建交互窗口
 
 * visualization pipeline
-![visualization](Y:\code\python_study\science_cal\visualization_ppl.png)
-    - tvtk.CubeSource：引入长方体三维数据源
-    - tvtk.PolyDataMapper：转化为图形数据
+  ![visualization](Y:\code\python_study\science_cal\visualization_ppl.png)
+
+- 可视化管线（Visualization Pipeline）：将原始数据加工成图形数据的过程
+- 数据->数据预处理->数据映射。
+- TVTK对象：CubeSource等（PolyData）、PloyDataMapper
 
 * graphic pipeline
-![graphic](Y:\code\python_study\science_cal\graphic_ppl.png)
-    - tvtk.Actor：创建实体
-    - tvtk.Renderer：创建渲染器
-    - tvtk.RenderWindow：设置背景
-    - tvtk.RenderWindowInteractor：创建交互窗口
+  ![graphic](Y:\code\python_study\science_cal\graphic_ppl.png)
 
+- 图形管线（Graphics Pipeline）：图形数据加工为我们所看到的图像的过程。
+- 数据映射->绘制(Rendering)->显示(Displaying)
+- TVTK对象：Actor、Renderer、RenderWindow、RenderWindowInteractor

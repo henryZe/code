@@ -19,7 +19,7 @@ if 0:
     print(s.height)
     print(s.radius)
 
-if 1:
+if 0:
     # ---- Visualization Pipeline ----
     # data source
     # s = tvtk.CubeSource(x_length = 1.0, y_length = 2.0, z_length = 3.0)
