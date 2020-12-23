@@ -48,3 +48,12 @@ Download from https://www.lfd.uci.edu/~gohlke/pythonlibs/
 - 图形管线（Graphics Pipeline）：图形数据加工为我们所看到的图像的过程。
 - 数据映射->绘制(Rendering)->显示(Displaying)
 - TVTK对象：Actor、Renderer、RenderWindow、RenderWindowInteractor
+
+## 3 Data Set
+
+TVTK 库提供了 `ImageData`、`RectilinearGrid`、`StructuredGrid`、`PolyData`、`UnstructuredGrid` 5种数据集:
+    - ImageData：表示二维或三维图像的数据结构。
+    - RectilinearGrid：间距不均匀的网格，所有点都在正交的网格上。
+    - StructuredGrid：创建任意形状的网格，需要指定点的坐标。
+    - PolyData：由一系列的点、点之间的联系以及由点构成的多边形组成。
+    - UnstructuredGrid：非结构化网格，其他的类型也可以此类型表示。

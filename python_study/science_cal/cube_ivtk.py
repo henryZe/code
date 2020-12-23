@@ -9,3 +9,5 @@ if 1:
     win = ivtk_scene(a)
     win.scene.isometric_view()
     event_loop()
+
+    print(win.scene.renderer.actors[0].mapper.input.points.to_array())
