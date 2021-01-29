@@ -106,6 +106,10 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize)
 }
 ~~~
 
+* 二叉树的锯齿形层次遍历(tree_sort.c)
+
+* 从前序与中序遍历序列构造二叉树()
+
 ## 2 算法
 
 ### 2.1 排序
