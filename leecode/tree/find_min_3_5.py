@@ -26,7 +26,7 @@ class Solution:
             k -= 1
             if not k:
                 return root.val
-            
+
             root = root.right
 
 obj = Solution()
