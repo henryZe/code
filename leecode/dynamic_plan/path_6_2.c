@@ -24,6 +24,6 @@ int uniquePaths(int m, int n)
 
 int main(void)
 {
-    printf("%d\n", uniquePaths(23, 12));
+    printf("%d\n", uniquePaths(20, 12));
     return 0;
 }
