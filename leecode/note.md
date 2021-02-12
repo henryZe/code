@@ -114,6 +114,8 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize)
 
 ### 2.1 排序
 
+时间复杂度是 O(nlogn) 的排序算法包括归并排序、堆排序和快速排序（快速排序的最差时间复杂度是 O(n^2)），其中最适合链表的排序算法是归并排序。
+
 #### 2.1.1 qsort
 
 ~~~ C
