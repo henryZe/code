@@ -1,59 +1,71 @@
 from typing import List
 import collections
 
+# double direct bfs
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         def addWord(word: str):
             if word not in wordId:
                 nonlocal nodeNum
-                print("wordId[{}] = {}".format(word, nodeNum))
                 wordId[word] = nodeNum
                 nodeNum += 1
 
         def addEdge(word: str):
             addWord(word)
-            # original word id
-            id1 = wordId[word]
+            originId = wordId[word]
             chars = list(word)
-            for c in range(len(chars)):
-                tmp = chars[c]
-                chars[c] = '*'
+            for i in range(len(word)):
+                tmp = chars[i]
+                chars[i] = '*'
                 newWord = "".join(chars)
                 addWord(newWord)
-                # '*' word id
-                id2 = wordId[newWord]
-                edge[id1].append(id2)
-                edge[id2].append(id1)
-                chars[c] = tmp
+                varId = wordId[newWord]
+                edge[originId].append(varId)
+                edge[varId].append(originId)
+                chars[i] = tmp
 
         wordId = {}
-        edge = collections.defaultdict(list)
         nodeNum = 0
+        edge = collections.defaultdict(list)
 
         if endWord not in wordList:
             return 0
 
         addEdge(beginWord)
-        for word in wordList:
-            addEdge(word)
+        for w in wordList:
+            addEdge(w)
+        print(edge)
 
         beginId = wordId[beginWord]
         endId = wordId[endWord]
+        beginQue = collections.deque([beginId])
+        endQue = collections.deque([endId])
 
-        dis = [float('inf')] * nodeNum
-        dis[beginId] = 0
-        que = collections.deque([beginId])
-        while que:
-            itemId = que.popleft()
-            if itemId == endId:
-                print(dis)
-                return dis[itemId] // 2 + 1
-            else:
-                for i in edge[itemId]:
-                    if dis[i] == float('inf'):
-                        dis[i] = dis[itemId] + 1
-                        print("dis[{}] = {}".format(i, dis[i]))
-                        que.append(i)
+        disBegin = [float("inf")] * nodeNum
+        disEnd = [float("inf")] * nodeNum
+        disBegin[beginId] = 0
+        disEnd[endId] = 0
+
+        while beginQue or endQue:
+            queSize = len(beginQue)
+            for _ in range(queSize):
+                node = beginQue.popleft()
+                if disEnd[node] != float("inf"):
+                    return (disBegin[node] + disEnd[node]) // 2 + 1
+                for var in edge[node]:
+                    if disBegin[var] == float("inf"):
+                        disBegin[var] = disBegin[node] + 1
+                        beginQue.append(var)
+
+            queSize = len(endQue)
+            for _ in range(queSize):
+                node = endQue.popleft()
+                if disBegin[node] != float("inf"):
+                    return (disBegin[node] + disEnd[node]) // 2 + 1
+                for var in edge[node]:
+                    if disEnd[var] == float("inf"):
+                        disEnd[var] = disEnd[node] + 1
+                        endQue.append(var)
 
         return 0
 
