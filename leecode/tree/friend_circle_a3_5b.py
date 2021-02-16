@@ -1,5 +1,4 @@
 from typing import List
-import collections
 
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
