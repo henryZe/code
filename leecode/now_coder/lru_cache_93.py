@@ -51,7 +51,7 @@ class Solution:
         self.addToHead(node)
         return
     
-    def lru_set(self, key, val):
+    def put(self, key, val):
         if key not in self.cache:
             node = DLinknode(key, val)
             self.size += 1
@@ -77,7 +77,7 @@ class Solution:
         
         for op in operators:
             if op[0] == 1:
-                self.lru_set(op[1], op[2])
+                self.put(op[1], op[2])
             else:
                 res.append(self.get(op[1]))
         
