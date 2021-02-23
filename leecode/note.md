@@ -36,9 +36,7 @@ struct ListNode* ReverseList(struct ListNode* pHead) {
 }
 ~~~
 
-### 1.2 图
-
-#### 1.2.1 Tree
+#### 1.2 树
 
 * 中序遍历
 
@@ -109,6 +107,23 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize)
 * 二叉树的锯齿形层次遍历(tree_sort.c)
 
 * 从前序与中序遍历序列构造二叉树()
+
+### 1.3 图
+
+#### 1.3.1 基本定义
+
+* 图是数据和数据关系的集合
+    * 元素：顶点 vertex
+    * 关系：边 edge
+
+* 边的走向：
+    * 有向图
+    * 无向图
+
+* 顶点和边的关系
+    * 稀疏图
+    * 稠密图
+    * 完全图
 
 ## 2 算法
 
