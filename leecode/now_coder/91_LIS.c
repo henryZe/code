@@ -14,28 +14,26 @@ int* LIS(int* arr, int arrLen, int* returnSize ) {
         dp[i] = 1;
     }
 
+    int max_len = 0;
     for (int i = 0; i < arrLen; i++) {
         for (int j = 0; j < i; j++) {
             if (arr[i] > arr[j]) {
                 dp[i] = fmax(dp[i], dp[j] + 1);
+                if (dp[i] > max_len) {
+                    max_len = dp[i];
+                }
             }
         }
     }
 
-    int maxi = 0;
-    for (int i = 0; i < arrLen; i++) {
-        if (dp[i] > dp[maxi])
-            maxi = i;
+    int *newarr = (int *)malloc(sizeof(int) * max_len);
+    int cur = max_len;
+    for (int i = arrLen - 1; i >= 0; i--) {
+        if (dp[i] == cur)
+            newarr[--cur] = arr[i];
     }
 
-    int *newarr = (int *)malloc(sizeof(int) * arrLen);
-    *returnSize = dp[maxi];
-    int num = 0;
-    for (int i = 0; i < dp[maxi]; i++) {
-        if (arr[i] < arr[maxi])
-            newarr[num++] = arr[i];
-    }
-    newarr[num] = arr[maxi];
+    *returnSize = max_len;
     return newarr;
 }
 

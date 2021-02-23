@@ -7,12 +7,12 @@ class Solution:
         # write code here
         n = len(arr)
         dp = [1] * n
-        lenth = 1
+        length = 1
         array = [arr[0]]
         for i in range(1, n):
             if arr[i] > array[-1]:
-                lenth += 1
-                dp[i] = lenth
+                length += 1
+                dp[i] = length
                 array.append(arr[i])
             else:
                 index = bisect.bisect(array, arr[i])
@@ -21,11 +21,11 @@ class Solution:
         res = []
         max_num = array[-1]
         max_num_index = arr.index(max_num)
-        lenth = max(dp)
+        length = max(dp)
         for i in range(max_num_index, -1, -1):
-            if res == [] or (arr[i] < res[-1] and dp[i] == lenth):
+            if res == [] or (arr[i] < res[-1] and dp[i] == length):
                 res.append(arr[i])
-                lenth -= 1
+                length -= 1
         return res[::-1]
 
 
