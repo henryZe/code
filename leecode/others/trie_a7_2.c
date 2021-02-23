@@ -83,9 +83,14 @@ void trieFree(Trie* obj)
 int main(void)
 {
     Trie* obj = trieCreate();
+    char *word = "helloworld";
+    char *prefix = "hello";
+
     trieInsert(obj, word);
     bool param_2 = trieSearch(obj, word);
     bool param_3 = trieStartsWith(obj, prefix);
     trieFree(obj);
+
+    printf("%d %d\n", param_2, param_3);
     return 0;
 }
