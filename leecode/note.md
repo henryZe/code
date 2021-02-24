@@ -116,7 +116,7 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize)
     * 元素：顶点 vertex
     * 关系：边 edge
 
-* 边的走向：
+* 边的走向
     * 有向图
     * 无向图
 
@@ -124,6 +124,100 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize)
     * 稀疏图
     * 稠密图
     * 完全图
+
+* 路径，回路(cycle)
+    * 无环图
+    * 有向无环图
+
+#### 1.3.2 图的储存模式
+
+* 邻接矩阵 Adjacency matrix (适用稠密图)
+    * A[i, j] = weight
+    * A[i, j] = 0
+
+* 邻接表 Adjacency list (适用稀疏图)，空间复杂度和边数有关
+
+~~~ C
+struct Node {
+    int index;
+    // array
+    struct Edge *neighbors[];
+};
+
+struct Edge {
+    int weight;
+    Node *fromNode;
+    Node *toNode;
+};
+~~~
+
+~~~ C++
+class Graph {
+public:
+    // return number of vertex
+    int VerticesNum();
+    // return number of edge
+    int EdgesNum();
+
+    Edge FirstEdge(Node *v);
+    Edge NextEdge(Edge *preEdge);
+
+    // add one edge
+    bool setEdge(Node *fromVertex, Node *toVertex);
+    // delete one edge
+    bool delEdge(Node *fromVertex, Node *toVertex);
+
+    // whether is edge
+    bool IsEdge(Edge *oneEdge);
+
+    // return start vertex
+    Node *FromVertex(Edge *oneEdge);
+    // return end vertex
+    Node *ToVertex(Edge *oneEdge);
+
+    // return oneEdge's weight
+    int Weight(Edge *oneEdge);
+};
+~~~
+
+* hashmap 亦可代表无权(weight = 1)邻接表
+
+#### 1.3.3 基本操作
+
+* 深度/广度优先遍历
+
+#### 1.3.4 最短路径
+
+* 单源最短路径：
+    * Bellman-Ford 算法：基于动态规划，适用于负权值边，可以检测负权回路，时间复杂度 O(VE), V: vertex, E:edge
+    * Dijkstra 算法：基于贪心算法，权值非负，时间复杂度 O(V^2)，优化时间复杂度 O(E + V*logV)
+
+* 顶点对最短路径
+    * Floyd 算法：动态规划，自底向上，时间复杂度 O(n^3)
+
+~~~
+if k == 0:
+    dp[i][j] = edge[i][j];
+
+if k >= 1:
+    dp(k)[i][j] = min(dp(k-1)[i][j], dp(k-1)[i][k] + dp(k-1)[k][j])
+~~~
+
+#### 1.3.5 生成树
+
+* 生成树：对于完全图，可以删除一些边，使得剩下的边仍然构成路径，路径通过所有顶点，这些边的集合称为生成树
+
+* 最小生成树：
+    * Kruskal 算法
+    * Prim 算法：基于贪心算法，类似 Dijkstra 算法，时间复杂度 O(V^2)，优化时间复杂度 O(E + V*logV)
+
+![ref_link](Y:\code\leecode\ref_link.png)
+
+#### 1.3.6 有向图的拓扑排序
+
+* 数组记录入度
+* 图保存邻接点
+* 每次弹出入度为 0 的顶点
 
 ## 2 算法
 

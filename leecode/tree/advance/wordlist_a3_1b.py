@@ -1,7 +1,7 @@
 from typing import List
 import collections
 
-# double direct bfs
+# double direct bfs: start from start point and end point at the same time
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         def addWord(word: str):
