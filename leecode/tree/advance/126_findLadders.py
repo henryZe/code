@@ -17,8 +17,8 @@ class Solution:
             for i in range(len(word1)):
                 if word1[i] != word2[i]:
                     diffs += 1
-                if diffs > 1:
-                    break
+                    if diffs > 1:
+                        break
             return diffs == 1
 
         wordId = {}
