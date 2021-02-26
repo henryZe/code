@@ -43,5 +43,10 @@ class Solution:
 
         return
 
+print("Before:")
+for g in grid:
+    print(g)
 Solution().solve(grid)
-print(grid)
+print("After:")
+for g in grid:
+    print(g)
