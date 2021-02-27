@@ -25,7 +25,9 @@ class Solution:
 
             for neighbor in graph[index]:
                 if color_graph[neighbor] == UNCOLORED:
-                    dfs(neighbor, color)
+                    valid = dfs(neighbor, color)
+                    if not valid:
+                        return False
                 elif color_graph[neighbor] != color:
                     return False
             
@@ -41,5 +43,6 @@ class Solution:
 
 
 # graph = [[1,2,3],[0,2],[0,1,3],[0,2]]
-graph = [[1,3],[0,2],[1,3],[0,2]]
+# graph = [[1,3],[0,2],[1,3],[0,2]]
+graph = [[2,3,5,6,7,8,9],[2,3,4,5,6,7,8,9],[0,1,3,4,5,6,7,8,9],[0,1,2,4,5,6,7,8,9],[1,2,3,6,9],[0,1,2,3,7,8,9],[0,1,2,3,4,7,8,9],[0,1,2,3,5,6,8,9],[0,1,2,3,5,6,7],[0,1,2,3,4,5,6,7]]
 print(Solution().isBipartite(graph))
