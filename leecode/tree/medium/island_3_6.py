@@ -31,7 +31,6 @@ class Solution:
         for i in range(r):
             for j in range(c):
                 if grid[i][j] == '1':
-                    print(i, j)
                     isalandnum += 1
                     dfs(grid, r, c, i, j)
 
