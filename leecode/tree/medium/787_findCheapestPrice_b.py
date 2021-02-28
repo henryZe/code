@@ -1,4 +1,5 @@
 from typing import List
+import collections
 
 # Dijkstra 算法
 # 在 Dijkstra 算法中，借助优先级队列持续搜索花费最低的下一个城市。
@@ -8,17 +9,33 @@ from typing import List
 
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
-        graph = {}
+        graph = collections.defaultdict(dict)
         for s, d, w in flights:
             graph[s][d] = w
-        
 
         best = {}
-        for _ in n:
+        # cost, k, place
+        pq = [(0, 0, src)]
+        while pq:
+            cost, k, place = pq.popleft()
+            print("cost {} k {} place {}".format(cost, k, place))
 
-        
-        
-        return n
+            if k > K + 1 or cost > best.get((k, place), float("inf")):
+                continue
+            if place == dst:
+                # best result
+                return cost
+
+            for dest, weight in graph[place].items():
+                newcost = cost + weight
+                if newcost < best.get((k + 1, dest), float("inf")):
+                    print("newcost {} place {} dest {}".format(newcost, place, dest))
+
+                    pq.append((newcost, k + 1, dest))
+                    best[k + 1, dest] = newcost
+
+        # can't reach dst
+        return -1
 
 
 n = 3
