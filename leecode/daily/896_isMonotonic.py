@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def isMonotonic(self, A: List[int]) -> bool:
         inc = True
@@ -11,3 +13,5 @@ class Solution:
                 dec = False
 
         return inc or dec
+
+print(Solution().isMonotonic([1,2,4,5]))
