@@ -1,5 +1,6 @@
 from typing import List
 import collections
+import heapq
 
 # Dijkstra 算法
 # 在 Dijkstra 算法中，借助优先级队列持续搜索花费最低的下一个城市。
@@ -11,27 +12,32 @@ class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
         graph = collections.defaultdict(dict)
         for s, d, w in flights:
+            # transfer graph as dictionary
             graph[s][d] = w
 
         best = {}
         # cost, k, place
-        pq = [(0, 0, src)]
-        while pq:
-            cost, k, place = pq.popleft()
-            print("cost {} k {} place {}".format(cost, k, place))
+        q = [(0, 0, src)]
+        while q:
+            # pop minmum element
+            cost, k, place = heapq.heappop(q)
+            print("heappop cost {} k {} place {}".format(cost, k, place))
 
+            # transit more than allowed & cost larger than best set
             if k > K + 1 or cost > best.get((k, place), float("inf")):
                 continue
             if place == dst:
-                # best result
+                # return best result
                 return cost
 
             for dest, weight in graph[place].items():
                 newcost = cost + weight
+                # better than best sub-solution so far
                 if newcost < best.get((k + 1, dest), float("inf")):
-                    print("newcost {} place {} dest {}".format(newcost, place, dest))
-
-                    pq.append((newcost, k + 1, dest))
+                    print("heappush newcost {} place {} dest {}".format(newcost, place, dest))
+                    # push best sub-solution
+                    heapq.heappush(q, (newcost, k + 1, dest))
+                    # update best
                     best[k + 1, dest] = newcost
 
         # can't reach dst
