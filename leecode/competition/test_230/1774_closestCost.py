@@ -26,15 +26,15 @@ class Solution:
 # toppingCosts = [3,4]
 # target = 10
 
-baseCosts = [2,3]
-toppingCosts = [4,5,100]
-target = 18
+# baseCosts = [2,3]
+# toppingCosts = [4,5,100]
+# target = 18
 
 # baseCosts = [3,10]
 # toppingCosts = [2,5]
 # target = 9
 
-# baseCosts = [10]
-# toppingCosts = [1]
-# target = 1
+baseCosts = [10]
+toppingCosts = [1]
+target = 1
 print(Solution().closestCost(baseCosts, toppingCosts, target))
