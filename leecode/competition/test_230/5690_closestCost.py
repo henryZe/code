@@ -2,33 +2,24 @@ from typing import List
 
 class Solution:
     def closestCost(self, baseCosts: List[int], toppingCosts: List[int], target: int) -> int:
-        m = len(baseCosts)
-        n = len(topping)
+        can = [False] * (20000 + 1)
 
-        baseCosts.sort()
-        toppingCosts.sort()
+        for base in baseCosts:
+            can[base] = True
 
-        def compare(price):
-            if price >= target:
-                nonlocal finish
-                finish = 1
-            return price
+        for _ in range(2):
+            for top in toppingCosts:
+                for i in range(20000, top, -1):
+                    can[i] = can[i] or can[i - top]
 
-        finish = 0
-        best = 
-        for i in range(m):
-            price = compare(baseCosts[i])
-            if finish:
-                best 
+        ans = baseCosts[0]
+        abs_ans = abs(baseCosts[0] - target)
+        for i in range(20000 + 1):
+            if can[i] and abs(i - target) < abs_ans:
+                ans = i
+                abs_ans = abs(i - target)
 
-            for j in range(n):
-                price += toppingCosts[j]
-                if price > target:
-                    best = price
-
-
-
-        return best
+        return ans
 
 
 # baseCosts = [1,7]

@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def minOperations(self, nums1: List[int], nums2: List[int]) -> int:
         len1 = len(nums1)
