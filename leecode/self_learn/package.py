@@ -1,5 +1,6 @@
 from typing import List
 
+# 递归
 # class Solution:
 #     def packageValue(self, capacity: int, value: List[int], weight: List[int]) -> int:
 #         def calcValue(index: int, c: int) -> int:
@@ -17,6 +18,7 @@ from typing import List
 #
 #         return calcValue(0, capacity)
 
+# dynamic programming
 class Solution:
     def packageValue(self, capacity: int, value: List[int], weight: List[int]) -> int:
         size = len(value)
