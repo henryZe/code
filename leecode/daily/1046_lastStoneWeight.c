@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 小顶堆
+// 大顶堆
 
-#define SIZE (1000)
+#define SIZE (30)
 
 struct heapq {
     int heap[SIZE + 1];
@@ -30,7 +30,7 @@ void heappush(struct heapq *heap, int x)
 
     h[++(heap->heapSize)] = x;
 
-    for (int i = heap->heapSize; i > 1 && h[i] < h[i >> 1]; i >>= 1) {
+    for (int i = heap->heapSize; i > 1 && h[i] > h[i >> 1]; i >>= 1) {
         swap(&h[i], &h[i >> 1]);
     }
 }
@@ -48,10 +48,10 @@ int heappop(struct heapq *heap)
 
     h[1] = h[heap->heapSize--];
     while (j <= heap->heapSize) {
-        if (h[j + 1] < h[j])
+        if (h[j + 1] > h[j])
             j++;
 
-        if (h[i] > h[j]) {
+        if (h[i] < h[j]) {
             swap(&h[i], &h[j]);
             i = j;
             j <<= 1;
@@ -80,25 +80,46 @@ struct heapq *heapify(int *list, int size)
     for (int i = 0; i < size; i++) {
         object->push(object, list[i]);
     }
+
     return object;
+}
+
+int lastStoneWeight(int* stones, int stonesSize)
+{
+    struct heapq *obj = heapify(stones, stonesSize);
+    int res, tmp1, tmp2;
+
+    while (1) {
+        tmp1 = obj->pop(obj);
+        tmp2 = obj->pop(obj);
+
+        if (tmp1 < 0) {
+            res = 0;
+            break;
+        }
+        if (tmp2 < 0) {
+            res = tmp1;
+            break;
+        }
+
+        if (tmp1 == tmp2) {
+            continue;
+        } else {
+            obj->push(obj, tmp1 - tmp2);
+        }
+    }
+
+    free(obj);
+    return res;
 }
 
 int main(void)
 {
-    int size = 10;
-    int data[] = { 5, 0, 4, 8, 6, 9, 3, 7, 1, 2 };
-    struct heapq *obj = heapify(data, size);
+    // int stonesSize = 6;
+    // int stones[] = {2,7,4,1,8,1};
+    int stonesSize = 1;
+    int stones[] = {1};
 
-    for (int i = 1; i < size + 1; i++) {
-        printf("%d, ", obj->heap[i]);
-    }
-    printf("\n");
-
-    for (int i = 0; i < size; i++) {
-        printf("%d, ", obj->pop(obj));
-    }
-    printf("\n");
-
-    free(obj);
+    printf("%d\n", lastStoneWeight(stones, stonesSize));
     return 0;
 }
