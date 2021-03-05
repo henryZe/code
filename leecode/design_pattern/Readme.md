@@ -15,8 +15,10 @@
 ### 1.1 工厂模式 Factory
 
 * [简单工厂模式](./simple_factory.py)
-* [工厂方法模式](./factory.py)
+* [工厂模式](./factory.py)
 
+### 1.2 抽象工厂模式 Abstract factory
 
+* [抽象工厂模式](./abstract_factory.py)
 
 
