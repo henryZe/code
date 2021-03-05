@@ -21,4 +21,4 @@
 
 * [抽象工厂模式](./abstract_factory.py)
 
-
+### 1.3 单例模式 Singleton
