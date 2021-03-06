@@ -1,7 +1,23 @@
 from typing import List
 import bisect
 
-# O(n * logn)
+# O(n^2)
+# class Solution:
+#     def countSmaller(self, nums: List[int]) -> List[int]:
+#         if not nums:
+#             return []
+# 
+#         size = len(nums)
+#         counts = [0] * size
+# 
+#         for i in range(size):
+#             for j in range(i + 1, size):
+#                 if nums[i] > nums[j]:
+#                     counts[i] += 1
+# 
+#         return counts
+
+# O(n^2)
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         if not nums:

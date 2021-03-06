@@ -14,11 +14,11 @@
 
 ### 1.1 工厂模式 Factory
 
-* [简单工厂模式](./simple_factory.py)
-* [工厂模式](./factory.py)
+* [简单工厂模式](./creational_pattern/simple_factory.py)
+* [工厂模式](./creational_pattern/factory.py)
 
 ### 1.2 抽象工厂模式 Abstract factory
 
-* [抽象工厂模式](./abstract_factory.py)
+* [抽象工厂模式](./creational_pattern/abstract_factory.py)
 
 ### 1.3 单例模式 Singleton
