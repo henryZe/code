@@ -11,7 +11,7 @@ class NumArray:
         for i in range(n, 2 * n):
             self.tree[i] = nums[j]
             j += 1
-        
+
         # init parent nodes
         for i in range(n - 1, 0, -1):
             self.tree[i] = self.tree[i*2] + self.tree[i*2 + 1]
