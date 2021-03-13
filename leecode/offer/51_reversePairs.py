@@ -13,16 +13,18 @@ class Solution:
             if nums[i] <= nums[j]:
                 tmp[pos] = nums[i]
                 i += 1
+                inv_count += j - 1 - mid
             else:
                 tmp[pos] = nums[j]
                 j += 1
-                inv_count += mid + 1 - i
+                # inv_count += mid + 1 - i
             pos += 1
 
         for k in range(i, mid + 1):
             tmp[pos] = nums[k]
             pos += 1
-            inv_count += r + 1 - j
+            inv_count += r - mid
+            # inv_count += r + 1 - j
 
         for k in range(j, r + 1):
             tmp[pos] = nums[k]

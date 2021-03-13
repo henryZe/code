@@ -15,7 +15,7 @@ class Solution:
             num = heapq.heappop(num_set)
             num_dict[num] = rank
             rank += 1
-        
+
         tree = fenwickTree(len(num_dict))
         res = [0 for _ in range(len(nums))]
         for i in range(len(nums) - 1, -1, -1):
@@ -26,6 +26,7 @@ class Solution:
         return res
 
 
-nums = [5,2,6,1]
-# nums = [-1,-1]
-print(Solution().countSmaller(nums))
+if __name__ == '__main__':
+    nums = [5,2,6,1]
+    # nums = [-1,-1]
+    print(Solution().countSmaller(nums))
