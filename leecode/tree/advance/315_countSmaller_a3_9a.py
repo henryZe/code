@@ -2,6 +2,7 @@ from typing import List
 import bisect
 
 # O(n^2)
+# 暴力算法
 # class Solution:
 #     def countSmaller(self, nums: List[int]) -> List[int]:
 #         if not nums:
@@ -18,6 +19,7 @@ import bisect
 #         return counts
 
 # O(n^2)
+# 插入排序
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         if not nums:

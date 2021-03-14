@@ -25,6 +25,7 @@ class fenwickTree:
         return res
 
 # O(n * logn)
+# 离散化数组 + 树状数组
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         if not nums:
