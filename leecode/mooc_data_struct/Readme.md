@@ -30,7 +30,7 @@ struct Gnode {
 
 * 多重链表
 
-  ![multiple_linked_list](./pic/multiple_linked_list.png)
+![multiple_linked_list](./pic/multiple_linked_list.png)
 
 ![multiple_linked_list2](./pic/multiple_linked_list2.png)
 
@@ -67,6 +67,7 @@ struct head {
 };
 ~~~
 
+### 2.2 堆栈
 
 
 
