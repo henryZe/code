@@ -1,66 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Gnode {
-    int tag;	// 0 means data, 1 means subList
-    union {
-        int data;
-        struct Gnode *subList;
-    } uRegion;
-    struct Gnode *next;
+struct node {
+    int coef;
+    int exp;
+    struct node *next;
 };
 
-sum()
-{
+struct queue {
+    struct node *front;
+    struct node *rear;
+};
 
+// struct node *add(, , )
+// {
+//     int ret;
+    
+//     compare();
+//     switch (ret) {
+//     case 1:
+        
+//         break;
+
+//     case -1:
+
+//         break;
+
+//     default:
+
+//         break;
+//     }
+
+
+
+//     return front->next;
+// }
+
+// struct node *mul()
+// {
+
+// }
+
+void queue_init(struct queue *q)
+{
+    q->front = q->rear = NULL;
 }
 
-multiple()
+void queue_add(struct queue *q, int coef, int exp)
 {
-    
+    struct node *new_node = malloc(sizeof(struct node));
+
+    new_node->coef = coef;
+    new_node->exp = exp;
+    new_node->next = NULL;
+
+    if (!q->rear)
+        // queue is empty
+        q->front = new_node;
+    else
+        q->rear->next = new_node;    
+
+    q->rear = new_node;
 }
 
 int main(void)
 {
     int num1, num2;
+    int coef, exp;
+    struct node tmp;
+    struct queue q1, q2;
+
+    queue_init(&q1);
+    queue_init(&q2);
 
     scanf("%d", &num1);
-    int *ratio1 = malloc(sizeof(int) * num1);
     for (int i = 0; i < num1; i++) {
-        scanf("%d", ratio1 + i);
-    }
-
-    int *exponent1 = malloc(sizeof(int) * num1);
-    for (int i = 0; i < num1; i++) {
-        scanf("%d", exponent1 + i);
+        scanf("%d", &coef);
+        scanf("%d", &exp);
+        queue_add(&q1, coef, exp);
     }
 
     scanf("%d", &num2);
-    int *ratio2 = malloc(sizeof(int) * num2);
     for (int i = 0; i < num2; i++) {
-        scanf("%d", ratio2 + i);
+        scanf("%d", &coef);
+        scanf("%d", &exp);
+        queue_add(&q2, coef, exp);
     }
 
-    int *exponent2 = malloc(sizeof(int) * num2);
-    for (int i = 0; i < num2; i++) {
-        scanf("%d", exponent2 + i);
-    }
+    for (struct node *it = q1.front; it; it = it->next)
+        printf("q1 %d %d\n", it->coef, it->exp);
 
-    for (int i = 0; i < num1; i++)
-        printf("%d ", ratio1[i]);
-    printf("\n");
-
-    for (int i = 0; i < num1; i++)
-        printf("%d ", exponent1[i]);
-    printf("\n");
-
-    for (int i = 0; i < num2; i++)
-        printf("%d ", ratio2[i]);
-    printf("\n");
-
-    for (int i = 0; i < num2; i++)
-        printf("%d ", exponent2[i]);
-    printf("\n");
+    for (struct node *it = q2.front; it; it = it->next)
+        printf("q2 %d %d\n", it->coef, it->exp);
 
     return 0;
 }

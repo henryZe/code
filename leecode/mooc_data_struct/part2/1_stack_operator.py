@@ -18,6 +18,6 @@ def stack_operator(s: str) -> int:
                 stack.append(a1 // a2)
     return stack.pop()
 
-# 后缀表达式
+# 后缀表达式求值
 s = "62/3-42*+"
 print(stack_operator(s))
