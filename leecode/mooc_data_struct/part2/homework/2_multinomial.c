@@ -22,20 +22,26 @@ struct queue *queue_create(void)
 
 void queue_free(struct queue *q)
 {
+    if (!q)
+        return;
+
     struct node *i = q->front;
-    struct node *tmp;
+    struct node *next;
 
     while (i) {
-        tmp = i->next;
+        next = i->next;
         free(i);
-        i = tmp;
+        i = next;
     }
 
     free(q);
 }
 
-void queue_add(struct queue *q, int coef, int exp)
+void queue_push(struct queue *q, int coef, int exp)
 {
+    if (!coef)
+        return;
+
     struct node *new_node = malloc(sizeof(struct node));
 
     new_node->coef = coef;
@@ -63,6 +69,11 @@ void queue_print(struct queue *q)
     char tmp[16] = {0};
     char str[128] = {0};
 
+    if (!q || !q->front) {
+        printf("0 0\n");
+        return;
+    }
+
     for (struct node *it = q->front; it; it = it->next) {
         sprintf(tmp, "%d %d ", it->coef, it->exp);
         strcat(str, tmp);
@@ -82,19 +93,21 @@ struct queue *add(struct queue *q1, struct queue *q2)
         ret = compare(n1->exp, n2->exp);
         switch (ret) {
         case 1:
-            queue_add(q, n1->coef, n1->exp);
+            if (n1->coef)
+                queue_push(q, n1->coef, n1->exp);
             n1 = n1->next;
             break;
 
         case -1:
-            queue_add(q, n2->coef, n2->exp);
+            if (n2->coef)
+                queue_push(q, n2->coef, n2->exp);
             n2 = n2->next;
             break;
 
         default:
             coef = n1->coef + n2->coef;
             if (coef)
-                queue_add(q, coef, n1->exp);
+                queue_push(q, coef, n1->exp);
 
             n1 = n1->next;
             n2 = n2->next;
@@ -103,12 +116,14 @@ struct queue *add(struct queue *q1, struct queue *q2)
     }
 
     while (n1) {
-        queue_add(q, n1->coef, n1->exp);
+        if (n1->coef)
+            queue_push(q, n1->coef, n1->exp);
         n1 = n1->next;
     }
 
     while (n2) {
-        queue_add(q, n2->coef, n2->exp);
+        if (n2->coef)
+            queue_push(q, n2->coef, n2->exp);
         n2 = n2->next;
     }
 
@@ -117,7 +132,6 @@ struct queue *add(struct queue *q1, struct queue *q2)
 
 struct queue *mul(struct queue *q1, struct queue *q2)
 {
-    int coef;
     struct queue *q = NULL;
 
     if (!q1->front || !q2->front)
@@ -127,9 +141,8 @@ struct queue *mul(struct queue *q1, struct queue *q2)
         struct queue *tmp = queue_create();
 
         for (struct node *j = q2->front; j; j = j->next) {
-            coef = i->coef * j->coef;
-            if (coef)
-                queue_add(tmp, coef, i->exp + j->exp);
+            if (i->coef && j->coef)
+                queue_push(tmp, i->coef * j->coef, i->exp + j->exp);
         }
 
         if (!q) {
@@ -155,7 +168,7 @@ void queue_read(struct queue *q)
     for (int i = 0; i < num; i++) {
         scanf("%d", &coef);
         scanf("%d", &exp);
-        queue_add(q, coef, exp);
+        queue_push(q, coef, exp);
     }
 }
 
@@ -168,9 +181,6 @@ int main(void)
 
     queue_read(q1);
     queue_read(q2);
-
-    // queue_print(q1);
-    // queue_print(q2);
 
     struct queue *q_add, *q_mul;
 
