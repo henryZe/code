@@ -24,7 +24,7 @@ void queue_free(struct queue *q)
 {
     struct node *i = q->front;
     struct node *tmp;
-    
+
     while (i) {
         tmp = i->next;
         free(i);
@@ -46,7 +46,7 @@ void queue_add(struct queue *q, int coef, int exp)
         // queue is empty
         q->front = new_node;
     else
-        q->rear->next = new_node;    
+        q->rear->next = new_node;
 
     q->rear = new_node;
 }
@@ -64,10 +64,8 @@ void queue_print(struct queue *q)
     char str[128] = {0};
 
     for (struct node *it = q->front; it; it = it->next) {
-        if (it->coef) {
-            sprintf(tmp, "%d %d ", it->coef, it->exp);
-            strcat(str, tmp);
-        }
+        sprintf(tmp, "%d %d ", it->coef, it->exp);
+        strcat(str, tmp);
     }
 
     str[strlen(str) - 1] = '\n';
@@ -95,11 +93,11 @@ struct queue *add(struct queue *q1, struct queue *q2)
 
         default:
             coef = n1->coef + n2->coef;
-            // if (coef) {
+            if (coef)
                 queue_add(q, coef, n1->exp);
-                n1 = n1->next;
-                n2 = n2->next;
-            // }
+
+            n1 = n1->next;
+            n2 = n2->next;
             break;
         }
     }
@@ -119,13 +117,19 @@ struct queue *add(struct queue *q1, struct queue *q2)
 
 struct queue *mul(struct queue *q1, struct queue *q2)
 {
+    int coef;
     struct queue *q = NULL;
+
+    if (!q1->front || !q2->front)
+        return q;
 
     for (struct node *i = q1->front; i; i = i->next) {
         struct queue *tmp = queue_create();
 
         for (struct node *j = q2->front; j; j = j->next) {
-            queue_add(tmp, i->coef * j->coef, i->exp + j->exp);
+            coef = i->coef * j->coef;
+            if (coef)
+                queue_add(tmp, coef, i->exp + j->exp);
         }
 
         if (!q) {

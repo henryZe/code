@@ -7,6 +7,7 @@ class Solution:
         if m < n:
             return 0
 
+        # dp[i][j] means s[i:] includes how many sublists like t[j:]
         dp = [[0] * (n + 1) for _ in range(m + 1)]
         for i in range(m + 1):
             dp[i][n] = 1
