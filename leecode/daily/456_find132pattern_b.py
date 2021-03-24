@@ -1,20 +1,22 @@
 from typing import List
-import bisect
 
 class Solution:
+    # time O(n)
+    # space O(n)
     def find132pattern(self, nums: List[int]) -> bool:
         n = len(nums)
-        left_min = nums[0]
-        right_all = nums[2::]
-        right_all.sort()
+        candidate_3 = [nums[n - 1]]
+        max_2 = float("-inf")
 
-        for i in range(1, n - 1):
-            index = bisect.bisect_right(right_all, left_min)
-            if index < len(right_all) and right_all[index] < nums[i]:
+        for i in range(n - 2, -1, -1):
+            if nums[i] < max_2:
                 return True
 
-            left_min = min(left_min, nums[i])
-            right_all.remove(nums[i + 1])
+            while candidate_3 and nums[i] > candidate_3[-1]:
+                max_2 = candidate_3.pop()
+
+            if nums[i] > max_2:
+                candidate_3.append(nums[i])
 
         return False
 

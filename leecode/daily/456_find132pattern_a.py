@@ -3,7 +3,7 @@ from typing import List
 from sortedcontainers import SortedList
 
 class Solution:
-    # time O(n*logn + n*(logn + n))
+    # time O(n*logn + n*(logn + n)) = O(n^2)
     # space O(n)
     # def find132pattern(self, nums: List[int]) -> bool:
     #     n = len(nums)
@@ -21,7 +21,7 @@ class Solution:
     # 
     #     return False
 
-    # time O(n*logn + n*(logn + logn))
+    # time O(n*logn + n*(logn + logn)) = O(n*logn)
     # space O(n)
     def find132pattern(self, nums: List[int]) -> bool:
         n = len(nums)
