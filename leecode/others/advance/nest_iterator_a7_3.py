@@ -23,7 +23,7 @@ class NestedIterator:
         return
 
     def next(self) -> int:
-        return self.stack.pop(-1).getInteger()
+        return self.stack.pop().getInteger()
     
     def hasNext(self) -> bool:
         while len(self.stack) > 0 and self.stack[-1].isInteger() is False:
