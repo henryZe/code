@@ -107,3 +107,40 @@ struct tree_node {
 
 * 前序/中序/后序遍历
 * 层序遍历
+
+### 3.4 二叉搜索树
+
+* 非空左子树所有键值小于其根结点的键值
+* 非空右子树所有键值大于其根结点的键值
+* 左右子树都是二叉搜索树
+
+- 操作函数：
+    * find
+    * findMin
+    * findMax
+    * insert
+    * delete:
+        1. 该结点左右子树皆为空，直接删除
+        2. 该结点只有一个儿子，直接替换
+        3. 该结点有两个儿子，实质是使用左子树最大值或者右子树最小值替换被删除结点
+
+### 3.5 平衡二叉树
+
+* Balance Factor: 任意结点左右子树高度差的绝对值不超过1
+* 一颗高度为 h 的平衡二叉树，最少结点数为 Nmin(h) = Nmin(h-1) + Nmin(h-2) + 1
+
+![balance_tree](./pic/balance_tree.png)
+
+* 平衡二叉树的调整
+    - RR旋转（麻烦结点在发现者的右子树的右边）
+    ![rr_rotate](./pic/rr_rotate.png)
+
+    - LL旋转（麻烦结点在发现者的左子树的左边）
+    ![ll_rotate](./pic/ll_rotate.png)
+
+    - LR旋转（麻烦结点在发现者的左子树的右边）
+    ![lr_rotate](./pic/lr_rotate.png)
+
+    - RL旋转（麻烦结点在发现者的右子树的左边）
+    ![rl_rotate](./pic/rl_rotate.png)
+
