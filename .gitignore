@@ -30,6 +30,5 @@
 *.hex
 
 # Specific
-*.txt
 output/
 .idea/
