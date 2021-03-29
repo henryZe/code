@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 struct tree {
     int val;
@@ -9,19 +10,19 @@ struct tree {
     struct tree *right;
 };
 
-int tree_insert(struct tree **t, struct tree *new)
+struct tree *tree_insert(struct tree *t, struct tree *new)
 {
-    if (!(*t))
-        t = new;
+    if (!t)
+        return new;
 
-    if (*t.val)
+    if (t->val >= new->val) {
+        t->left = tree_insert(t->left, new);
+    } else {
+        t->right = tree_insert(t->right, new);
+    }
+
+    return t;
 }
-
-// bool tree_find(struct tree **t, int x)
-// {
-//     if (!(*t))
-//         t = 
-// }
 
 struct tree *create_tree(int num)
 {
@@ -29,23 +30,58 @@ struct tree *create_tree(int num)
     struct tree *t = NULL;
     struct tree *ls = malloc(sizeof(struct tree) * num);
 
-
     for (int j = 0; j < num; j++) {
-        scanf("%d", val);
+        scanf("%d", &val);
 
         ls[j].val = val;
         ls[j].visited = false;
         ls[j].left = NULL;
         ls[j].right = NULL;
 
-        tree_insert(&t, &ls[j]);
+        t = tree_insert(t, &ls[j]);
     }
 
     return t;
 }
 
+bool tree_find(struct tree *t, int x)
+{
+    if (!t)
+        return false;
+
+    if (t->val == x && !t->visited) {
+        t->visited = true;
+        return true;
+    }
+
+    if (!t->visited)
+        return false;
+
+    if (t->val >= x)
+        return tree_find(t->left, x);
+    
+    return tree_find(t->right, x);
+}
+
+bool tree_verify(struct tree *t, int *nums, int num)
+{
+    // initialize visited flag
+    for (int i = 0; i < num; i++) {
+        t[i].visited = false;
+    }
+
+    for (int i = 0; i < num; i++) {
+        if (!tree_find(t, nums[i]))
+            return false;
+    }
+
+    return true;
+}
+
 int main(void)
 {
+    char str[256] = {0};
+
     while (1) {
         int num, cases;
 
@@ -66,8 +102,8 @@ int main(void)
                 scanf("%d", nums + j);
             }
 
-            int ret = tree_verify(t, nums);
-            printf("%s\n", ret ? "Yes" : "No");
+            bool ret = tree_verify(t, nums, num);
+            strcat(str, ret ? "Yes\n" : "No\n");
 
             free(nums);
         }
@@ -75,5 +111,6 @@ int main(void)
         free(t);
     }
 
+    printf("%s", str);
     return 0;
 }
