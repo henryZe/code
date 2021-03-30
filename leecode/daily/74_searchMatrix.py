@@ -1,6 +1,7 @@
 from typing import List
 
 class Solution:
+    # time O(log(m * n))
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         m = len(matrix)
         n = len(matrix[0])
