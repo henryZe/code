@@ -144,3 +144,26 @@ struct tree_node {
     - RL旋转（麻烦结点在发现者的右子树的左边）
     ![rl_rotate](./pic/rl_rotate.png)
 
+### 3.6 堆
+
+* 大顶堆/小顶堆，属于完全二叉树，堆的路径呈现单调性
+* 堆操作
+
+~~~
+create
+IsFull
+IsEmpty
+
+Insert
+DeleteMax
+~~~
+
+* create heap 如果使用 insert 方法，时间复杂度 O(n * logn)，最坏情况是各结点的高度之和
+
+### 3.7 哈夫曼树
+
+
+
+### 3.8 哈夫曼编码
+
+
