@@ -120,5 +120,11 @@ int main(void)
         printPath(h, index);
     }
 
+    // printf("heap: ");
+    // for (int i = 1; i <= num; i++) {
+    //     printf("%d ", Delete(h));
+    // }
+    // printf("\n");
+
     return 0;
 }
