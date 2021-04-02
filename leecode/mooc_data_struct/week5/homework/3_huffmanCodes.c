@@ -254,6 +254,7 @@ int main(void)
 
         struct trie *obj = trieCreate();
         for (int j = 0; j < num; j++) {
+            // printf("%s\n", codes[index[j]]);
             res = trieStartsWith(obj, codes[index[j]]);
             if (res)
                 break;
