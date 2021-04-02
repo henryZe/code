@@ -14,7 +14,7 @@ class Solution:
         rightMax = [0] * (n - 1) + [height[n - 1]]
         for i in range(n - 2, -1, -1):
             rightMax[i] = max(rightMax[i + 1], height[i])
-        
+
         res = 0
         for i in range(n):
             res += min(leftMax[i], rightMax[i]) - height[i]
