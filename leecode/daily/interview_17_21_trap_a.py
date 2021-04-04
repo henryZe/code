@@ -1,6 +1,9 @@
 from typing import List
 
 class Solution:
+    # 动态规划
+    # time O(n)
+    # space O(n)
     def trap(self, height: List[int]) -> int:
         if not height:
             return 0
