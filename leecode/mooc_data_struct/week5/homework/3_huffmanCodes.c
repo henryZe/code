@@ -53,27 +53,27 @@ int min_heap_pop(struct heap *h)
     }
 
     d[1] = d[h->size--];
-
-    int parent, child;
-    for (parent = 1, child = parent << 1; child <= h->size; parent = child) {
+    for (int parent = 1, child = parent << 1; child <= h->size; parent = child, child <<= 1) {
+        // there is right child or not
         if (child < h->size) {
+            // choose smaller one
             if (d[child] > d[child + 1]) {
                 child++;
             }
         }
 
+        // stop search
         if (d[child] >= d[parent]) {
             break;
-        } 
+        }
 
         swap(d + child, d + parent);
-        child <<= 1;
     }
 
     return min;
 }
 
-struct heap *create_min_heap(int *nums, int num)
+struct heap *create_min_heap(int num)
 {
     struct heap *h = malloc(sizeof(struct heap));
 
@@ -82,10 +82,6 @@ struct heap *create_min_heap(int *nums, int num)
     h->size = 0;
 
     h->weight[0] = INT_MIN;
-    for (int i = 0; i < num; i++) {
-        min_heap_push(h, nums[i]);
-    }
-
     return h;
 }
 
@@ -206,15 +202,22 @@ int main(void)
 
     char c;
     int frq;
-    int *frqs = malloc(sizeof(int) * num);
+    char *char_index = malloc(sizeof(char) * num);
+    int frqs[128];
 
     for (int i = 0; i < num; i++) {
         scanf("%c %d ", &c, &frq);
-        frqs[i] = frq;
+        char_index[i] = c;
+        frqs[c] = frq;
     }
 
-    struct heap *min_heap = create_min_heap(frqs, num);
+    // create min heap
+    struct heap *min_heap = create_min_heap(num);
+    for (int i = 0; i < num; i++) {
+        min_heap_push(min_heap, frqs[char_index[i]]);
+    }
 
+    // calculate optimal wpl
     int wpl_min = create_huffman_tree(min_heap);
     // printf("wpl_min = %d\n", wpl_min);
 
@@ -223,25 +226,26 @@ int main(void)
 
     char str[64];
 
-    int *index = malloc(sizeof(int) * num);
+    // initialize codes
     codes = malloc(sizeof(char *) * num);
     for (int i = 0; i < num; i++) {
         codes[i] = malloc(sizeof(str));
-        memset(codes[i], 0, sizeof(str));
     }
+
+    // initialize index array
+    int *index = malloc(sizeof(int) * num);
 
     for (int i = 0; i < cases; i++) {
 
+        // calculate case's wpl
+        int wpl = 0;
         for (int j = 0; j < num; j++) {
             memset(str, 0, sizeof(str));
             scanf("%c %s \n", &c, str);
-            strcpy(codes[j], str);
-            index[j] = j;
-        }
+            memcpy(codes[j], str, sizeof(str));
 
-        int wpl = 0;
-        for (int j = 0; j < num; j++) {
-            wpl += strlen(codes[j]) * frqs[j];
+            // printf("%s len = %ld\n", codes[j], strlen(codes[j]));
+            wpl += strlen(codes[j]) * frqs[c];
         }
         // printf("wpl = %d\n", wpl);
         if (wpl_min != wpl) {
@@ -249,12 +253,18 @@ int main(void)
             continue;
         }
 
-        bool res;
+        bool res = false;
+        // initialize index array
+        for (int j = 0; j < num; j++) {
+            index[j] = j;
+        }
+        // sort index array by codes' length
         qsort(index, num, sizeof(int), compare_strlen);
 
+        // judge prefix code by trie tree
         struct trie *obj = trieCreate();
         for (int j = 0; j < num; j++) {
-            // printf("%s\n", codes[index[j]]);
+            // printf("%ld %s\n", strlen(codes[index[j]]), codes[index[j]]);
             res = trieStartsWith(obj, codes[index[j]]);
             if (res)
                 break;
