@@ -7,15 +7,16 @@ class Solution:
             return 0
 
         n = len(nums)
-        pos = 0
-        for i in range(1, n):
-            if nums[i] != nums[i - 1]:
-                pos += 1
-                nums[pos] = nums[i]
+        slow, fast = 2, 2
+        while fast < n:
+            if nums[slow - 2] != nums[fast]:
+                nums[slow] = nums[fast]
+                slow += 1
+            fast += 1
 
-        return pos + 1
+        return slow
 
-nums = [1,1,2]
+nums = [1,1,1,2,2,3]
 num = Solution().removeDuplicates(nums)
 for i in range(num):
     print(nums[i])
