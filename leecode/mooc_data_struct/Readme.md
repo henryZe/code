@@ -243,6 +243,25 @@ G[i][j] =   1 (若 <Vi, Vj> 是 G 中的边)
 好处：
     1. 节约稀疏图的空间（需要N个头指针 + 2E个结点（每个结点至少2 fields））
 
-### 4.3 图的
+### 4.3 图的遍历
 
+* DFS 复杂度
+    1. 邻接表存储，则 O(N + E)
+    2. 邻接矩阵存储，则 O(N * N)
 
+~~~ C
+void DFS(Vertex V)
+{
+    visited[V] = true;
+
+    for (V 的每个邻接点 W)
+        if (!visited[W])
+            DFS(W);
+}
+~~~
+
+* BFS
+
+~~~ C
+
+~~~
