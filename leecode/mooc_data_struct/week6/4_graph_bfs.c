@@ -3,7 +3,7 @@
 /* 例如对有权图, 如果不存在的边被初始化为INFINITY, 则函数实现如下:         */
 bool IsEdge( MGraph Graph, Vertex V, Vertex W )
 {
-    return Graph->G[V][W]<INFINITY ? true : false;
+    return Graph->G[V][W] < INFINITY ? true : false;
 }
 
 /* Visited[]为全局变量，已经初始化为false */

@@ -308,7 +308,3 @@ void ListComponents(Graph G)
             DFS(V); // or BFS(V);
 }
 ~~~
-
-
-
-
