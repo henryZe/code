@@ -12,7 +12,7 @@ struct Vnode {
     struct edge FirstEdge;
 };
 
-struct Graph {  
+struct Graph {
     int Nv;             /* 顶点数 */
     int Ne;             /* 边数   */
     struct Vnode *G;    /* 邻接表 */
