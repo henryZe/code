@@ -1,21 +1,24 @@
 import heapq
 
 class Solution:
-    # O(n * logn)
+    # O(n)
     def nthUglyNumber(self, n: int) -> int:
-        factors = [2, 3, 5]
-        heap = [1]
-        setHeap = {1}
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        p2 = p3 = p5 = 1
 
-        for i in range(n - 1):
-            cur = heapq.heappop(heap)
-            for factor in factors:
-                tmp = cur * factor
-                if tmp not in setHeap:
-                    heapq.heappush(heap, tmp)
-                    setHeap.add(tmp)
+        for i in range(2, n + 1):
+            num2, num3, num5 = dp[p2] * 2, dp[p3] * 3, dp[p5] * 5
+            dp[i] = min(num2, num3, num5)
+            # print(dp[i])
+            if dp[i] == num2:
+                p2 += 1
+            if dp[i] == num3:
+                p3 += 1
+            if dp[i] == num5:
+                p5 += 1
 
-        return heapq.heappop(heap)
+        return dp[n]
 
 n = 297
 # n = 1
