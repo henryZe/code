@@ -314,5 +314,55 @@ void ListComponents(Graph G)
 }
 ~~~
 
+### 4.5 图的最短路径问题
 
+* 在网络中，求两个不同顶点之间的所有路径中，边的权值之和最小的那一条路径(shortest path)
+* **单源**最短路径问题：从某固定源点出发，求其到所有其他顶点的最短路径
+* **多源**最短路径问题：求任意两顶点间的最短路径
+
++ 无权图的单源最短路径算法：BFS, 复杂度取决于存储方式 O(|V|+|E|) 邻接表 or O(|V|^2) 邻接矩阵
+~~~ C
+void Unweighted(Vertex S)
+{
+    Enqueue(S, Q);
+    while (!IsEmpty(Q)) {
+        V = Dequeue(Q);
+        for (V 的每个邻接点 W) {
+            // initialize dist & path as -1
+            if (dist[W] == -1) {
+                dist[W] = dist[V] + 1;
+                path[W] = V;
+                Enqueue(W, Q);
+            }
+        }
+    }
+}
+~~~
+
++ 有权图的单源最短路径算法：
+~~~ C
+/* Dijkstra 不能解决有负边的情况 */
+void Dijkstra(Vertex s)
+{
+    while (1) {
+        V = 未收录顶点中，dist最小者;
+        if (!V)
+            break;
+        
+        collected[V] = true;
+        for (V 的每个邻接点 W) {
+            if (collected[W] == false) {
+                if (dist[V] + E<V, W> < dist[W]) {
+                    dist[W] = dist[V] + E<V, W>;
+                    path[W] = V;
+                }
+            }
+        }
+    }
+}
+~~~
+
+* Dijkstra, 复杂度取决于扫描最小 dist 的方式：
+    - 方法1：直接扫描所有未收录顶点 - O(|V|), T = O(|V|^2 + |E|) 对于稠密图效果好
+    - 方法2：将dist存在最小堆中 - O(log|V|), 而更新 dist[w] 的值 - O(log|V|), T = O(|V| * log|V| + |E| * log|V|) = O(|E| * log|V|) 对于稀疏图效果好
 
