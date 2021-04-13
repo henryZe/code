@@ -317,8 +317,10 @@ void ListComponents(Graph G)
 ### 4.5 图的最短路径问题
 
 * 在网络中，求两个不同顶点之间的所有路径中，边的权值之和最小的那一条路径(shortest path)
+
+#### 4.5.1 单源最短路径问题
+
 * **单源**最短路径问题：从某固定源点出发，求其到所有其他顶点的最短路径
-* **多源**最短路径问题：求任意两顶点间的最短路径
 
 + 无权图的单源最短路径算法：BFS, 复杂度取决于存储方式 O(|V|+|E|) 邻接表 or O(|V|^2) 邻接矩阵
 ~~~ C
@@ -346,13 +348,14 @@ void Dijkstra(Vertex s)
 {
     while (1) {
         V = 未收录顶点中，dist最小者;
-        if (!V)
+        if (V 不存在)
             break;
         
         collected[V] = true;
         for (V 的每个邻接点 W) {
             if (collected[W] == false) {
                 if (dist[V] + E<V, W> < dist[W]) {
+                    // initialize dist[] as infinite & path[] as -1
                     dist[W] = dist[V] + E<V, W>;
                     path[W] = V;
                 }
@@ -366,3 +369,33 @@ void Dijkstra(Vertex s)
     - 方法1：直接扫描所有未收录顶点 - O(|V|), T = O(|V|^2 + |E|) 对于稠密图效果好
     - 方法2：将dist存在最小堆中 - O(log|V|), 而更新 dist[w] 的值 - O(log|V|), T = O(|V| * log|V| + |E| * log|V|) = O(|E| * log|V|) 对于稀疏图效果好
 
+#### 4.5.2 多源最短路径问题
+
+* **多源**最短路径问题：求任意两顶点间的最短路径
+
+1. 方法1：直接将单源最短路径算法调用 |V| 遍, T = O(|V|^3 + |E|*|V|), 对于稀疏图效果好
+2. 方法2：Floyd 算法, T = O(|V|^3), 对于稠密图效果好
+
+~~~ C
+void Floyd(void)
+{
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+            // 邻接矩阵
+            D[i][j] = G[i][j];
+            path[i][j] = -1;
+        }
+    }
+
+    for (k = 0; k < N; k++) {
+        for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                if (D[i][k] + D[k][j] < D[i][j]) {
+                    D[i][j] = D[i][k] + D[k][j];
+                    path[i][j] = k;
+                }
+            }
+        }
+    }
+}
+~~~
