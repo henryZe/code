@@ -8,7 +8,7 @@ struct graph {
     int **vmatrix;
 };
 
-struct graph *create_graph(int v_num, int e_num)
+struct graph *create_graph(int v_num)
 {
     struct graph *G = malloc(sizeof(struct graph));
 
@@ -25,6 +25,11 @@ struct graph *create_graph(int v_num, int e_num)
         }
     }
 
+    return G;
+}
+
+int insert_edge(struct graph *G, int e_num)
+{
     int v, w, weight;
     for (int i = 0; i < e_num; i++) {
         scanf("%d %d %d\n", &v, &w, &weight);
@@ -43,7 +48,7 @@ struct graph *create_graph(int v_num, int e_num)
     // }
     // printf("\n");
 
-    return G;
+    return 0;
 }
 
 bool Floyd(struct graph *Graph, int **D)
@@ -87,12 +92,26 @@ bool Floyd(struct graph *Graph, int **D)
     return true;
 }
 
+int findMaxDist(int **dist, int v_num, int i)
+{
+    int max_dist = 0;
+
+    for (int j = 1; j <= v_num; j++) {
+        if (dist[i][j] > max_dist) {
+            max_dist = dist[i][j];
+        }
+    }
+
+    return max_dist;
+}
+
 int main(void)
 {
     int v_num, e_num;
     scanf("%d %d\n", &v_num, &e_num);
 
-    struct graph *G = create_graph(v_num, e_num);
+    struct graph *G = create_graph(v_num);
+    insert_edge(G, e_num);
 
     int **dist = malloc(sizeof(int *) * (v_num + 1));
     for (int i = 1; i <= v_num; i++) {
@@ -106,11 +125,11 @@ int main(void)
     int min_v = 0;
 
     for (int i = 1; i <= v_num; i++) {
-        int max_dist = 0;
-        for (int j = 1; j <= v_num; j++) {
-            if (dist[i][j] > max_dist) {
-                max_dist = dist[i][j];
-            }
+        max_dist = findMaxDist(dist, v_num, i);
+        if (max_dist == INT_MAX) {
+            // vertex no link with the other, stop it
+            printf("0\n");
+            break;
         }
 
         if (max_dist < min_path) {
@@ -119,11 +138,8 @@ int main(void)
         }
     }
 
-    if (min_path != INT_MAX) {
+    if (min_path != INT_MAX)
         printf("%d %d\n", min_v, min_path);
-    } else {
-        printf("0\n");
-    }
 
     return 0;
 }
