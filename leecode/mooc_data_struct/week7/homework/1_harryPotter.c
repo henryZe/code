@@ -55,10 +55,11 @@ bool Floyd(struct graph *Graph, int **D)
 {
     int i, j, k;
 
-    for (i = 1; i <= Graph->Nv; i++)
+    for (i = 1; i <= Graph->Nv; i++) {
         for (j = 1; j <= Graph->Nv; j++) {
             D[i][j] = Graph->vmatrix[i][j];
         }
+    }
 
     for (k = 1; k <= Graph->Nv; k++) {
         for (i = 1; i <= Graph->Nv; i++) {
