@@ -3,6 +3,7 @@ from functools import lru_cache
 
 class Solution:
     def isScramble(self, s1: str, s2: str) -> bool:
+        # 记忆化搜索
         # make sure cache maxsize more than currsize, which improve program's performance
         @lru_cache(maxsize=2048, typed=False)
         def dfs(i1: int, i2: int, length: int) -> bool:
