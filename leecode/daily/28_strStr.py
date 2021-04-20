@@ -18,11 +18,20 @@ class Solution:
     # 
     #     return res
     
-    # Knuth-Morris-Pratt 算法
+    # Knuth-Morris-Pratt KMP 算法
+    # time O(n+m)
+    # space O(m)
     def strStr(self, haystack: str, needle: str) -> int:
+        if not needle:
+            return 0
+    
+        if not haystack:
+            return -1
 
+        n = len(haystack)
+        m = len(needle)
 
-
+        return True
 
 # haystack = "hello"
 # needle = "ll"
