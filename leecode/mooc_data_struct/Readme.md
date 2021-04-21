@@ -399,3 +399,79 @@ void Floyd(void)
     }
 }
 ~~~
+
+### 4.6 最小生成树 (Minimum Spanning Tree)
+
+* 是一棵树
+    + 无回路
+    + V 个顶点一定有 V - 1 条边
+* 是生成树
+    + 包含全部顶点
+    + V - 1 条边都在图里
+* 边的权重和最小
+
+**最小生成树存在** 意味着 **图连通**
+
+#### 4.6.1 贪心算法
+
+贪：每一步都要最好
+好：权重最小的边
+约束条件：
+    1. 只能用图里有的边
+    2. 只能正好用掉 V - 1 条边
+    3. 不能有回路
+
+#### 4.6.2 Prim 算法
+
+* T = O(V^2)
+* 稠密图比较合算
+
+~~~
+void Prim(Graph G)
+{
+    MST = {s};
+
+    while (1) {
+        V = 未收录顶点中 dist 最小者
+        if (这样的 V 不存在)
+            break;
+        将 V 收录进 MST: dist[V] = 0
+
+        for (V 的每个邻接点 W) {
+            if (W 未被收录: dist[W] != 0) {
+                if (E<v, w> < dist[W]) {
+                    dist[W] = E<v, w>;
+                    parent[W] = V;
+                }
+            }
+        }
+    }
+
+    if (MST 中收的顶点不到 V 个)
+        Error("MST is not exist")
+}
+~~~
+
+#### 4.6.3 Kruskal 算法
+
+* 将森林合并成树的过程
+* T = O(E * logE)
+* 稀疏图比较合算
+
+~~~
+void Kruskal(Graph G)
+{
+    MST = {};
+    while (MST 中不到 V - 1 条边 && E 中还有边) {
+        从 E 中取一条权重最小的边 E<v, w>    /* 最小堆 */
+        将 E<v, w> 从 E 中删除
+        if (E<v, w> 不在 MST 中构成回路)    /* 并查集，将森林合并成树的过程 */
+            将 E<v, w> 加入 MST
+        else
+            彻底无视 E<v, w>
+    }
+
+    if (MST 中不到 V - 1 条边)
+        Error("MST is not exist")
+}
+~~~
