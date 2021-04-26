@@ -92,11 +92,6 @@ bool ListComponents(struct point *point, int num, int distance)
         visited[i] = false;
     }
 
-    struct point source = { .x = 0, .y = 0 };
-    res = isSafe(&source, 0, distance);
-    if (res)
-        return res;
-
     for (int i = 0; i < num; i++) {
         // printf("start\n");
         if (!visited[i] && FirstJump(point, i, distance)) {
