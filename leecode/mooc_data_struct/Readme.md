@@ -322,7 +322,9 @@ void ListComponents(Graph G)
 
 * **单源**最短路径问题：从某固定源点出发，求其到所有其他顶点的最短路径
 
-+ 无权图的单源最短路径算法：BFS, 复杂度取决于存储方式 O(|V|+|E|) 邻接表 or O(|V|^2) 邻接矩阵
+#### 4.5.1.1 无权图
+
+* 无权图的单源最短路径算法：BFS, 复杂度取决于存储方式 O(|V|+|E|) 邻接表 or O(|V|^2) 邻接矩阵
 ~~~ C
 void Unweighted(Vertex S)
 {
@@ -341,7 +343,9 @@ void Unweighted(Vertex S)
 }
 ~~~
 
-+ 有权图的单源最短路径算法：
+#### 4.5.1.1 有权图
+
+* 有权图的单源最短路径算法：
 ~~~ C
 /* Dijkstra 不能解决有负边的情况 */
 void Dijkstra(Vertex s)
@@ -368,6 +372,17 @@ void Dijkstra(Vertex s)
 * Dijkstra, 复杂度取决于扫描最小 dist 的方式：
     - 方法1：直接扫描所有未收录顶点 - O(|V|), T = O(|V|^2 + |E|) 对于稠密图效果好
     - 方法2：将dist存在最小堆中 - O(log|V|), 而更新 dist[w] 的值 - O(log|V|), T = O(|V| * log|V| + |E| * log|V|) = O(|E| * log|V|) 对于稀疏图效果好
+
+* 类似问题：
+    1. 要求数最短路径有多少条
+        * count[s] = 1
+        * 如果找到更短路：count[W] = count[V]
+        * 如果找到等长路：count[W] += count[V]
+
+    2. 要求边数最少的最短路
+        * count[s] = 0
+        * 如果找到更短路：count[W] = count[V] + 1
+        * 如果找到等长路：count[W] = count[V] + 1
 
 #### 4.5.2 多源最短路径问题
 
@@ -400,7 +415,7 @@ void Floyd(void)
 }
 ~~~
 
-### 4.6 最小生成树 (Minimum Spanning Tree)
+### 4.6 最小生成树问题 (Minimum Spanning Tree)
 
 * 是一棵树
     + 无回路
@@ -412,16 +427,18 @@ void Floyd(void)
 
 **最小生成树存在** 意味着 **图连通**
 
-#### 4.6.1 贪心算法
+#### 4.6.0 背景：贪心算法
 
 贪：每一步都要最好
-好：权重最小的边
-约束条件：
-    1. 只能用图里有的边
-    2. 只能正好用掉 V - 1 条边
-    3. 不能有回路
 
-#### 4.6.2 Prim 算法
+好：权重最小的边
+
+约束条件：
+1. 只能用图里有的边
+2. 只能正好用掉 V - 1 条边
+3. 不能有回路
+
+#### 4.6.1 Prim 算法
 
 * T = O(V^2)
 * 稠密图比较合算
@@ -452,7 +469,7 @@ void Prim(Graph G)
 }
 ~~~
 
-#### 4.6.3 Kruskal 算法
+#### 4.6.2 Kruskal 算法
 
 * 将森林合并成树的过程
 * T = O(E * logE)
@@ -475,3 +492,50 @@ void Kruskal(Graph G)
         Error("MST is not exist")
 }
 ~~~
+
+### 4.7 拓扑排序
+
+* 拓扑序：如果图中从 V 到 W 有一条有向路径，则 V 一定排在 W 之前。满足此条件的顶点序列称为一个拓扑序。
+* 获得一个拓扑序的过程就是拓扑排序。
+* AOV(Activity on Vertex) 如果有合理的拓扑序，则必定是有向无环图(Directed Acyclic Graph, DAG)
+
+~~~
+void TopSort(void)
+{
+    for (cnt = 0; cnt < |V|; cnt++) {
+        if (Indegree[V] == 0)
+            Enqueue(V, Q);
+    }
+
+    while (!IsEmpty(Q)) {
+        V = Dequeue(Q);
+        输出 V，或者记录 V 的输出序号；
+        cnt++;
+
+        for (V 的每个邻接点 W) {
+            if (--Indegree[W] == 0)
+                Enqueue(W, Q);
+        }
+    }
+
+    if (cnt != |V|)
+        Error("图中有回路");
+}
+~~~
+
+* T = O(|V| + |E|)
+* 此算法可以用来检测有向图是否 DAG
+
+### 4.8 关键路径问题
+
+* AOE(Activity on Edge)，一般用于安排项目的工序
+* 由绝对不允许延误的活动组成的路径
+* 问题类型：
+    1. 整个工期有多长 `Earliest[0] = 0; Earliest[j] = max{Earliest[i] + C<i,j>}`
+    2. 哪几个组有机动时间 `Latest[i] = min{Latest[j] - C<i,j>}; D<i,j> = Latest[j] - Earliest[i] - C<i,j>`
+
+## 5 排序
+
+### 5.1 简单排序
+
+

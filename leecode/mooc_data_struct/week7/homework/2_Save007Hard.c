@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define DIAMETER 15
+
 struct point {
     int x;
     int y;
@@ -18,7 +20,7 @@ bool isSafe(struct point *point, int v, int distance)
 {
     int x = point[v].x;
     int y = point[v].y;
-    struct point arr[] = {
+    struct point side[] = {
         [0] = {
             .x = x,
             .y = 50,
@@ -38,7 +40,7 @@ bool isSafe(struct point *point, int v, int distance)
     };
 
     for (int i = 0; i < 4; i++) {
-        if (distance * distance >= dis(&arr[i], &point[v]))
+        if (distance * distance >= dis(&side[i], &point[v]))
             return true;
     }
     
@@ -56,7 +58,7 @@ bool FirstJump(struct point *point, int v, int distance)
 {
     struct point source = { .x = 0, .y = 0 };
 
-    if ((distance + 15 / 2) * (distance + 15 / 2) >= dis(&source, &point[v]))
+    if ((distance + DIAMETER / 2) * (distance + DIAMETER / 2) >= dis(&source, &point[v]))
         return true;
     return false;
 }
@@ -65,9 +67,9 @@ bool dfs(struct point *point, bool *visited, int num, int v, int distance)
 {
     bool res;
 
-    // printf("path %d\n", v);
+    printf("v %d (%d, %d)\n", v, point[v].x, point[v].y);
 
-    visited[v] = true;
+    dist[v] = true;
     if (isSafe(point, v, distance)) {
         return true;
     }
@@ -83,31 +85,48 @@ bool dfs(struct point *point, bool *visited, int num, int v, int distance)
     return false;
 }
 
-bool ListComponents(struct point *point, int num, int distance)
+bool Unweighted(struct point *point, int num, int distance, int *dist, int *path)
 {
     bool res;
-    bool *visited = malloc(sizeof(bool) * num);
 
     for (int i = 0; i < num; i++) {
-        visited[i] = false;
+        dist[i] = -1;
+        path[i] = -1;
     }
 
-    struct point source = { .x = 0, .y = 0 };
-    res = isSafe(&source, 0, distance);
-    if (res)
-        return res;
-
-    for (int i = 0; i < num; i++) {
-        // printf("start\n");
-        if (!visited[i] && FirstJump(point, i, distance)) {
-            res = dfs(point, visited, num, i, distance);
-            if (res)
-                return res;
+    for (int w = 0; w < num; w++) {
+        if (dist[w] < 0 && FirstJump(point, w, distance)) {
+            dist[w] = 1;
+            // circle self
+            path[w] = w;
+            Enqueue(w, Q);
         }
-        // printf("end\n");
     }
 
-    return false;
+    while (!IsEmpty(Q)) {
+        int v = Dequeue(Q);
+
+        if (isSafe(point, v, distance)) {
+            return true;
+        }
+
+        for (int i = 0; i < num; i++) {
+
+            dist[i] = dist[v] + 1;
+            path[v] = ;
+            if (isSafe(point, v, distance)) {
+                return true;
+            }
+
+            if (dist[i] < 0) {
+                dist[i] = dist[V] + 1;
+                path[i] = V;
+                Enqueue(i, Q);
+            }
+        }
+    }
+
+
 }
 
 int main(void)
@@ -124,7 +143,16 @@ int main(void)
         crocodile[i].y = y;
     }
 
-    bool res = ListComponents(crocodile, num, distance);
+    // add start as 0 and end as num + 1
+    int *dist = malloc(sizeof(int) * num);
+    int *path = malloc(sizeof(int) * num);
+
+    bool res = Unweighted(crocodile, num, distance, dist, path);
+    if (res) {
+        printf("\n");
+    } else {
+        printf("0\n");
+    }
 
     return 0;
 }

@@ -13,11 +13,12 @@ void Unweighted(LGraph Graph, int dist[], int path[], Vertex S)
 
     while (!IsEmpty(Q)) {
         V = DeleteQ(Q);
-        for (W = Graph->G[V].FirstEdge; W; W = W->Next) /* 对V的每个邻接点W->AdjV */
+        for (W = Graph->G[V].FirstEdge; W; W = W->Next) { /* 对V的每个邻接点W->AdjV */
             if (dist[W->AdjV] == -1) { /* 若W->AdjV未被访问过 */
                 dist[W->AdjV] = dist[V] + 1; /* W->AdjV到S的距离更新 */
                 path[W->AdjV] = V; /* 将V记录在S到W->AdjV的路径上 */
                 AddQ(Q, W->AdjV);
             }
+        }
     } /* while结束*/
 }
