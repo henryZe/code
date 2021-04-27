@@ -2,9 +2,15 @@
 
 ## 1 基本概念
 
-### 1.1 渐进复杂度
-
-* 1, logN, N, N*logN, N^2, N^3, 2^N, N!
+* 渐进复杂度
+    - 1
+    - logN
+    - N
+    - N * logN
+    - N^2
+    - N^3
+    - 2^N
+    - N!
 
 ## 2 线性结构
 
@@ -537,6 +543,316 @@ void TopSort(void)
 
 ## 5 排序
 
+* 背景
+    - 没有一种排序是任何情况下都表现最好的
+
+* 稳定性：若经过排序，这些记录的相对次序保持不变，即在原序列中，r[i]=r[j]，且r[i]在r[j]之前，而在排序后的序列中，r[i]仍在r[j]之前，则称这种排序算法是稳定的
+
 ### 5.1 简单排序
+
+* 冒泡排序
+    + 最好情况：顺序 T = O(N)
+    + 最坏情况：逆序 T = O(N^2)
+
+~~~ c
+void bubble_sort(int A[], int N)
+{
+    for (P = N - 1; P >= 0; P--) {
+        flag = 0;
+
+        for (i = 0; i < P; i++) {
+            if (A[i] > A[i+1]) {
+                swap(A[i], A[i+1]);
+                flag = 1;
+            }
+        }
+
+        if (flag == 0)
+            /* already sorted, optimize */
+            break;
+    }
+}
+~~~
+
+![bubble_sort](./pic/bubble_sort.png)
+
+* 插入排序
+    + 最好情况：顺序 T = O(N)
+    + 最坏情况：逆序 T = O(N^2)
+
+~~~ c
+void insertion_sort(int A[], int N)
+{
+    for (P = 1; P < N; P++) {
+        tmp = A[P];
+        for (i = P; i > 0 && A[i - 1] > tmp; i--) {
+            A[i] = A[i - 1];
+        }
+        A[i] = tmp;
+    }
+}
+~~~
+
+![insert_sort](./pic/insert_sort.png)
+
+#### 5.1.1 时间复杂度下界
+
+* 对于下标 i < j，如果 A[i] > A[j]，则称 (i, j) 是一对**逆序对**(inversion)
+* 交换2个相邻元素正好消去1个逆序对
+* 插入排序：T(N, I) = O(N + I) -- 如果序列基本有序，则插入排序简单且高效
+
+* 定理：任意 N 个不同元素组成的序列平均具有 N*(N-1)/4 个逆序对
+* 定理：任何仅以交换相邻两元素来排序的算法，其平均时间复杂度为 O(N^2)
+* 这意味着：要提高算法效率，我们必须
+    - 每次消去不止1个逆序对
+    - 每次交换相隔较远的2个元素
+
+### 5.2 希尔排序 Shell Sort
+
+* 定义增量序列 D[m] > D[m-1] > ... > D[1] = 1
+* 对每个 D[k] 进行间隔排序
+
+~~~ c
+void shell_sort(int A[], int N)
+{
+    for (D = N/2; D > 0; D /= 2) {  // Shell 增量序列
+
+        // insertion sort
+        for (P = D; P < N; P++) {
+            tmp = A[P];
+            for (i = P; i >= D && A[i - D] > tmp; i -= D) {
+                A[i] = A[i - D];
+            }
+            A[i] = tmp;
+        }
+    }
+}
+~~~
+
+![shell_sort](./pic/shell_sort.png)
+
+* 最坏情况：T = O(N^2)
+* 因为增量元素不互质，则小增量可能根本不起作用
+
+* Hibbard 增量序列
+    - D[k] = 2^k - 1 -- 相邻元素互质
+    - 最坏情况：T = O(N^(3/2))
+
+* Sedgewick 增量序列
+    - D[k] = 9 * 4^k - 9 * 2^k + 1
+    - Tavg = O(N^(7/6))
+    - Tworst = O(N^(4/3))
+
+![Shell_withSedgewick](./pic/Shell_withSedgewick.png)
+
+### 5.3 堆排序 Heap Sort
+
+* 选择排序
+    - 无论如何：T = O(N^2)
+
+~~~ c
+void selection_sort(int A[], int N)
+{
+    for (i = 0; i < N; i++) {
+        /* 从A[i]到A[N-1]中找最小元，并将其位置赋给MinPosition */
+        /* 可优化 */
+        MinPosition = ScanForMin(A, i, N - 1);
+
+        /* 将未排序部分的最小元换到有序部分的最后位置*/
+        Swap(A[i], A[MinPosition]);
+    }
+}
+~~~
+
+* 堆排序
+
+* 需要额外空间
+
+~~~ c
+// T(N) = O(N * logN)
+// space: O(N)
+void Heap_sort_A(int A[], int N)
+{
+    /* O(N) */
+    heapify(A);
+
+    for (i = 0; i < N; i++) {
+        /* O(logN) */
+        tmp[i] = heappop(A);
+    }
+
+    /* O(N) */
+    for (i = 0; i < N; i++) {
+        A[i] = tmp[i];
+    }
+}
+~~~
+
+![Heap_sortA](./pic/Heap_sortA.png)
+
+* 不需额外空间
+
+~~~ c
+// time: Tavg = 2*N*logN - O(N * loglogN) = O(N * logN)
+// space: O(1)
+void Heap_sort_B(int A[], int N)
+{
+    for (i = N/2; i >= 0; i--) {   /* Build Heap */
+        // create Maxheap
+        Percdown(A, i, N);
+    }
+
+    // swap first with last one
+    // move max one to the last position
+    for (i = N - 1; i > 0; i--) {
+        swap(&A[0], &A[i]);
+        Percdown(A, 0, i);
+    }
+}
+~~~
+
+![HeapSort](./pic/heap_sort.png)
+
+### 5.4 归并排序 Merge Sort
+
+* 核心：有序子列的归并
+* 稳定
+
+1. 递归算法
+    * 分而治之
+    * 无论如何：T(N) = O(logN * N)
+
+~~~ c
+void merge(int A[], int tmpA[], int L, int R, int RightEnd)
+{
+    /* 左边终点位置。假设左右两列挨着 */
+    int LeftEnd = R - 1;
+
+    /* 存放结果的数组的初始位置 */
+    int cur = L;
+
+    int NumElements = RightEnd - L + 1;
+
+    while (L <= LeftEnd && R <= RightEnd) {
+        if (A[L] <= A[R])
+            tmpA[cur++] = A[L++];
+        else
+            tmpA[cur++] = A[R++];
+    }
+
+    /* 直接复制左边剩下的 */
+    while (L <= LeftEnd)
+        tmpA[cur++] = A[L++];
+
+    /*直接复制右边剩下的 */
+    while (R <= RightEnd)
+        tmpA[cur++] = A[R++];
+
+    for (i = 0; i < NumElements; i++, RightEnd--)
+        A[RightEnd] = tmpA[RightEnd];
+}
+
+void MSort(int A[], int TmpA[], int L, int RightEnd)
+{
+    int Center;
+
+    if (L < RightEnd) {
+        Center = (L + RightEnd) / 2;
+        MSort(A, TmpA, L, Center);
+        MSort(A, TmpA, Center + 1, RightEnd);
+        Merge(A, TmpA, L, Center + 1, RightEnd);
+    }
+}
+
+void Merge_sort(int A[], int N)
+{
+    int *TmpA = malloc(N * sizeof(int));
+
+    if (!TmpA)
+        Error("空间不足");
+
+    MSort(A, TmpA, 0, N - 1);
+    free(TmpA);
+}
+~~~
+
+2. 非递归算法
+
+~~~ c
+void Merge_pass(int A[], int TmpA[], int N, int length)
+{
+    /* length = 当前有序子列的长度 */
+    for (i = 0; i <= N - 2 * length; i += 2 * length)
+        merge(A, TmpA, i, i + length, i + 2 * length - 1);
+
+    if (i + length < N) {
+        /* 归并最后2个子列 */
+        merge(A, TmpA, i, i + length, N - 1);
+    } else {
+        /* 最后只剩1个子列 */
+        for (j = i; j < N; j++)
+            TmpA[j] = A[j];
+    }
+}
+
+void Merge_sort(int A[], int N)
+{
+    int length = 1; /* 初始化子序列长度*/
+    int *TmpA = malloc(N * sizeof(int));
+
+    if (!TmpA)
+        Error("空间不足");
+
+    while (length < N) {
+        Merge_pass(A, TmpA, N, length);
+        length *= 2;
+        Merge_pass(TmpA, A, N, length);
+        length *= 2;
+    }
+    free(TmpA);
+}
+~~~
+
+### 5.5 性能比较
+
+* 测试项：
+    - 数据1：只有1个元素；
+    - 数据2：11个不相同的整数，测试基本正确性；
+    - 数据3：10^3 个随机整数；
+    - 数据4：10^4 个随机整数；
+    - 数据5：10^5 个随机整数；
+    - 数据6：10^5 个顺序整数；
+    - 数据7：10^5 个逆序整数；
+    - 数据8：10^5 个基本有序的整数；
+    - 数据9：10^5 个随机正整数，每个数字不超过1000。
+
+* 时间复杂度：单位 ms
+
+| 测试项 | bubble | insertion | Shell | Shell Sedgewick | select  | heap  | merge |
+| ------ | ------ | --------- | ----- | --------------- | ------- | ----- | ----- |
+| 1      | 5 ms   | 16 ms     | 3 ms  | 8 ms            | 16 ms   | 3 ms  | 4 ms  |
+| 2      | 4 ms   | 6 ms      | 4 ms  | 4 ms            | 10 ms   | 4 ms  | 6 ms  |
+| 3      | 6 ms   | 6 ms      | 3 ms  | 5 ms            | 17 ms   | 4 ms  | 6 ms  |
+| 4      | 155 ms | 40 ms     | 9 ms  | 11 ms           | 112 ms  | 9 ms  | 10 ms |
+| 5      | TLE    | 1734 ms   | 62 ms | 39 ms           | 4727 ms | 40 ms | 35 ms |
+| 6      | 42 ms  | 36 ms     | 42 ms | 43 ms           | 4792 ms | 35 ms | 32 ms |
+| 7      | TLE    | 3325 ms   | 47 ms | 29 ms           | 4290 ms | 28 ms | 26 ms |
+| 8      | 394 ms | 82 ms     | 22 ms | 35 ms           | 4836 ms | 39 ms | 27 ms |
+| 9      | TLE    | 1729 ms   | 54 ms | 41 ms           | 4477 ms | 29 ms | 36 ms |
+
+* 空间复杂度：单位 KB
+
+| 测试项 | bubble  | insertion | Shell   | Shell Sedgewick | select  | heap    | merge   |
+| ------ | ------- | --------- | ------- | --------------- | ------- | ------- | ------- |
+| 1      | 200 KB  | 456 KB    | 196 KB  | 300 KB          | 172 KB  | 316 KB  | 192 KB  |
+| 2      | 164 KB  | 188 KB    | 188 KB  | 192 KB          | 160 KB  | 176 KB  | 316 KB  |
+| 3      | 192 KB  | 324 KB    | 200 KB  | 300 KB          | 192 KB  | 184 KB  | 292 KB  |
+| 4      | 316 KB  | 324 KB    | 376 KB  | 312 KB          | 544 KB  | 444 KB  | 308 KB  |
+| 5      | TLE     | 1160 KB   | 1196 KB | 1352 KB         | 1284 KB | 1216 KB | 1340 KB |
+| 6      | 1212 KB | 1312 KB   | 1212 KB | 1344 KB         | 1180 KB | 1216 KB | 1332 KB |
+| 7      | TLE     | 1176 KB   | 1208 KB | 1496 KB         | 1380 KB | 1212 KB | 1336 KB |
+| 8      | 1276 KB | 1192 KB   | 1208 KB | 1216 KB         | 1192 KB | 1212 KB | 1336 KB |
+| 9      | TLE     | 1176 KB   | 1084 KB | 960 KB          | 1052 KB | 964 KB  | 1088 KB |
+
 
 

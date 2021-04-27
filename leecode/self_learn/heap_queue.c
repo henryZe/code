@@ -69,6 +69,22 @@ int heaptop(struct heapq *heap)
     return heap->heap[1];
 }
 
+void siftDown(int *array, int parent, int size)
+{
+    while (parent << 1 <= size) {
+        int child = parent << 1;    // left son
+        if (child + 1 <= size && array[child] > array[child + 1]) {
+            child++;                // right son
+        }
+        if (array[child] >= array[parent]) {
+            break;
+        }
+        swap(&array[child], &array[parent]);
+
+        parent = child;
+    }
+}
+
 struct heapq *heapify(int *list, int size)
 {
     struct heapq *object = malloc(sizeof(struct heapq));
@@ -77,16 +93,21 @@ struct heapq *heapify(int *list, int size)
     object->pop = heappop;
     object->top = heaptop;
 
-    for (int i = 0; i < size; i++) {
-        object->push(object, list[i]);
-    }
+    object->heapSize = size;
+    for (int i = 0; i < size; i++)
+        object->heap[i + 1] = list[i];
+
+    // heapify: O(n)
+    for (int i = (size >> 1); i > 0; i--)
+        siftDown(object->heap, i, size);
+
     return object;
 }
 
 int main(void)
 {
-    int size = 10;
-    int data[] = { 5, 0, 4, 8, 6, 9, 3, 7, 1, 2 };
+    int size = 11;
+    int data[] = { 4, 981, 10, -17, 0, -20, 29, 50, 8, 43, -5 };
     struct heapq *obj = heapify(data, size);
 
     for (int i = 1; i < size + 1; i++) {
