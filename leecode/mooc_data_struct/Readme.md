@@ -529,10 +529,11 @@ void TopSort(void)
 ### 4.8 关键路径问题
 
 * AOE(Activity on Edge)，一般用于安排项目的工序
-* 由绝对不允许延误的活动组成的路径
+* 由绝对不允许延误的活动组成的路径，称为关键路径
 * 问题类型：
     1. 整个工期有多长 `Earliest[0] = 0; Earliest[j] = max{Earliest[i] + C<i,j>}`
     2. 哪几个组有机动时间 `Latest[i] = min{Latest[j] - C<i,j>}; D<i,j> = Latest[j] - Earliest[i] - C<i,j>`
+    3. 没有机动时间的路径，称为关键路径
 
 ## 5 排序
 
