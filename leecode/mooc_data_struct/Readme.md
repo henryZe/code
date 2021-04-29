@@ -574,8 +574,6 @@ void bubble_sort(int A[], int N)
 }
 ~~~
 
-![bubble_sort](./pic/bubble_sort.png)
-
 * 插入排序
     + 最好情况：顺序 T = O(N)
     + 最坏情况：逆序 T = O(N^2)
@@ -592,8 +590,6 @@ void insertion_sort(int A[], int N)
     }
 }
 ~~~
-
-![insert_sort](./pic/insert_sort.png)
 
 #### 5.1.1 时间复杂度下界
 
@@ -629,8 +625,6 @@ void shell_sort(int A[], int N)
 }
 ~~~
 
-![shell_sort](./pic/shell_sort.png)
-
 * 最坏情况：T = O(N^2)
 * 因为增量元素不互质，则小增量可能根本不起作用
 
@@ -642,8 +636,6 @@ void shell_sort(int A[], int N)
     - D[k] = 9 * 4^k - 9 * 2^k + 1
     - Tavg = O(N^(7/6))
     - Tworst = O(N^(4/3))
-
-![Shell_withSedgewick](./pic/Shell_withSedgewick.png)
 
 ### 5.3 堆排序 Heap Sort
 
@@ -688,8 +680,6 @@ void Heap_sort_A(int A[], int N)
 }
 ~~~
 
-![Heap_sortA](./pic/Heap_sortA.png)
-
 * 不需额外空间
 
 ~~~ c
@@ -710,8 +700,6 @@ void Heap_sort_B(int A[], int N)
     }
 }
 ~~~
-
-![HeapSort](./pic/heap_sort.png)
 
 ### 5.4 归并排序 Merge Sort
 
