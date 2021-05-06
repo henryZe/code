@@ -71,7 +71,7 @@ int FindMinDist(struct graph *Graph, int *dist, int *collected)
         return -1;
 }
 
-int Dijkstra(struct graph *Graph, int dist[], int path[], int rescue[], int S, int E)
+int Dijkstra(struct graph *Graph, int dist[], int rescue[], int S, int E)
 {
     int collected[Graph->Nv];
     int count[Graph->Nv];
@@ -81,15 +81,9 @@ int Dijkstra(struct graph *Graph, int dist[], int path[], int rescue[], int S, i
         dist[V] = Graph->dist[S][V];
         rescue[V] = Graph->rescue[V];
         count[V] = 0;
-
-        if (dist[V] < INT_MAX)
-            path[V] = S;
-        else
-            path[V] = -1;
         collected[V] = false;
     }
 
-    path[S] = -1;
     collected[S] = true;
     count[S] = 1;
 
@@ -115,16 +109,15 @@ int Dijkstra(struct graph *Graph, int dist[], int path[], int rescue[], int S, i
             if (collected[W] == false && Graph->dist[V][W] < INT_MAX) {
                 if (dist[V] + Graph->dist[V][W] < dist[W]) {
                     dist[W] = dist[V] + Graph->dist[V][W];
-                    rescue[W] = rescue[V] + Graph->rescue[W];
-                    path[W] = V;
+
                     count[W] = count[V];
-
-                } else if ((dist[V] + Graph->dist[V][W] == dist[W])
-                    && (rescue[V] + Graph->rescue[W] > rescue[W])) {
                     rescue[W] = rescue[V] + Graph->rescue[W];
-                    path[W] = V;
-                    count[W] += count[V];
 
+                } else if (dist[V] + Graph->dist[V][W] == dist[W]) {
+                    count[W] += count[V];
+                    if (rescue[V] + Graph->rescue[W] > rescue[W]) {
+                        rescue[W] = rescue[V] + Graph->rescue[W];
+                    }
                 }
             }
         }
@@ -140,10 +133,9 @@ int main(void)
 
     int *rescue = malloc(sizeof(int) * v_num);
     int *dist = malloc(sizeof(int) * v_num);
-    int *path = malloc(sizeof(int) * v_num);
 
     struct graph *g = create_graph(v_num, e_num);
-    int num = Dijkstra(g, dist, path, rescue, start, end);
+    int num = Dijkstra(g, dist, rescue, start, end);
     printf("%d %d\n", num, rescue[end]);
 
     return 0;
