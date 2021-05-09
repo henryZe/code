@@ -842,5 +842,61 @@ void Merge_sort(int A[], int N)
 | 8      | 1276 KB | 1192 KB   | 1208 KB | 1216 KB         | 1192 KB | 1212 KB | 1336 KB |
 | 9      | TLE     | 1176 KB   | 1084 KB | 960 KB          | 1052 KB | 964 KB  | 1088 KB |
 
+### 5.6 快速排序
 
+* 概述
+    * 分而治之
 
+~~~ c
+void Quicksort(int A[], int N)
+{
+    if (N < 2)
+        return;
+
+    /* caution! */
+    int pivot = 从 A[] 中选一个主元;
+
+    /* caution! */
+    将 S = { A[] \ pivot } 分成 2 个独立子集：
+        A1 = { a belongs to S | a <= pivot };
+        A2 = { a belongs to S | a >= pivot };
+
+    A[] = Quicksort(A1, N1) V { pivot } V Quicksort(A2, N2);
+}
+~~~
+
+* 选主元
+    * A[0]
+    * rand()
+    * 取 head, mid, tail 的中位数
+
+~~~ c
+int Median3(int A[], int Left, int Right)
+{
+    int Center = (Left + Right) / 2;
+
+    if (A[Left] > A[Center])
+        swap(A[Left], A[Center]);
+    if (A[Left] > A[Right])
+        swap(A[Left], A[Right]);
+    if (A[Center] > A[Right])
+        swap(A[Center], A[Right]);
+    /* A[Left] <= A[Center] <= A[Right] */
+
+    swap(A[Center], A[Right - 1]);
+
+    /* 只需考虑 A[Left + 1] ... A[Right - 2] */
+    /* return pivot */
+    return A[Right - 1];
+}
+~~~
+
+* 子集划分
+    * 交换元素，生成子集
+    * 将 pivot 交换到正确位置
+    * 如果有元素正好等于 pivot，停下来交换，否则可能导致子集不平衡
+
+* 小规模数据处理
+    * 对于 N < 100 可能还不如插入排序快
+    * 当递归的数据规模充分小，则停止递归，直接调用简单排序（如插入排序）
+    * 定义一个 cutoff 的阈值
