@@ -900,3 +900,26 @@ int Median3(int A[], int Left, int Right)
     * 对于 N < 100 可能还不如插入排序快
     * 当递归的数据规模充分小，则停止递归，直接调用简单排序（如插入排序）
     * 定义一个 cutoff 的阈值
+
+* quick sort 选取不同的 cutoff：
+
+| 测试项 | 50            | 100           | 200           | 300           |
+| ------ | ------------- | ------------- | ------------- | ------------- |
+| 1      | 5 ms 188 KB   | 4 ms 324 KB   | 4 ms 196 KB   | 4 ms 324 KB   |
+| 2      | 9 ms 308 KB   | 5 ms 204 KB   | 5 ms 192 KB   | 4 ms 192 KB   |
+| 3      | 12 ms 196 KB  | 5 ms 200 KB   | 5 ms 192 KB   | 4 ms 196 KB   |
+| 4      | 10 ms 320 KB  | 8 ms 324 KB   | 8 ms 448 KB   | 9 ms 328 KB   |
+| 5      | 37 ms 1216 KB | 49 ms 1220 KB | 36 ms 1216 KB | 53 ms 1224 KB |
+| 6      | 47 ms 1228 KB | 53 ms 1344 KB | 24 ms 1212 KB | 44 ms 1348 KB |
+| 7      | 41 ms 1208 KB | 43 ms 1224 KB | 26 ms 1220 KB | 43 ms 1220 KB |
+| 8      | 41 ms 1216 KB | 44 ms 1344 KB | 34 ms 1352 KB | 43 ms 1220 KB |
+| 9      | 35 ms 956 KB  | 48 ms 952 KB  | 30 ms 964 KB  | 48 ms 968 KB  |
+
+
+
+
+
+
+
+
+
