@@ -360,7 +360,7 @@ void Dijkstra(Vertex s)
         V = 未收录顶点中，dist最小者;
         if (V 不存在)
             break;
-        
+
         collected[V] = true;
         for (V 的每个邻接点 W) {
             if (collected[W] == false) {
