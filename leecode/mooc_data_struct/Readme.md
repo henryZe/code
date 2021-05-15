@@ -915,11 +915,37 @@ int Median3(int A[], int Left, int Right)
 | 8      | 41 ms 1216 KB | 44 ms 1344 KB | 34 ms 1352 KB | 43 ms 1220 KB |
 | 9      | 35 ms 956 KB  | 48 ms 952 KB  | 30 ms 964 KB  | 48 ms 968 KB  |
 
+### 5.7 表排序
 
+* 简介排序
+    * 定义指针数组作为 “表” (table)
 
+* 物理排序
+    * N 个数字的排列由若干个独立的环组成
+    * time O(N)
 
+### 5.8 基数排序
 
+* 桶排序
+    * time O(N + B)
 
+~~~ c
+void Bucket_sort(int A[], int N)
+{
+    count[] 初始化;
 
+    while (读入 1 个学生成绩 grade)
+        将该生插入 count[grade] 链表;
 
+    for (int i = 0; i < B; i++) {
+        if (count[i])
+            输出整个 count[i] 链表;
+    }
+}
+~~~
 
+* 多关键字的排序
+    * 次位优先 (least significant digit), T = O(P(N + B))
+    * 主位优先 (most significant digit)
+
+![bucket_sort](./pic/bucket_sort.png)
