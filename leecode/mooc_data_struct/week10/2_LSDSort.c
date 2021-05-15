@@ -16,7 +16,7 @@ struct HeadNode {
     PtrToNode head, tail;
 };
 typedef struct HeadNode Bucket[Radix];
- 
+
 int GetDigit(int X, int D)
 {
     /* 默认次位 D=1, 主位 D <= MaxDigit */
@@ -46,7 +46,7 @@ void LSDRadixSort(int A[], int N)
         List = tmp;
     }
 
-    /* 下面开始排序 */ 
+    /* 下面开始排序 */
     for (D = 1; D <= MaxDigit; D++) { /* 对数据的每一位循环处理 */
         /* 下面是分配的过程 */
         p = List;

@@ -947,5 +947,19 @@ void Bucket_sort(int A[], int N)
 * 多关键字的排序
     * 次位优先 (least significant digit), T = O(P(N + B))
     * 主位优先 (most significant digit)
+    * 次位优先移动链表的方式，比主位优先递归的方式要更简洁
 
 ![bucket_sort](./pic/bucket_sort.png)
+
+### 5.9 排序比较
+
+| 排序方法    | Average T(N) | 最坏情况 T(N) | 额外空间      | 稳定性 |
+| ----------- | ------------ | ------------- | ------------- | ------ |
+| select sort | O(N^2)       | O(N^2)        | O(1)          | 不稳定 |
+| bubble sort | O(N^2)       | O(N^2)        | O(1)          | 稳定   |
+| insert sort | O(N^2)       | O(N^2)        | O(1)          | 稳定   |
+| Shell sort  | O(N^d)       | O(N^2)        | O(1)          | 不稳定 |
+| heap sort   | O(N*logN)    | O(N*logN)     | O(1)          | 不稳定 |
+| quick sort  | O(N*logN)    | O(N^2)        | O(logN), 递归 | 不稳定 |
+| merge sort  | O(N*logN)    | O(N*logN)     | O(N)          | 稳定   |
+| radix sort  | O(P(N+B))    | O(P(N+B))     | O(N+B)        | 稳定   |
