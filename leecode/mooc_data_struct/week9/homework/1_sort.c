@@ -308,8 +308,9 @@ void quick_sort(int A[], int N)
     Quicksort(A, 0, N - 1);
 }
 
-#define MaxDigit 4
+#define BucketNum 19
 #define Radix 10
+#define Index(x) (x + BucketNum - Radix)
 
 struct Node {
     int key;
@@ -336,10 +337,10 @@ void LSDRadixSort(int A[], int N)
 {
     /* 基数排序 - 次位优先 */
     int Di, i;
-    struct bucket B[Radix];
+    struct bucket B[BucketNum];
     struct Node *tmp, *p, *List = NULL;
 
-    for (i = 0; i < Radix; i++) /* 初始化每个桶为空链表 */
+    for (i = 0; i < BucketNum; i++) /* 初始化每个桶为空链表 */
         B[i].head = B[i].tail = NULL;
 
     for (i = 0; i < N; i++) { /* 将原始序列逆序存入初始链表List */
@@ -362,22 +363,22 @@ void LSDRadixSort(int A[], int N)
             tmp = p;
             p = p->next;
 
-            /* 插入B[Di]号桶尾 */
+            /* 插入 B[Di] 号桶尾 */
             tmp->next = NULL;
-            if (B[Di].head == NULL)
-                B[Di].head = B[Di].tail = tmp;
-            else {
-                B[Di].tail->next = tmp;
-                B[Di].tail = tmp;
+            if (B[Index(Di)].head == NULL) {
+                B[Index(Di)].head = B[Index(Di)].tail = tmp;
+            } else {
+                B[Index(Di)].tail->next = tmp;
+                B[Index(Di)].tail = tmp;
             }
         }
 
         /* 下面是收集的过程 */
         List = NULL;
         bucket_count = 0;
-        for (Di = Radix - 1; Di >= 0; Di--) { /* 将每个桶的元素顺序收集入List */
+        for (Di = BucketNum - 1; Di >= 0; Di--) { /* 将每个桶的元素顺序收集入 List */
             if (B[Di].head) { /* 如果桶不为空 */
-                /* 整桶插入List表头 */
+                /* 整桶插入 List 表头 */
                 B[Di].tail->next = List;
                 List = B[Di].head;
                 B[Di].head = B[Di].tail = NULL; /* 清空桶 */
@@ -388,7 +389,7 @@ void LSDRadixSort(int A[], int N)
     // when bucket_count == 1, means the array has been sorted out.
     } while (bucket_count != 1);
 
-    /* 将List倒入A[]并释放空间 */
+    /* 将 List 倒入 A[] 并释放空间 */
     for (i = 0; i < N; i++) {
         tmp = List;
         List = List->next;

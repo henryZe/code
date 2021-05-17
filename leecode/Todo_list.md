@@ -10,6 +10,9 @@ mooc:
     e. https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024
 
 2. 3 for week 10
+    * radix sort in least significant digit
+
+3. 4 for week 11
 
 schedule:
 1. daily 1 question

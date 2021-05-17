@@ -816,31 +816,31 @@ void Merge_sort(int A[], int N)
 
 * 时间复杂度：单位 ms
 
-| 测试项 | bubble | insertion | Shell | Shell Sedgewick | select  | heap  | merge |
-| ------ | ------ | --------- | ----- | --------------- | ------- | ----- | ----- |
-| 1      | 5 ms   | 16 ms     | 3 ms  | 8 ms            | 16 ms   | 3 ms  | 4 ms  |
-| 2      | 4 ms   | 6 ms      | 4 ms  | 4 ms            | 10 ms   | 4 ms  | 6 ms  |
-| 3      | 6 ms   | 6 ms      | 3 ms  | 5 ms            | 17 ms   | 4 ms  | 6 ms  |
-| 4      | 155 ms | 40 ms     | 9 ms  | 11 ms           | 112 ms  | 9 ms  | 10 ms |
-| 5      | TLE    | 1734 ms   | 62 ms | 39 ms           | 4727 ms | 40 ms | 35 ms |
-| 6      | 42 ms  | 36 ms     | 42 ms | 43 ms           | 4792 ms | 35 ms | 32 ms |
-| 7      | TLE    | 3325 ms   | 47 ms | 29 ms           | 4290 ms | 28 ms | 26 ms |
-| 8      | 394 ms | 82 ms     | 22 ms | 35 ms           | 4836 ms | 39 ms | 27 ms |
-| 9      | TLE    | 1729 ms   | 54 ms | 41 ms           | 4477 ms | 29 ms | 36 ms |
+|      | bubble | insertion | Shell | Shell-Sedgewick | select  | heap  | merge | quick | radix |
+| ---- | ------ | --------- | ----- | --------------- | ------- | ----- | ----- | ----- | ----- |
+| 1    | 5 ms   | 16 ms     | 3 ms  | 8 ms            | 16 ms   | 3 ms  | 4 ms  | 4 ms  | 5 ms  |
+| 2    | 4 ms   | 6 ms      | 4 ms  | 4 ms            | 10 ms   | 4 ms  | 6 ms  | 4 ms  | 6 ms  |
+| 3    | 6 ms   | 6 ms      | 3 ms  | 5 ms            | 17 ms   | 4 ms  | 6 ms  | 4 ms  | 5 ms  |
+| 4    | 155 ms | 40 ms     | 9 ms  | 11 ms           | 112 ms  | 9 ms  | 10 ms | 9 ms  | 13 ms |
+| 5    | TLE    | 1734 ms   | 62 ms | 39 ms           | 4727 ms | 40 ms | 35 ms | 51 ms | 55 ms |
+| 6    | 42 ms  | 36 ms     | 42 ms | 43 ms           | 4792 ms | 35 ms | 32 ms | 44 ms | 43 ms |
+| 7    | TLE    | 3325 ms   | 47 ms | 29 ms           | 4290 ms | 28 ms | 26 ms | 44 ms | 38 ms |
+| 8    | 394 ms | 82 ms     | 22 ms | 35 ms           | 4836 ms | 39 ms | 27 ms | 48 ms | 53 ms |
+| 9    | TLE    | 1729 ms   | 54 ms | 41 ms           | 4477 ms | 29 ms | 36 ms | 48 ms | 49 ms |
 
 * 空间复杂度：单位 KB
 
-| 测试项 | bubble  | insertion | Shell   | Shell Sedgewick | select  | heap    | merge   |
-| ------ | ------- | --------- | ------- | --------------- | ------- | ------- | ------- |
-| 1      | 200 KB  | 456 KB    | 196 KB  | 300 KB          | 172 KB  | 316 KB  | 192 KB  |
-| 2      | 164 KB  | 188 KB    | 188 KB  | 192 KB          | 160 KB  | 176 KB  | 316 KB  |
-| 3      | 192 KB  | 324 KB    | 200 KB  | 300 KB          | 192 KB  | 184 KB  | 292 KB  |
-| 4      | 316 KB  | 324 KB    | 376 KB  | 312 KB          | 544 KB  | 444 KB  | 308 KB  |
-| 5      | TLE     | 1160 KB   | 1196 KB | 1352 KB         | 1284 KB | 1216 KB | 1340 KB |
-| 6      | 1212 KB | 1312 KB   | 1212 KB | 1344 KB         | 1180 KB | 1216 KB | 1332 KB |
-| 7      | TLE     | 1176 KB   | 1208 KB | 1496 KB         | 1380 KB | 1212 KB | 1336 KB |
-| 8      | 1276 KB | 1192 KB   | 1208 KB | 1216 KB         | 1192 KB | 1212 KB | 1336 KB |
-| 9      | TLE     | 1176 KB   | 1084 KB | 960 KB          | 1052 KB | 964 KB  | 1088 KB |
+|      | bubble  | insertion | Shell   | Shell-Sedgewick | select  | heap    | merge   | quick   | radix   |
+| ---- | ------- | --------- | ------- | --------------- | ------- | ------- | ------- | ------- | ------- |
+| 1    | 200 KB  | 456 KB    | 196 KB  | 300 KB          | 172 KB  | 316 KB  | 192 KB  | 324 KB  | 188 KB  |
+| 2    | 164 KB  | 188 KB    | 188 KB  | 192 KB          | 160 KB  | 176 KB  | 316 KB  | 196 KB  | 300 KB  |
+| 3    | 192 KB  | 324 KB    | 200 KB  | 300 KB          | 192 KB  | 184 KB  | 292 KB  | 196 KB  | 196 KB  |
+| 4    | 316 KB  | 324 KB    | 376 KB  | 312 KB          | 544 KB  | 444 KB  | 308 KB  | 456 KB  | 576 KB  |
+| 5    | TLE     | 1160 KB   | 1196 KB | 1352 KB         | 1284 KB | 1216 KB | 1340 KB | 1216 KB | 4288 KB |
+| 6    | 1212 KB | 1312 KB   | 1212 KB | 1344 KB         | 1180 KB | 1216 KB | 1332 KB | 1216 KB | 4400 KB |
+| 7    | TLE     | 1176 KB   | 1208 KB | 1496 KB         | 1380 KB | 1212 KB | 1336 KB | 1352 KB | 4344 KB |
+| 8    | 1276 KB | 1192 KB   | 1208 KB | 1216 KB         | 1192 KB | 1212 KB | 1336 KB | 1220 KB | 4288 KB |
+| 9    | TLE     | 1176 KB   | 1084 KB | 960 KB          | 1052 KB | 964 KB  | 1088 KB | 956 KB  | 4284 KB |
 
 ### 5.6 快速排序
 
@@ -919,10 +919,11 @@ int Median3(int A[], int Left, int Right)
 
 * 简介排序
     * 定义指针数组作为 “表” (table)
+    * 可以减少待排序列的交换操作
 
 * 物理排序
     * N 个数字的排列由若干个独立的环组成
-    * time O(N)
+    * 整理待排序列时间复杂度：O(N)
 
 ### 5.8 基数排序
 
