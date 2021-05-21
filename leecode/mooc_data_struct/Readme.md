@@ -1024,17 +1024,20 @@ int hash(const char *key, int TableSize)
     1. 开放地址法 `hash[i](key) = (h(key) + d[i]) % TableSize`
     2. 链地址法
 
-* 线性探测
+* 线性探测 (linear probing)
     1. di = i, 会有聚集现象
 
-* 平方探测
+* 平方探测 (quadratic probing)
     1. di = (+-i^2)
+    2. 如果散列表长度 TableSize 是 `4k+3(k是正整数)` 形式的 `素数` 时，平方探测法就可以探查到整个散列表空间
 
-* 双散列
+* 双散列 (double hashing)
     1. di = i * h2(key)
     2. h2(key) = p - (key % p), p 为素数
+        * 满足任意 key, h2(key) != 0
+        * 探测序列保证所有的散列存储单元都能被探测到
 
-* 再散列
+* 再散列 (rehashing)
     1. 当散列表元素太多（即装填因子a太大）时，查找效率会下降：
         > 实用最大装填因子取 0.5 <= a <= 0.85
     2. 当装填因子a太大，扩大散列表
