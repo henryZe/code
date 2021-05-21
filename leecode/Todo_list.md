@@ -11,7 +11,7 @@
     d. https://pintia.cn/problem-sets/994805342720868352/problems/994805347523346432
     e. https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024
 
-+ 4 for week 11    -- 1 day for course and 3 day for excise
++ 4 for week 11    -- 3 day for excise
 
 + 1 for week 12    -- 1 day for course and 1 day for excise
 
