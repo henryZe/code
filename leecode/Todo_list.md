@@ -5,17 +5,17 @@
 
 ## mooc
 
-+ 4 * advanced for week 7 -- 4 day for excise
++ 4 * advanced for week 7 -- 4 day for excise Next Sunday
     b. https://pintia.cn/problem-sets/994805342720868352/problems/994805396953219072
     c. https://pintia.cn/problem-sets/994805342720868352/problems/994805379664297984
     d. https://pintia.cn/problem-sets/994805342720868352/problems/994805347523346432
     e. https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024
 
-+ 4 for week 11    -- 3 day for excise
++ 3 for week 11    -- 3 day for excise Monday
 
-+ 1 for week 12    -- 1 day for course and 1 day for excise
++ 1 for week 12    -- 1 day for course & excise Tuesday
 
-+ final examination    -- 1 day
++ final examination    -- 1 day Wednesday
 
 Ready For War!
 
