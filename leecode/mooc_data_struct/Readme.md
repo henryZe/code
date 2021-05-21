@@ -964,3 +964,80 @@ void Bucket_sort(int A[], int N)
 | quick sort  | O(N*logN)    | O(N^2)        | O(logN), 递归 | 不稳定 |
 | merge sort  | O(N*logN)    | O(N*logN)     | O(N)          | 稳定   |
 | radix sort  | O(P(N+B))    | O(P(N+B))     | O(N+B)        | 稳定   |
+
+## 6 散列查找
+
+### 6.1 散列表
+
+* 背景
+    * 插入
+    * 查找
+
+* 散列查找法：
+    1. 计算位置：构造散列函数
+    2. 解决冲突
+
+* 操作集
+    * InitializeTable
+    * IsIn
+    * Find
+    * Modify
+    * Insert
+    * Delete
+
+
+### 6.2 散列函数的构造方法
+
+1. 计算简单
+2. 地址空间分布均匀，减少冲突
+
+* 方法：
+    * 数字
+        1. 直接定址法 hash(key) = a * key + b
+        2. 除留余数法 hash(key) = key % p
+        3. 数字分析法
+        4. 折叠法
+        5. 平方取中法
+
+    > 因为如果除数取合数（合数为除了1和其本身外还有其他因子的数）的话，一旦数据是以合数的某个因子为间隔而增长时，那么哈希值结果冲突将会非常严重。以它的任何一个因子作为间隔的数列都将产生严重的散列冲突，因数越多，发生这种冲突的数列越多。
+
+    * 字符关键字
+        1. ASCII码加和法 hash(key) = (Sum(key[i])) % TableSize
+        2. 前3个字符移位法
+        3. 移位法 hash(key) = (Sum(key[n-i-1] * 32^i)) % TableSize
+
+~~~ c
+int hash(const char *key, int TableSize)
+{
+    unsigned int h = 0;
+
+    while (*key)
+        h = (h << 5) + *key++; 
+
+    return h % TableSize;
+}
+~~~
+
+### 6.3 冲突处理方法
+
+* 思路
+    1. 开放地址法 `hash[i](key) = (h(key) + d[i]) % TableSize`
+    2. 链地址法
+
+* 线性探测
+    1. di = i, 会有聚集现象
+
+* 平方探测
+    1. di = (+-i^2)
+
+* 双散列
+    1. di = i * h2(key)
+    2. h2(key) = p - (key % p), p 为素数
+
+* 再散列
+    1. 当散列表元素太多（即装填因子a太大）时，查找效率会下降：
+        > 实用最大装填因子取 0.5 <= a <= 0.85
+    2. 当装填因子a太大，扩大散列表
+
+* 分离链接法 (separate chaining)
+
