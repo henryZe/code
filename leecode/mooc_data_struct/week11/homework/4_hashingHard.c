@@ -99,7 +99,7 @@ int Delete(HashTable H, ElementType Key)
     if (Pos < 0)
         return Pos;
 
-    if (H->Cells[Pos].Info == Legitimate) { /* 如果这个单元没有被占，说明Key可以插入在此 */
+    if (H->Cells[Pos].Info == Legitimate) {
         H->Cells[Pos].Info = Empty;
     }
 
@@ -130,29 +130,29 @@ int main(void)
     HashTable hash = CreateTable(tableSize);
 
     int n, pos;
+    // T = O(n * n)
     for (int i = 0; i < tableSize; i++) {
         if (input[i] < 0)
             continue;
 
-redo:
         for (int j = i; j < tableSize; j++) {
-            pos = Insert(hash, input[j]);
+            pos = Find(hash, input[j]);
             // printf("pos = %d\n", pos);
             if (ref[pos] == input[j]) {
-                // find its position, and delete it
+                Insert(hash, input[j]);
                 if (--count)
                     printf("%d ", input[j]);
                 else
                     printf("%d\n", input[j]);
                 input[j] = -1;
                 break;
-            } else {
-                Delete(hash, input[j]);
             }
         }
 
-        if (!(input[i] < 0))
-            goto redo;
+        if (!(input[i] < 0)) {
+            // try again
+            i--;
+        }
     }
 
     return 0;
