@@ -16,7 +16,7 @@ typedef enum {
 } EntryType;
 
 typedef struct HashEntry Cell; /* 散列表单元类型 */
-struct HashEntry{
+struct HashEntry {
     ElementType Data; /* 存放元素 */
     EntryType Info;   /* 单元状态 */
 };

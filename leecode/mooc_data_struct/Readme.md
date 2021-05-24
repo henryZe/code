@@ -1072,3 +1072,8 @@ int hash(const char *key, int TableSize)
     * 优点：关键字删除不需要懒惰删除法，从而没有存储垃圾
 
 ## 附录A 串的模式匹配
+
+### 串的匹配
+
+* 方法1：`strstr`, T = O(n * m)
+* 方法2：KMP 算法, T = O(n + m)

@@ -25,6 +25,7 @@ class Solution:
     # space O(m)
     def strStr(self, haystack: str, needle: str) -> int:
 
+        # time O(m) = O(m * k), k < m
         def partialMatchTable(pattern: str) -> List[int]:
             length = len(pattern)
             pmt = [0] * length
