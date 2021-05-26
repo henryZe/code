@@ -5,15 +5,11 @@
 
 ## mooc
 
-+ 4 * advanced for week 7 -- 4 day for excise Next Sunday
-    b. https://pintia.cn/problem-sets/994805342720868352/problems/994805396953219072
-    c. https://pintia.cn/problem-sets/994805342720868352/problems/994805379664297984
-    d. https://pintia.cn/problem-sets/994805342720868352/problems/994805347523346432
-    e. https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024
++ 3 * advanced for week 7 -- Saturday
+    * https://pintia.cn/problem-sets/994805342720868352/problems/994805347523346432 最短路的题
+    * https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024 此题有难度
 
-+ final examination    -- 1 day Wednesday
-
-Ready For War!
++ final examination -- Wednesday
 
 + Advanced Data Structure and Algorithm
 
