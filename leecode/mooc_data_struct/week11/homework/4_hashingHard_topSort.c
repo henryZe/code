@@ -19,13 +19,6 @@ struct Graph {
     struct Vnode *G;    /* 邻接表 */
 };
 
-#define QUEUE_SIZE 1001
-struct queue {
-    int *queue;
-    int front;
-    int rear;
-};
-
 struct Graph *create_graph(int v_num)
 {
     struct Graph *g = malloc(sizeof(struct Graph));

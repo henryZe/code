@@ -5,9 +5,7 @@
 
 ## mooc
 
-+ 3 * advanced for week 7 -- Saturday
-    * https://pintia.cn/problem-sets/994805342720868352/problems/994805347523346432 最短路的题
-    * https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024 此题有难度
++ https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024 此题有难度
 
 + final examination -- Wednesday
 
