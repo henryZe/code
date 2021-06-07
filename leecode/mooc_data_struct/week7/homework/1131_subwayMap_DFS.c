@@ -30,10 +30,10 @@ int link_line(struct graph *g, int v, int w)
 }
 
 int best_stop, best_line;
-int visited[STOPS_NUM];
-
-int path[STOPS_NUM];
 int best_path[STOPS_NUM];
+
+int visited[STOPS_NUM];
+int path[STOPS_NUM];
 
 /*
  * 1. first print in a line the minimum number of stops.
@@ -56,6 +56,8 @@ void DFS(struct graph *g, int V, int pre_line, int line_num, int stop_num, int e
 
         for (int tmp = 0; tmp <= stop_num; tmp++)
             best_path[tmp] = path[tmp];
+
+        goto end;
     }
 
     struct Vnode *v = &g->hash[V];
@@ -72,6 +74,7 @@ void DFS(struct graph *g, int V, int pre_line, int line_num, int stop_num, int e
         }
     }
 
+end:
     // resume this vertex
     visited[V] = 0;
 }
@@ -100,8 +103,11 @@ struct graph *create_graph(void)
             g->hash[cur].line[g->hash[cur].n_w] = i;
             g->hash[pre].line[g->hash[pre].n_w] = i;
 
-            g->hash[cur].w[g->hash[cur].n_w++] = pre;
-            g->hash[pre].w[g->hash[pre].n_w++] = cur;
+            g->hash[cur].w[g->hash[cur].n_w] = pre;
+            g->hash[pre].w[g->hash[pre].n_w] = cur;
+
+            g->hash[cur].n_w++;
+            g->hash[pre].n_w++;
 
             pre = cur;
         }

@@ -5,11 +5,7 @@
 
 ## mooc
 
-+ https://pintia.cn/problem-sets/994805342720868352/problems/994805489282433024 此题有难度
-
-+ final examination -- Wednesday
-
-+ Advanced Data Structure and Algorithm
+Advanced Data Structure and Algorithm
 
 ## schedule
 
