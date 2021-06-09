@@ -764,7 +764,7 @@ void Merge_sort(int A[], int N)
 }
 ~~~
 
-2. 非递归算法
+2. 非递归算法，循环实现
 
 ~~~ c
 void Merge_pass(int A[], int TmpA[], int N, int length)

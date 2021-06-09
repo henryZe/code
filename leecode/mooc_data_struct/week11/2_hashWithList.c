@@ -21,6 +21,7 @@ struct TblNode {   /* 散列表结点定义 */
     List Heads;    /* 指向链表头结点的数组 */
 };
 
+// 分离链接法 创建 hash
 HashTable CreateTable(int TableSize)
 {
     HashTable H;

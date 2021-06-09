@@ -36,6 +36,11 @@ int NextPrime(int N)
     return p;
 }
 
+/*
+ * 开放定址法 创建 hash
+ * 所谓的开放定址法就是一旦发生了冲突，就去寻找下一个空的散列地址，
+ * 只要散列表足够大，空的散列地址总能找到，并将记录存入。
+ */
 HashTable CreateTable(int TableSize)
 {
     HashTable H;
@@ -55,6 +60,7 @@ HashTable CreateTable(int TableSize)
     return H;
 }
 
+// 平方探测法
 Position Find(HashTable H, ElementType Key)
 {
     Position CurrentPos, NewPos;
