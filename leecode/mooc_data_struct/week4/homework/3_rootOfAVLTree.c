@@ -14,13 +14,6 @@ struct tree {
     struct tree *right;
 };
 
-enum ROTATION {
-    LL,
-    RR,
-    LR,
-    RL,
-};
-
 void inOrder(struct tree *t)
 {
     if (!t)
@@ -74,7 +67,8 @@ int calc_delta(struct tree *t)
     return left_depth - right_depth;
 }
 
-struct tree *rotate_ll(struct tree *t, struct tree *new)
+// SingleLeftRotation
+struct tree *rotate_ll(struct tree *t)
 {
     struct tree *a = t;
     struct tree *b = t->left;
@@ -88,7 +82,8 @@ struct tree *rotate_ll(struct tree *t, struct tree *new)
     return b;
 }
 
-struct tree *rotate_rr(struct tree *t, struct tree *new)
+// SingleRightRotation
+struct tree *rotate_rr(struct tree *t)
 {
     struct tree *a = t;
     struct tree *b = t->right;
@@ -102,45 +97,58 @@ struct tree *rotate_rr(struct tree *t, struct tree *new)
     return b;
 }
 
-struct tree *rotate_lr(struct tree *t, struct tree *new)
+// struct tree *rotate_lr(struct tree *t)
+// {
+//     struct tree *a = t;
+//     struct tree *b = t->left;
+//     struct tree *c = t->left->right;
+
+//     b->right = c->left;
+//     a->left = c->right;
+//     c->left = b;
+//     c->right = a;
+
+//     // update depth
+//     a->depth = calc_depth(a);
+//     b->depth = calc_depth(b);
+//     c->depth = calc_depth(c);
+//     return c;
+// }
+
+// SingleRightRotation + SingleLeftRotation
+struct tree *rotate_lr(struct tree *t)
 {
-    struct tree *a = t;
-    struct tree *b = t->left;
-    struct tree *c = t->left->right;
-
-    b->right = c->left;
-    a->left = c->right;
-    c->left = b;
-    c->right = a;
-
-    // update depth
-    a->depth = calc_depth(a);
-    b->depth = calc_depth(b);
-    c->depth = calc_depth(c);
-    return c;
+    t->left = rotate_rr(t->left);
+    return rotate_ll(t);
 }
 
-struct tree *rotate_rl(struct tree *t, struct tree *new)
+// struct tree *rotate_rl(struct tree *t)
+// {
+//     struct tree *a = t;
+//     struct tree *b = t->right;
+//     struct tree *c = t->right->left;
+
+//     a->right = c->left;
+//     b->left = c->right;
+//     c->left = a;
+//     c->right = b;
+
+//     // update depth
+//     a->depth = calc_depth(a);
+//     b->depth = calc_depth(b);
+//     c->depth = calc_depth(c);
+//     return c;
+// }
+
+// SingleLeftRotation + SingleRightRotation
+struct tree *rotate_rl(struct tree *t)
 {
-    struct tree *a = t;
-    struct tree *b = t->right;
-    struct tree *c = t->right->left;
-
-    a->right = c->left;
-    b->left = c->right;
-    c->left = a;
-    c->right = b;
-
-    // update depth
-    a->depth = calc_depth(a);
-    b->depth = calc_depth(b);
-    c->depth = calc_depth(c);
-    return c;
+    t->right = rotate_ll(t->right);
+    return rotate_rr(t);
 }
 
 struct tree *tree_insert(struct tree *t, struct tree *new)
 {
-
     if (!t)
         return new;
 
@@ -158,37 +166,24 @@ struct tree *tree_insert(struct tree *t, struct tree *new)
         // printf("founder %d depth %d troubler %d depth %d\n",
         //         t->val, t->depth, new->val, new->depth);
 
-        int pos;
         if (t->val >= new->val) {
+            // left subtree
             if (t->left->val >= new->val) {
-                pos = LL;
+                // left
+                t = rotate_ll(t);
             } else {
-                pos = LR;
+                // right
+                t = rotate_lr(t);
             }
         } else {
+            // right subtree
             if (t->right->val >= new->val) {
-                pos = RL;
+                // left
+                t = rotate_rl(t);
             } else {
-                pos = RR;
+                // right
+                t = rotate_rr(t);
             }
-        }
-
-        // printf("position %d\n", pos);
-        switch (pos) {
-        case LL:
-            t = rotate_ll(t, new);
-            break;
-        case RR:
-            t = rotate_rr(t, new);
-            break;
-        case LR:
-            t = rotate_lr(t, new);
-            break;
-        case RL:
-            t = rotate_rl(t, new);
-            break;
-        default:
-            break;
         }
     }
 
