@@ -27,8 +27,11 @@ Idea: After a node is accessed, it is pushed to the root by a series of AVL tree
 Splaying not only moves the accessed node to the root, but also roughly halves the depth of most nodes on the path.
 
 Rotation:
-1. zig-zag: double rotation
-2. zig-zig: single rotation
+* P is the root:
+    1. zig: single rotation
+* P is not the root:
+    1. zig-zag: double rotation
+    2. zig-zig: single rotation
 
 ![splay_tree_rotate](./pic/splay_tree_rotate.png)
 
@@ -37,3 +40,31 @@ Deletion:
 2. Remove X
 3. FindMax(`Tl`)
 4. Make `Tr` the right child of the root of `Tl`.
+
+### 1.3 Amortized Analysis
+
+worst-case bound >= amortized bound >= average-case bound
+> not greater than or equal to, but stronger than
+
+There is no probability is involved with amortized bound.
+
+It's stronger than the so called average-case bound while we have to assume some probability distributions.
+
+**Methods:**
+1. Aggregate analysis
+2. Accounting method
+3. Potential method
+
+**Aggregate analysis**
+
+Idea: Show that for all `n`, a sequence of `n` operations takes `worst-case` time `T(n)` in total. In the worst case, the average cost, or amortized cost, per operation is therefore `T(n)/n`.
+
+**Accounting analysis**
+
+Idea: When an operation's amortized cost `c'i` exceeds its actual cost `ci`, we assign the difference to specific objects in the data structure as credit. Credit can help pay for later operations whose amortized cost is less than their actual cost.
+
+**Potential analysis**
+
+Idea: Potential function
+
+
