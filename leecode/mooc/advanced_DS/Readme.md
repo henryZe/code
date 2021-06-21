@@ -41,6 +41,8 @@ Deletion:
 3. FindMax(`Tl`)
 4. Make `Tr` the right child of the root of `Tl`.
 
+Splay tree is like a simplified version of AVL tree, which doesn't care about what balancing is. Its performance is as good as an AVL tree.
+
 ### 1.3 Amortized Analysis
 
 worst-case bound >= amortized bound >= average-case bound
@@ -66,5 +68,33 @@ Idea: When an operation's amortized cost `c'i` exceeds its actual cost `ci`, we 
 **Potential analysis**
 
 Idea: Potential function
+
+## 2 Red-Black Trees and B+ Trees
+
+### 2.1 Red-Black Trees
+
+Target: Balanced binary search tree
+
+Definition: A `red-black` tree is a binary search tree that satisfies the following red-black properties:
+1. Every node is either red or black.
+2. The root is black.
+3. Every leaf (NIL) is black.
+4. If a node is red, then both its children are black.
+5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes.
+
+Definition: The `black-height` of any node x, denoted by bh(x), is the number of black nodes on any simple path from x (x not included) down to a leaf. bh(Tree) = bh(root).
+
+Lemma: A red-black tree with N internal nodes has height at most `2ln(N+1)`.
+
+Proof:
+1. For any node x, sizeof(x) >= 2^(bh(x)) - 1.
+    > `sizeof` means number of internal nodes in the subtree rooted at x. Prove by induction (归纳法证明).
+2. bh(Tree) >= h(Tree) / 2.
+    > Since for every red mode, both of its children must be black, hence on any simple path from root to a leaf, at least half the nodes (root not included) must be black.
+
+
+
+
+
 
 
