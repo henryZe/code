@@ -71,7 +71,7 @@ Idea: Potential function
 
 ## 2 Red-Black Trees and B+ Trees
 
-### 2.1 Red-Black Trees
+### 2.1 Red-Black Trees: Definition
 
 Target: Balanced binary search tree
 
@@ -92,7 +92,38 @@ Proof:
 2. bh(Tree) >= h(Tree) / 2.
     > Since for every red mode, both of its children must be black, hence on any simple path from root to a leaf, at least half the nodes (root not included) must be black.
 
+Lemma: In a Red-Black tree, the path from the root to the farthest leaf is no more than twice as long as the path from the root to the nearest leaf.
 
+### 2.2 Red-Black Trees: Operations
+
+* insert
+    1. When we make an insertion, first colored the new node red. If the number of black nodes is not changed, we don't have to do anything to re-balance the tree.
+    2. The overall performance is basically the same as what we have in an AVL tree.
+
+* delete
+    * Delete a leaf node: reset its parent link to NIL. Adjust only if the node is black.
+    * Delete a degree 1 node: replace the node by its single child.
+    * Delete a degree 2 node:
+        1. replace the node by the largest one in its left subtree or the smallest one in its right subtree (Keep the color).
+        2. delete the replacing node from the subtree.
+
+Must add 1 black to the path of the replacing node.
+
+## 7 Divide and Conquer
+
+Recursively:
+    **Divide** the problem into a number of sub-problems
+    **Conquer** the sub-problems by solving them recursively
+    **Combine** the solutions to the sub-problems into the solution for the original problem
+
+### 7.1 Closest Points
+
+Sort according to x-coordinates and divide;
+Conquer by forming a solution from left, right and cross.
+
+`T(N) = 2T(N/2) + cN`
+
+### 7.2 Substitution and Recursion-Tree
 
 
 
