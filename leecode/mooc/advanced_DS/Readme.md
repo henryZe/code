@@ -109,7 +109,17 @@ Lemma: In a Red-Black tree, the path from the root to the farthest leaf is no mo
 
 Must add 1 black to the path of the replacing node.
 
-## 7 Divide and Conquer
+## 6 Backtracking 回溯法
+
+A sure-fire way to find the answer to a problem is to `make a list of all candidate answers, examine each`, and following the examination of all or some of the candidates, declare the identified answer.
+
+Backtracking enables us to `eliminate` the explicit examination of `a large subset` of the candidates while still guaranteeing that the answer will be found if the algorithm is run to termination.
+
+### 6.2 Eight Queens
+
+
+
+## 7 Divide and Conquer 分治法
 
 Recursively:
     **Divide** the problem into a number of sub-problems
@@ -123,9 +133,64 @@ Conquer by forming a solution from left, right and cross.
 
 `T(N) = 2T(N/2) + cN`
 
-### 7.2 Substitution and Recursion-Tree
+1. Substitution
+2. Recursion-Tree
+3. Master method
 
+## 8 Dynamic Programing 动态规划
 
+Solve sub-problems just once and save answers in a table.
 
+Use a table instead of recursion (Time-Space Tradeoff)
+
+### 8.1 Fibonacci Number
+
+Trouble maker: The growth of redundant calculations is explosive.
+Solution: Record the two most recently computed values to avoid recursive calls.
+
+`F(n) = F(n - 1) + F(n - 2)`
+
+~~~ c
+int Fibonacci(int n)
+{
+    int i, last, nextToLast, Answer;
+
+    if (n <= 1)
+        return 1;
+
+    last = nextToLast = 1;
+
+    for (i = 2; i <= n; i++) {
+        answer = last + nextToLast;
+        nextToLast = last;
+        last = answer;
+    }
+
+    return answer;
+}
+~~~
+
+### 8.2 Ordering Matrix Multiplications
+
+### 8.5 Product Assembly
+
+* How to design a DP method
+    1. Characterize an optimal solution
+        * An optimal solution contains an optimal solution of a sub-problem.
+    2. Recursively define the optimal values
+        * An optimal path to stage is based on an optimal path to (stage - 1).
+    3. Compute the values in some order
+    4. Reconstruct the solving strategy
+
+### 8.6 Summary
+
+Element of DP:
+    * Optimal substructure
+    * Overlapping sub-problems
+
+When can't we apply dynamic programming?
+    * History dependency if sub-problems do not overlap
+
+## 9 Greedy Algorithms
 
 
