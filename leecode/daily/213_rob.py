@@ -2,28 +2,27 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        def robRange(start: int, end: int) -> int:
+
+        def rob_range(nums: List[int], start: int, end: int):
+            f = [0] * len(nums)
             for i in range(start, end):
                 if i == start:
-                    dp[i] = nums[start]
+                    f[i] = nums[start]
                 elif i == start + 1:
-                    dp[i] = max(nums[start], nums[start + 1])
+                    f[i] = max(nums[start : start + 2])
                 else:
-                    dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-            return dp[end - 1]
+                    f[i] = max(f[i - 2] + nums[i], f[i - 1])
+            return f[end - 1]
 
-        if not nums:
-            return 0
-
-        n = len(nums)
-        if n == 1:
+        size = len(nums)
+        if size == 1:
             return nums[0]
 
-        dp = [0] * n
-        return max(robRange(0, n - 1), robRange(1, n))
+        return max(rob_range(nums, 0, size - 1), rob_range(nums, 1, size))
 
 # nums = [2,3,2]
+# nums = [2,7,9,3,1]
 # nums = [1,2,3,1]
-# nums = [1]
-nums = [2,1,1,2]
+# nums = [1,2]
+nums = [1]
 print(Solution().rob(nums))
