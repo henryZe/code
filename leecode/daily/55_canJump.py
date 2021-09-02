@@ -17,7 +17,7 @@ class Solution:
                     else:
                         dp[pos + i] = False
             return ret
-        
+
         dp = [True] * len(nums)
         return check(0)
 
