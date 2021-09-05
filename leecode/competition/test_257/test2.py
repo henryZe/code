@@ -1,24 +1,21 @@
 from typing import List
 
-def takeAttack(member):
-    return member[0]
-
 class Solution:
     def numberOfWeakCharacters(self, properties: List[List[int]]) -> int:
-        n = len(properties)
-        count = 0
+        # main key is x[0], second key is -x[1] ('-' means reverse)
+        # O(n * logn)
+        properties.sort(key = lambda x: (x[0], -x[1]))
 
-        temp = properties
-        temp.sort(key=takeAttack)
-        # print(temp)
-        for i in range(0, n):
-            for j in range(i, n):
-                if temp[i][0] < temp[j][0] and temp[i][1] < temp[j][1]:
-                    print(temp[i], temp[j])
-                    count += 1
-                    break
-
-        return count
+        res = 0
+        right = [-1, -1]
+        # O(n)
+        for item in properties[::-1]:
+            # only compare x[1]
+            if right[0] > item[0] and right[1] > item[1]:
+                res += 1
+            elif right[1] < item[1]:
+                right = item
+        return res
 
 nums = [
     # [[5,5],[6,3],[3,6]],
