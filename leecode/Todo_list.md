@@ -12,5 +12,5 @@ Advanced Data Structure and Algorithm
 1. daily 1 question
 2. 1 design pattern
 
-DP:
+Design Pattern:
 https://leetcode-cn.com/leetbook/read/design-patterns/99sx01/

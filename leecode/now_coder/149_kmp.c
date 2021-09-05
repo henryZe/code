@@ -51,14 +51,15 @@ int kmp(char *pattern, char *string)
             }
         }
 
+        if (s == n) {
+            // check end
+            break;
+        }
+
         if (p == m) {
             // match!
             times++;
             p = match[p - 1] + 1;
-        }
-
-        if (s == n) {
-            break;
         }
     }
 
