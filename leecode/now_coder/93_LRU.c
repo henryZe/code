@@ -1,3 +1,9 @@
+struct node {
+    int *data;
+    struct node *prev;
+    struct node *next;
+};
+
 void move(int b, int e, int **arr);
 int get(int b, int e, int k, int **arr, int *val);
 
@@ -19,14 +25,15 @@ int* LRU(int** operators, int operatorsRowLen, int* operatorsColLen, int k, int*
     int curIdx = 0;
     int getVal;
     int *retArr = (int *) malloc(operatorsRowLen * sizeof(int));
-    int **curArr = (int **) malloc(k * sizeof(int *));
+    struct node *curArr = malloc(k * sizeof(struct node));
     int cnt = 0;
-    
+
     for (i = 0; i < operatorsRowLen; i++) {
         curRow = operators[i];
         if (curRow[0] == 1) {
             // set
-            curArr[curIdx] = curRow;
+            curArr[curIdx].data = curRow;
+            curArr[curIdx - 1].next
             curIdx++;
             curIdx = curIdx == k ? 0 : curIdx;
             cnt++;
@@ -65,7 +72,7 @@ int get(int b, int e, int k, int **arr, int *val) {
         fr = arr[i];
         if (fr[1] == k) {
             *val = fr[2];
-            move(i, e, arr);
+            move(i, e, k, arr);
             return 1;
         }
     }
@@ -73,11 +80,13 @@ int get(int b, int e, int k, int **arr, int *val) {
     return 0;
 }
 
-void move(int b, int e, int **arr) {
+// move from b to e - 1
+void move(int b, int e, int k, int **arr) {
     int i;
     int *f = arr[b];
     for (i = b; i < e - 1; i++) {
         arr[i] = arr[i + 1];
+        if (i + 1)
     }
     arr[i] = f;
 }
