@@ -1,11 +1,93 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 struct node {
-    int *data;
+    int key;
+    int value;
     struct node *prev;
     struct node *next;
 };
 
-void move(int b, int e, int **arr);
-int get(int b, int e, int k, int **arr, int *val);
+struct cache_info {
+    struct node cache;
+    int capacity;
+    int size;
+};
+
+struct node *list_insert_head(struct node *head, struct node *n)
+{
+    n->prev = head->prev;
+    n->next = head;
+    head->prev->next = n;
+    head->prev = n;
+
+    // return new head pointer
+    return n;
+}
+
+struct node *list_del(struct node *n)
+{
+    n->prev->next = n->next;
+    n->next->prev = n->prev;
+
+    // return delete pointer
+    return n;
+}
+
+struct node *list_del_tail(struct node *head)
+{
+    struct node *tail = head->prev;
+    list_del(tail);
+    // return delete pointer
+    return tail;
+}
+
+void put(struct cache_info *cache, int key, int value)
+{
+    int isExist = 0;
+    struct node *n = cache->cache;
+
+    for (int i = 0; i < cache->size; i++) {
+        if (n->key == key) {
+            // match
+            isExist = 1;
+            break;
+        }
+        n = n->next;
+    }
+
+    if (!isExist) {
+        n = list_del_tail(cache->cache);
+        if (cache->size < cache->capacity) {
+            cache->size++;
+        }
+    } else {
+        list_del(n);
+    }
+
+    n->key = key;
+    n->value = value;
+    cache->cache = list_insert_head(cache->cache, n);
+}
+
+int get(struct cache_info *cache, int key)
+{
+    int value = -1;
+    struct node *n = cache->cache;
+
+    for (int i = 0; i < cache->size; i++) {
+        if (n->key == key) {
+            // match
+            value = n->value;
+            n = list_del(n);
+            cache->cache = list_insert_head(cache->cache, n);
+            break;
+        }
+        n = n->next;
+    }
+
+    return value;
+}
 
 /**
  * lru design
@@ -18,75 +100,38 @@ int get(int b, int e, int k, int **arr, int *val);
  */
 int* LRU(int** operators, int operatorsRowLen, int* operatorsColLen, int k, int* returnSize )
 {
-    int retLen = 0;
-    int i = 0;
     int *curRow;
-    int curKey, isFull = 0, isGet = 0;;
-    int curIdx = 0;
-    int getVal;
-    int *retArr = (int *) malloc(operatorsRowLen * sizeof(int));
-    struct node *curArr = malloc(k * sizeof(struct node));
-    int cnt = 0;
+    int *retArr = (int *)malloc(operatorsRowLen * sizeof(int));
+    struct node *freeNode = (struct node *)malloc(k * sizeof(struct node));
+    struct node *cache;
+    struct cache_info info;
 
-    for (i = 0; i < operatorsRowLen; i++) {
+    cache = freeNode;
+    cache->next = cache->prev = cache;
+    for (int i = 1; i < k; i++) {
+        cache = list_insert_head(cache, freeNode + i);
+    }
+
+    info.cache = cache;
+    info.capacity = k;
+    info.size = 0;
+
+    *returnSize = 0;
+    for (int i = 0; i < operatorsRowLen; i++) {
         curRow = operators[i];
         if (curRow[0] == 1) {
-            // set
-            curArr[curIdx].data = curRow;
-            curArr[curIdx - 1].next
-            curIdx++;
-            curIdx = curIdx == k ? 0 : curIdx;
-            cnt++;
+            // put
+            put(&info, curRow[1], curRow[2]);
         } else {
             // get
-            curKey = curRow[1];
-            isFull = cnt >= k ? 1 : 0;
-            if (isFull) {
-                isGet = get(curIdx, k, curKey, curArr, &getVal);
-                if (isGet) {
-                    if (curIdx != 0) {
-                        curRow = curArr[k - 1];
-                        curArr[k - 1] = curArr[0];
-                        curArr[0] = curRow;
-                        move(0, curIdx, curArr);
-                    }
-                } else {
-                    get(0, curIdx, curKey, curArr, &getVal);
-                }
-            } else {
-                get(0, curIdx, curKey, curArr, &getVal);
-            }
-            retArr[retLen++] = getVal;
+            retArr[*returnSize++] = get(&info, curRow[1]);
         }
     }
-    *returnSize = retLen;
-    free(curArr);
+
     return retArr;
 }
 
-int get(int b, int e, int k, int **arr, int *val) {
-    int i;
-    int *fr;
-    int *cr;
-    for (i = b; i < e; i++) {
-        fr = arr[i];
-        if (fr[1] == k) {
-            *val = fr[2];
-            move(i, e, k, arr);
-            return 1;
-        }
-    }
-    *val = -1;
+int main(void)
+{
     return 0;
-}
-
-// move from b to e - 1
-void move(int b, int e, int k, int **arr) {
-    int i;
-    int *f = arr[b];
-    for (i = b; i < e - 1; i++) {
-        arr[i] = arr[i + 1];
-        if (i + 1)
-    }
-    arr[i] = f;
 }
