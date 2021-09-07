@@ -9,20 +9,19 @@ struct node {
 };
 
 struct cache_info {
-    struct node cache;
+    struct node head;
     int capacity;
     int size;
 };
 
-struct node *list_insert_head(struct node *head, struct node *n)
+void list_insert(struct node *head, struct node *n)
 {
-    n->prev = head->prev;
-    n->next = head;
-    head->prev->next = n;
-    head->prev = n;
+    struct node *next = head->next;
 
-    // return new head pointer
-    return n;
+    n->prev = head;
+    n->next = next;
+    next->prev = n;
+    head->next = n;
 }
 
 struct node *list_del(struct node *n)
@@ -34,18 +33,31 @@ struct node *list_del(struct node *n)
     return n;
 }
 
-struct node *list_del_tail(struct node *head)
+void print_cache(struct cache_info *cache)
 {
-    struct node *tail = head->prev;
-    list_del(tail);
-    // return delete pointer
-    return tail;
+    struct node *n = cache->head.next;
+
+    for (int i = 0; i < cache->size; i++) {
+        printf("key %d value %d\n", n->key, n->value);
+        n = n->next;
+    }
+}
+
+void print_ret(int size, int *array)
+{
+    int i;
+
+    printf("[");
+    for (i = 0; i < size - 1; i++) {
+        printf("%d,", array[i]);
+    }
+    printf("%d]\n", array[i]);
 }
 
 void put(struct cache_info *cache, int key, int value)
 {
     int isExist = 0;
-    struct node *n = cache->cache;
+    struct node *n = cache->head.next;
 
     for (int i = 0; i < cache->size; i++) {
         if (n->key == key) {
@@ -57,30 +69,30 @@ void put(struct cache_info *cache, int key, int value)
     }
 
     if (!isExist) {
-        n = list_del_tail(cache->cache);
+        n = list_del(cache->head.prev);
         if (cache->size < cache->capacity) {
             cache->size++;
         }
     } else {
-        list_del(n);
+        n = list_del(n);
     }
 
     n->key = key;
     n->value = value;
-    cache->cache = list_insert_head(cache->cache, n);
+    list_insert(&cache->head, n);
 }
 
 int get(struct cache_info *cache, int key)
 {
     int value = -1;
-    struct node *n = cache->cache;
+    struct node *n = cache->head.next;
 
     for (int i = 0; i < cache->size; i++) {
         if (n->key == key) {
             // match
             value = n->value;
             n = list_del(n);
-            cache->cache = list_insert_head(cache->cache, n);
+            list_insert(&cache->head, n);
             break;
         }
         n = n->next;
@@ -89,30 +101,20 @@ int get(struct cache_info *cache, int key)
     return value;
 }
 
-/**
- * lru design
- * @param operators int整型二维数组 the ops
- * @param operatorsRowLen int operators数组行数
- * @param operatorsColLen int* operators数组列数
- * @param k int整型 the k
- * @return int整型一维数组
- * @return int* returnSize 返回数组行数
- */
 int* LRU(int** operators, int operatorsRowLen, int* operatorsColLen, int k, int* returnSize )
 {
     int *curRow;
     int *retArr = (int *)malloc(operatorsRowLen * sizeof(int));
     struct node *freeNode = (struct node *)malloc(k * sizeof(struct node));
-    struct node *cache;
     struct cache_info info;
 
-    cache = freeNode;
-    cache->next = cache->prev = cache;
-    for (int i = 1; i < k; i++) {
-        cache = list_insert_head(cache, freeNode + i);
+    info.head.prev = &info.head;
+    info.head.next = &info.head;
+
+    for (int i = 0; i < k; i++) {
+        list_insert(&info.head, freeNode + i);
     }
 
-    info.cache = cache;
     info.capacity = k;
     info.size = 0;
 
@@ -124,8 +126,10 @@ int* LRU(int** operators, int operatorsRowLen, int* operatorsColLen, int k, int*
             put(&info, curRow[1], curRow[2]);
         } else {
             // get
-            retArr[*returnSize++] = get(&info, curRow[1]);
+            retArr[(*returnSize)++] = get(&info, curRow[1]);
+            // print_ret(*returnSize, retArr);
         }
+        // print_cache(&info);
     }
 
     return retArr;
@@ -133,5 +137,31 @@ int* LRU(int** operators, int operatorsRowLen, int* operatorsColLen, int k, int*
 
 int main(void)
 {
+    int op_num = 0;
+    scanf("%d\n", &op_num);
+
+    int **operators = malloc(op_num * sizeof(int *));
+    int op, key, value;
+    for (int i = 0; i < op_num; i++) {
+        operators[i] = malloc(3 * sizeof(int));
+        scanf("[%d,", &op);
+        if (op == 1) {
+            scanf("%d,%d],", &key, &value);
+            operators[i][0] = op;
+            operators[i][1] = key;
+            operators[i][2] = value;
+        } else {
+            scanf("%d],", &key);
+            operators[i][0] = op;
+            operators[i][1] = key;
+        }
+    }
+
+    int k = 0;
+    scanf("%d\n", &k);
+
+    int retSize;
+    print_ret(retSize, LRU(operators, op_num, NULL, k, &retSize));
+
     return 0;
 }
