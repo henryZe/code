@@ -38,6 +38,5 @@ int main(void)
     printf("%d\n", ret);
 
     // print_array(array, num);
-
     return 0;
 }
