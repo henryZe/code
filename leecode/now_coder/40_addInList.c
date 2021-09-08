@@ -3,8 +3,8 @@
 #include "stdlib.h"
 
 struct ListNode {
-	int val;
-	struct ListNode *next;
+    int val;
+    struct ListNode *next;
 };
 
 int val(struct ListNode *node)
@@ -19,23 +19,6 @@ struct ListNode *malloc_listnode(int val, struct ListNode *next)
     struct ListNode *node = (struct ListNode *)malloc(sizeof(struct ListNode));
     node->val = val;
     node->next = next;
-    return node;
-}
-
-struct ListNode *mk_list(int num)
-{
-    int val;
-    struct ListNode *prev = NULL;
-    struct ListNode *node = NULL;
-
-    while (num) {
-        val = num % 10;
-        num = num / 10;
-
-        node = malloc_listnode(val, prev);
-        prev = node;
-    }
-
     return node;
 }
 
