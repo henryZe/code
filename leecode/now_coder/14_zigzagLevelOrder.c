@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 struct TreeNode {
     struct TreeNode *left;
@@ -20,7 +21,7 @@ int** zigzagLevelOrder(struct TreeNode* root, int* returnSize, int** returnColum
     int* num_queue = malloc(2 * N * sizeof(int));
     int left = 0, right = 0;
     int front = N, rear = N;
-    unsigned char left_order = 1;
+    unsigned char left_order = true;
     int size;
     int column = 0;
     int i;
@@ -77,12 +78,17 @@ int main(void)
     res = zigzagLevelOrder(&root, &returnSize, &returnColumnSizes);
     for (i = 0; i < returnSize; i++) {
         printf("[");
-        for (j = 0; j < returnColumnSizes[i]; j++) {
+        for (j = 0; j < returnColumnSizes[i] - 1; j++) {
             printf("%d,", (res[i])[j]);
         }
-        printf("], ");
+        if (j == returnColumnSizes[i] - 1) {
+            printf("%d", (res[i])[j]);
+        }
+        if (i == returnSize - 1) {
+            printf("]\n");
+        } else {
+            printf("],");
+        }
     }
-    printf("\n");
-
     return 0;
 }

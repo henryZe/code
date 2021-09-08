@@ -5,6 +5,7 @@ struct ListNode {
     struct ListNode *next;
 };
 
+// a' + c + b' == b' + c + a'
 struct ListNode* FindFirstCommonNode(struct ListNode* pHead1, struct ListNode* pHead2 ) {
     // write code here
     struct ListNode* p1 = pHead1;
