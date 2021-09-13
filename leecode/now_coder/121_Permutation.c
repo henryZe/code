@@ -4,29 +4,28 @@
 
 struct hash {
     int table[256];
+    char *hash;
     int type;
     int num;
 };
 
 void dfs(char **ret, int *retSize, char *cur, int pos, struct hash *h)
 {
-    if (pos + 1 == h->num) {
+    if (pos == h->num) {
         ret[*retSize] = cur;
         (*retSize)++;
-        printf("cur %s\n", cur);
         return;
     }
 
     for (int i = 0; i < h->type; i++) {
-        for (int j = 0; j < 256; j++) {
-            if (h->table[j]) {
-                h->table[j]--;
-                char *newStr = (char *)malloc(h->num);
-                memcpy(newStr, cur, pos);
-                newStr[pos] = j;
-                dfs(ret, retSize, newStr, pos + 1, h);
-                h->table[j]++;
-            }
+        int j = h->hash[i];
+        if (h->table[j]) {
+            h->table[j]--;
+            char *newStr = (char *)malloc(h->num);
+            memcpy(newStr, cur, pos);
+            newStr[pos] = j;
+            dfs(ret, retSize, newStr, pos + 1, h);
+            h->table[j]++;
         }
     }
 }
@@ -44,11 +43,14 @@ char **Permutation(char *ss)
     memset((char *)&h, 0, sizeof(h));
     h.type = 0;
     h.num = n;
+    h.hash = (char *)malloc(n);
 
     for (int i = 0; i < n; i++) {
         int index = ss[i];
         if (h.table[index] == 0) {
+            h.hash[h.type] = index;
             h.type++;
+            h.hash[h.type] = 0;
         }
         h.table[index]++;
     }
@@ -64,12 +66,12 @@ char **Permutation(char *ss)
 
 int main(void)
 {
-    char **ret = Permutation("ab");
     int i = 0;
+    // char **ret = Permutation("ab");
+    char **ret = Permutation("abc");
     while (ret[i]) {
         printf("%s\n", ret[i]);
         i++;
     }
-
     return 0;
 }
