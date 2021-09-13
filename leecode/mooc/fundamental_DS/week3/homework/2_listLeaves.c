@@ -66,6 +66,11 @@ struct tree *create_tree(void)
     return NULL;
 }
 
+bool queue_is_empty(struct queue *q)
+{
+    return q->front == q->rear;
+}
+
 int enqueue(struct queue *q, struct tree *node)
 {
     if (q->rear == (q->front - 1)) {
@@ -81,18 +86,13 @@ struct tree *dequeue(struct queue *q)
 {
     struct tree *node;
 
-    if (q->front == q->rear) {
+    if (queue_is_empty(q)) {
         return NULL;
     }
 
     node = q->queue[q->front];
     q->front = (q->front + 1) % QUEUE_SIZE;
     return node;
-}
-
-bool queue_is_empty(struct queue *q)
-{
-    return q->front == q->rear;
 }
 
 int queue_size(struct queue *q)
