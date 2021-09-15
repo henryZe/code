@@ -8,21 +8,19 @@ class Solution:
                 str_dict[s] += 1
 
         str_set = list(set(strings))
+        # sorted by alphabets
         str_set.sort()
         n_set = len(str_set)
         str_index = list(range(n_set))
 
         def compare(x):
             return str_dict[str_set[x]]
+        # sorted by times of appearance
         str_index.sort(key=compare, reverse=True)
 
         ret = []
-        count = 0
-        for i in str_index:
-            if count == k:
-                break
+        for i in str_index[:k]:
             ret.append([str_set[i], str(str_dict[str_set[i]])])
-            count += 1
 
         return ret
 

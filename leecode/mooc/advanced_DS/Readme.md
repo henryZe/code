@@ -111,12 +111,23 @@ Must add 1 black to the path of the replacing node.
 
 ## 6 Backtracking 回溯法
 
-A sure-fire way to find the answer to a problem is to `make a list of all candidate answers, examine each`, and following the examination of all or some of the candidates, declare the identified answer.
+* exhaustive search
+
+> A sure-fire way to find the answer to a problem is to `make a list of all candidate answers, examine each`, and following the examination of all or some of the candidates, declare the identified answer.
 
 Backtracking enables us to `eliminate` the explicit examination of `a large subset` of the candidates while still guaranteeing that the answer will be found if the algorithm is run to termination.
+> pruning
+
+The `basic idea` is that suppose we have a partial solution (X1, ..., Xi) where each xk belongs to Sk for 1 <= k <= i < n. First we add x(i+1) belongs to S(i+1) and check if (x1, ..., xi, x(i+1)) satisfies the constrains. If the answer is "yes" we continue to add the next x, else we delete xi and backtrack to the previous partial solution (x1, ..., x(i-1)).
 
 ### 6.2 Eight Queens
 
+Constrains:
+1. Si = {1,2,3,4,5,6,7,8} for 1<=i<=8
+2. xi != xj if i != j
+3. (xi - xj)/(i - j) != 1 or -1
+
+### 6.3 Turnpike Reconstruct
 
 
 ## 7 Divide and Conquer 分治法
