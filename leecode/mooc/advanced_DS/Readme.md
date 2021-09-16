@@ -129,6 +129,33 @@ Constrains:
 
 ### 6.3 Turnpike Reconstruct
 
+Template
+
+~~~ c
+bool Backtracking(int i)
+{
+    found = false;
+    if (i > N)
+        return true;
+
+    for (each xi in Si) {
+        /* check if satisfies the restriction R */
+        /* pruning */
+        ok = check((x1, ..., xi), R);
+        if (ok) {
+            count xi in;
+            found = Backtracking(i + 1);
+            if (!found)
+                undo(i);
+        }
+
+        if (found)
+            break;
+    }
+
+    return found;
+}
+~~~
 
 ## 7 Divide and Conquer 分治法
 
