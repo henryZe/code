@@ -6,6 +6,7 @@
 
 bool check_IPv4(char *IP, char *next)
 {
+    // check '0' as beginning
     if (IP[0] == '0') {
         if (IP[1])
             return false;
@@ -14,16 +15,15 @@ bool check_IPv4(char *IP, char *next)
     errno = 0;
     char *end;
     long num = strtol(IP, &end, 10);
+    // check convert success
     if (errno)
         return false;
 
+    // check each char of the string is valid
     if (end != next)
         return false;
 
-    if (end == IP)
-        // no number
-        return false;
-
+    // range: 0 ~ 255
     if (num < 0 || num > 255)
         return false;
 
@@ -53,15 +53,17 @@ bool check_IPv6(char *IP, char *next)
     errno = 0;
     char *end;
     long num = strtol(IP, &end, 16);
+    // check convert success
     if (errno)
         return false;
 
+    // check each char of the string is valid
     if (end != next)
         return false;
 
     int width = end - IP;
+    // check IP is a 16-bit number
     if (width < 1 || width > 4)
-        // no number
         return false;
 
     return true;

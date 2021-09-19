@@ -171,8 +171,11 @@ Conquer by forming a solution from left, right and cross.
 
 `T(N) = 2T(N/2) + cN`
 
-1. Substitution
-2. Recursion-Tree
+### 7.2 Substitution and Recursion-Tree
+
+Three method for solving recurrence:
+1. Substitution 替换法
+2. Recursion-Tree 递归树
 3. Master method
 
 ## 8 Dynamic Programing 动态规划
@@ -180,6 +183,8 @@ Conquer by forming a solution from left, right and cross.
 Solve sub-problems just once and save answers in a table.
 
 Use a table instead of recursion (Time-Space Tradeoff)
+
+To solve a problem by dynamic programming instead of recursions, the key approach is to store the results of computations for the subproblems so that we only have to compute each different subproblem once. Those solutions can be stored in an array or a hash table.
 
 ### 8.1 Fibonacci Number
 
@@ -198,6 +203,7 @@ int Fibonacci(int n)
 
     last = nextToLast = 1;
 
+    // T(N) = O(N), linear
     for (i = 2; i <= n; i++) {
         answer = last + nextToLast;
         nextToLast = last;
@@ -208,7 +214,39 @@ int Fibonacci(int n)
 }
 ~~~
 
-### 8.2 Ordering Matrix Multiplications
+### 8.2 Matrix Multiplication
+
+~~~ c
+// r contains number of columns for each of the N matrices
+// r[0] is the number of rows in matrix 1
+// Minimum number of Multiplication is left in M[1][N]
+void OptMatrix(const long r[], int N, TwoTimArray M[][])
+{
+    int i, j, k, L;
+    long ThisM;
+
+    for (i = 1; i <= N; i++)
+        M[i][i] = 0;
+
+    // T(N) = O(N^3)
+    for (k = 1; k < N; k++) {
+        for (i = 1; i <= N - k; i++) {
+            j = i + k;
+            M[i][j] = Infinity;
+
+            for (L = i; L < j; L++) {
+                ThisM = M[i][L] + M[L + 1][j] + r[i - 1] * r[L] * r[j];
+                if (ThisM < M[i][j])
+                    M[i][j] = ThisM;
+            }
+        }
+    }
+}
+~~~
+
+### 8.3 Optimal Binary Search Trees
+
+O(N^3)
 
 ### 8.5 Product Assembly
 
@@ -218,7 +256,7 @@ int Fibonacci(int n)
     2. Recursively define the optimal values
         * An optimal path to stage is based on an optimal path to (stage - 1).
     3. Compute the values in some order
-    4. Reconstruct the solving strategy
+    4. Reconstruct the solving strategy(e.g. OBST)
 
 ### 8.6 Summary
 
