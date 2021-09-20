@@ -269,4 +269,18 @@ When can't we apply dynamic programming?
 
 ## 9 Greedy Algorithms
 
+Optimization problems:
+> Given a set of constrains and an optimization function. Solutions that satisfy the constrains are called feasible solutions. A feasible solution for which the optimization function has the best possible value is called an optimal solution.
+
+The greedy method:
+> Make the best decision at each stage, under some greedy criterion. A decision made in one stage is not changed in a later stage, so each decision should assure feasibility.
+
+Note:
+* Greedy algorithm works only if the local optimum is equal to the global optimum.
+* Greedy algorithm does not guarantee optimal solutions. However, it generally produces solutions that are very close in value(heuristics) to the optimal, and hence is intuitively appealing when finding the optimal solution takes too much time.
+
+### 9.1 Activity Selection
+
+
+
 
