@@ -1,7 +1,10 @@
 while True:
     try:
+        # str[1:]
         s1 = input().split()[1:]
+        # str[1:] ->int ->set ->list
         s2 = list(set(map(int, input().split()[1:])))
+        # increase order
         s2.sort()
 
         rst = []
