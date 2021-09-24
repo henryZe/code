@@ -36,13 +36,15 @@ int searchSeat(struct seatInfo *s)
         }
     }
 
+    // pos 9 is idle
     if (begin != -1) {
-        interval = s->seatNum - 1 - begin;
         cur_idx = s->seatNum - 1;
-    }
-    if (interval > min_interval) {
-        idx = cur_idx;
-        min_interval = interval;
+        interval = s->seatNum - 1 - begin;
+
+        if (interval > min_interval) {
+            idx = cur_idx;
+            min_interval = interval;
+        }
     }
 
     return idx;
