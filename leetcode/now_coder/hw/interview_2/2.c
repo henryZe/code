@@ -80,6 +80,7 @@ int main(void)
         scanf("%s\n", str[i]);
         str_to_cap(str[i], capacity[i]);
 
+        // index array
         idx[i] = i;
     }
 

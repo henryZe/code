@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// recursion
 int apple(long long num, int time)
 {
     while (num % 2 == 0) {

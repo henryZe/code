@@ -8,6 +8,7 @@ struct seatInfo {
     int present;
 };
 
+// dynamic programming
 int searchSeat(struct seatInfo *s)
 {
     if (s->present == 0)
@@ -36,10 +37,10 @@ int searchSeat(struct seatInfo *s)
         }
     }
 
-    // pos 9 is idle
+    // last pos is idle
     if (begin != -1) {
         cur_idx = s->seatNum - 1;
-        interval = s->seatNum - 1 - begin;
+        interval = cur_idx - begin;
 
         if (interval > min_interval) {
             idx = cur_idx;
