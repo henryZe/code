@@ -25,7 +25,7 @@ class Solution:
                             else:
                                 dp[i] = dp[i - 1] + 2
 
-        print(dp)
+        # print(dp)
         return max(dp)
 
 # s = "(()"
