@@ -2,7 +2,6 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define PRINTSUCCESS(x, y) x ## y
 #define EXPECT_EQ(x, y) { assert(x == y); printf("assert success\n"); }
 #define FUNCTION_NAME(x, y, z) x ## y ## z
 #define TEST(x, y) void FUNCTION_NAME(test, x, y)(void)
@@ -90,6 +89,8 @@ int GetMinAmount(int **suppliers, int suppliersSize, int *suppliersColSize, int 
     h = heapinit();
 
     for (int i = 0; i < suppliersSize; i++) {
+        assert(suppliersColSize[i] == 2);
+
         tmp.value = suppliers[i][0];
         tmp.index = i;
         heappush(h, &tmp);

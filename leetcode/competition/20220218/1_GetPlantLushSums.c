@@ -1,6 +1,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
+
+#define EXPECT_EQ(x, y) { assert(x == y); printf("assert success\n"); }
+#define FUNCTION_NAME(x, y, z) x ## y ## z
+#define TEST(x, y) void FUNCTION_NAME(test, x, y)(void)
+#define CALL_TEST(x, y) FUNCTION_NAME(test, x, y)()
 
 struct pos {
     int x;
@@ -106,6 +112,8 @@ int cal_sum(int **growth, int growthSize, int *growthColSize)
 int GetPlantLushSums(int **growth, int growthSize, int *growthColSize,
                     int *interfere, int interfereSize, int time)
 {
+    assert(interfereSize == 4);
+
     for (int i = 1; i <= time; i++) {
         cal_rule1(growth, growthSize, growthColSize);
         cal_rule2(growth, growthSize, growthColSize);
@@ -120,50 +128,35 @@ int GetPlantLushSums(int **growth, int growthSize, int *growthColSize,
     return ret;
 }
 
-bool TEST1(void)
-{
+TEST(TestGetPlantLushSums, case1){
     int row1[] = {4,8,4,10};
     int row2[] = {0,3,4,5};
     int row3[] = {2,10,9,7};
     int *growth[] = {row1, row2, row3};
     int growthColSize[] = {sizeof(row1) / sizeof(int), sizeof(row2) / sizeof(int), sizeof(row3) / sizeof(int)};
-
     int interfere[] = {1,2,3,5};
     int interfereSize = 4;
-
     int time = 2;
-
-    int ret = GetPlantLushSums(growth, sizeof(growth) / sizeof(int*),
-                                growthColSize, interfere, interfereSize, time);
-    return (ret == 91);
+    int ret = GetPlantLushSums(growth, sizeof(growth) / sizeof(int*), growthColSize, interfere, interfereSize, time);
+    EXPECT_EQ(ret, 91);
 }
 
-bool TEST2(void)
-{
+TEST(TestGetPlantLushSums, case2){
     int row1[] = {0,3};
     int row2[] = {2,0};
     int *growth[] = {row1, row2};
     int growthColSize[] = {sizeof(row1) / sizeof(int), sizeof(row2) / sizeof(int)};
-
     int interfere[] = {1,0,0,-10};
     int interfereSize = 4;
-
     int time = 1;
-
-    int ret = GetPlantLushSums(growth, sizeof(growth) / sizeof(int*),
-                                growthColSize, interfere, interfereSize, time);
-    return (ret == -1);
+    int ret = GetPlantLushSums(growth, sizeof(growth) / sizeof(int*), growthColSize, interfere, interfereSize, time);
+    EXPECT_EQ(ret, -1);
 }
 
 int main(void)
 {
-    bool ret = TEST1();
-    if (!ret)
-        printf("TEST1 fail\n");
-
-    ret = TEST2();
-    if (!ret)
-        printf("TEST1 fail\n");
+    CALL_TEST(TestGetPlantLushSums, case1);
+    CALL_TEST(TestGetPlantLushSums, case2);
 
     return 0;
 }

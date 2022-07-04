@@ -1,18 +1,16 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
+#define EXPECT_EQ(x, y) { assert(x == y); printf("assert success\n"); }
+#define FUNCTION_NAME(x, y, z) x ## y ## z
+#define TEST(x, y) void FUNCTION_NAME(test, x, y)(void)
+#define CALL_TEST(x, y) FUNCTION_NAME(test, x, y)()
 
 #define MAX_FILEID 1001
 #define MAX_FILE_BLOCKS 101
 #define QUEUE_SIZE 1001
-
-bool __result = true;
-
-void EXPECT_EQ(int test, int reference)
-{
-    if (test != reference)
-        __result = false;
-}
 
 #define RECEIVE_REQ 0
 #define QUERY_REQ   1
@@ -184,14 +182,10 @@ void FileSystemFree(FileSystem *sys)
     free(sys);
 }
 
-bool TEST1(void)
+TEST(FileSystem, RequestAndReceiveSimple)
 {
     FileSystem *sys = FileSystemCreate(3);
-    if (!sys) {
-        __result = false;
-        return false;
-    }
-
+ 
     bool req = FileSystemRequest(sys, 0, 5, 2);
     EXPECT_EQ(req, true);
  
@@ -207,71 +201,32 @@ bool TEST1(void)
     FileSystemFree(sys);
 }
 
-bool TEST2(void)
+TEST(FileSystem, RequestAndReceiveAndQueryTwice)
 {
     FileSystem *sys = FileSystemCreate(7);
-    if (!sys) {
-        __result = false;
-        return false;
-    }
- 
+
     EXPECT_EQ(FileSystemRequest(sys, 0, 17, 2), true);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemRequest(sys, 1, 21, 2), true);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemRequest(sys, 2, 35, 1), true);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemReceive(sys, 3, 21, 1), 1);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemReceive(sys, 4, 35, 0), 0);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemReceive(sys, 5, 52, 1), -1);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemRequest(sys, 6, 21, 2), false);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemReceive(sys, 8, 21, 0), 0);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemQuery(sys, 9), 2);
-    // printf("debug FileSystemQuery(sys, 9) = %d\n", FileSystemQuery(sys, 9));
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemRequest(sys, 10, 81, 1), true);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemRequest(sys, 13, 76, 1), true);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemReceive(sys, 14, 76, 0), 0);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemQuery(sys, 16), 2);
-    printf("%d %d\n", __LINE__, __result);
-
     EXPECT_EQ(FileSystemQuery(sys, 17), 3);
-    printf("%d %d\n", __LINE__, __result);
  
     FileSystemFree(sys);
 }
 
 int main(void)
 {
-    __result = true;
-    TEST1();
-    if (__result == false)
-        printf("TEST1 fail\n");
-
-    __result = true;
-    TEST2();
-    if (__result == false)
-        printf("TEST2 fail\n");
+    CALL_TEST(FileSystem, RequestAndReceiveSimple);
+    CALL_TEST(FileSystem, RequestAndReceiveAndQueryTwice);
 
     return 0;
 }
