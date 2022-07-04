@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2020-2020. All rights reserved.
- * Description: 考生实现代码
- * Note: 缺省代码仅供参考，可自行决定使用、修改或删除 */
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>

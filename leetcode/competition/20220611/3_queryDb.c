@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2020-2020. All rights reserved.
- * Description: 上机编程认证
- * Note: 缺省代码仅供参考，可自行决定使用、修改或删除
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -39,7 +34,6 @@ int QueryDb(int cacheSize, int *ids, int num)
     int cache_cur = 0;
     struct slot *place = malloc(sizeof(struct slot) * num);
     int place_cur;
-    int replace;
     int count = 0;
     int ret, j, index;
 
