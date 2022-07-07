@@ -32,3 +32,5 @@
 # Specific
 output/
 .idea/
+
+.vscode/
