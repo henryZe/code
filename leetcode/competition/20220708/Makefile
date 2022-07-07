@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror
-INC_HEADER = -I../vos_cstl
+INC_HEADER = -I./vos_cstl
 
 target := $(patsubst %.c, %, $(wildcard *.c))
 

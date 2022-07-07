@@ -37,6 +37,8 @@ VOS_StrHashErase
 
 ## 2 map
 
+基于红黑树实现
+
 ~~~ C
 VosMap *VOS_MapCreate(VosKeyCmpFunc keyCmpFunc, VosDupFreeFuncPair *keyFunc, VosDupFreeFuncPair *valueFunc);
 
@@ -75,6 +77,8 @@ void *dataDupFunc(void *src)
 
 ## 3 priority queue
 
+数组形式存储数据，支持容量动态扩展，默认提供大顶堆
+
 ~~~ C
 VOS_PriQueCreate
 
@@ -85,7 +89,7 @@ VOS_PriQuePush
 VOS_PriQueTop
 VOS_PriQuePop
 
-VOS_PriQuePushBatch
+uint32_t VOS_PriQuePushBatch(VosPriQue *priQueue, void *beginItemAddr, size_t itemNum, size_t itemSize);
 
 VOS_PriQueDestroy
 ~~~
@@ -144,6 +148,8 @@ VOS_SetDestroy
 
 ## 6 list
 
+链表
+
 ~~~ C
 VOS_ListInit
 
@@ -180,6 +186,8 @@ VOS_StackDestroy
 ~~~
 
 ## 8 vector
+
+数组
 
 ~~~ C
 VOS_VectorCreate
