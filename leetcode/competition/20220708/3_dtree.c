@@ -4,17 +4,18 @@
 #include <stdio.h>
 
 #define idx(x) (x - 'a')
+#define LETTER_RANGE 26
+#define ALLOW_DIFF 1
 
 struct tree_n {
     bool end;
-    char c;
-    struct tree_n *nodes[26];
+    struct tree_n *nodes[LETTER_RANGE];
 };
 
 void init_tree_node(struct tree_n *n, bool end)
 {
     n->end = end;
-    for (int i = 0; i < 26; i++)
+    for (int i = 0; i < LETTER_RANGE; i++)
         n->nodes[i] = NULL;
 }
 
@@ -23,16 +24,18 @@ struct tree_n *grow_tree(struct tree_n *root, char c, bool end)
     struct tree_n *n;
 
     if (!root->nodes[idx(c)]) {
+        // not exist
         n = (struct tree_n *)malloc(sizeof(struct tree_n));
         init_tree_node(n, end);
 
         root->nodes[idx(c)] = n;
+        return n;
     }
 
+    // already exist
     if (end)
-        init_tree_node(root->nodes[idx(c)], end);
-    else
-        init_tree_node(root->nodes[idx(c)], root->nodes[idx(c)]->end);
+        // if the word ends, mark it
+        root->nodes[idx(c)]->end = true;
 
     return root->nodes[idx(c)];
 }
@@ -57,36 +60,33 @@ struct tree_n *gen_dict_tree(char **dict, int dictionarySize)
     return start;
 }
 
-bool examine(struct tree_n *tree, char c)
+void dfs(struct tree_n *tree, char *word, int len, int i, int diff, int *res)
 {
-    return tree->nodes[idx(c)] != NULL;
-}
-
-void dfs(struct tree_n *tree, int n_idx, char *word, int len, int i, int diff, int *res)
-{
-    if (diff > 1)
+    if (diff > ALLOW_DIFF)
+        // already fail to meet
         return;
 
     if (i == len) {
         // word is over
-        printf("line %d tree_i %d diff %d end %s\n",
-                __LINE__, n_idx, diff, tree->end ? "yes" : "no");
-
-        if (diff == 1 && tree->end) {
+        // printf("line %d diff %d end %s\n",
+        //         __LINE__, diff, tree->end ? "yes" : "no");
+        if (diff == ALLOW_DIFF && tree->end) {
+            // if meets the conditions, then count it
             (*res)++;
-            printf("res++ %d\n", *res);
+            // printf("res++ %d\n", *res);
         }
         return;
     }
 
-    if (examine(tree, word[i])) {
-        dfs(tree->nodes[idx(word[i])], idx(word[i]), word, len, i + 1, diff, res);
-        return;
-    }
-
-    for (int j = 0; j < 26; j++) {
+    for (int j = 0; j < LETTER_RANGE; j++) {
         if (tree->nodes[j]) {
-            dfs(tree->nodes[j], j, word, len, i + 1, diff + 1, res);
+            // node exists, then dfs
+            if (j != idx(word[i]))
+                // not equal current character, diff + 1
+                dfs(tree->nodes[j], word, len, i + 1, diff + 1, res);
+            else
+                // equal current character
+                dfs(tree->nodes[j], word, len, i + 1, diff, res);
         }
     }
 }
@@ -94,7 +94,7 @@ void dfs(struct tree_n *tree, int n_idx, char *word, int len, int i, int diff, i
 int walk_tree(struct tree_n *tree, char *word)
 {
     int res = 0;
-    dfs(tree, 0, word, strlen(word), 0, 0, &res);
+    dfs(tree, word, strlen(word), 0, 0, &res);
     return res;
 }
 
@@ -110,7 +110,7 @@ int *QueryWords(char **dictionary, int dictionarySize,
     // walk all trees
     for (int i = 0; i < wordsSize; i++) {
         res[i] = walk_tree(tree, words[i]);
-        printf("%s done\n", words[i]);
+        // printf("%s done\n", words[i]);
     }
 
     return res;
@@ -118,7 +118,7 @@ int *QueryWords(char **dictionary, int dictionarySize,
 
 #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 
-int main()
+int main(void)
 {
     char *dictionary[] = {"aba", "abb", "abc", "bba", "bbb", "bbc"};
     int dictionarySize = ARRAY_SIZE(dictionary);
@@ -128,7 +128,7 @@ int main()
 
     int returnSize;
     int *res = QueryWords(dictionary, dictionarySize,
-                        words, wordsSize, &returnSize);
+                            words, wordsSize, &returnSize);
 
     for (int i = 0; i < returnSize; i++)
         printf("%d ", res[i]);
