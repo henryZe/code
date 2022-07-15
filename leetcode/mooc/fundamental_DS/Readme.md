@@ -394,7 +394,23 @@ void Dijkstra(Vertex s)
 
 * **多源**最短路径问题：求任意两顶点间的最短路径
 
-1. 方法1：直接将单源最短路径算法调用 |V| 遍, T = O(|V|^3 + |E|*|V|), 对于稀疏图效果好
+1. 方法1：直接将单源最短路径算法调用 |V| 遍, T = O(|V|^3 + |E|*|V|), 对于稀疏图效果好, 即 Bellman-Ford 算法
+
+~~~ C
+void Bellman_Ford(void)
+{
+    for (i = 0; i < MAX_V; i++) {
+        // Dijkstra
+        for (j = 0; j < MAX_E; j++) {
+            if (dist[V] + E<V, W> < dist[W]) {
+                // initialize dist[] as infinite & path[] as -1
+                dist[W] = dist[V] + E<V, W>;
+            }
+        }
+    }
+}
+~~~
+
 2. 方法2：Floyd 算法, T = O(|V|^3), 对于稠密图效果好
 
 ~~~ C
@@ -408,6 +424,8 @@ void Floyd(void)
         }
     }
 
+    // 动态规划：状态转移方程
+    // dp[k][i][j] = min(d[k-1][i][j], dp[k-1][i][k] + dp[k-1][k][j])
     for (k = 0; k < N; k++) {
         for (i = 0; i < N; i++) {
             for (j = 0; j < N; j++) {
