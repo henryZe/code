@@ -8,6 +8,7 @@ def update_interval(new_interval, interval):
 
 class Solution:
     # 贪心 + heap optimize
+    # O(N * logN)
     def smallestRange(self, nums: List[List[int]]) -> List[int]:
         idx = [0] * len(nums)
         heap = []
