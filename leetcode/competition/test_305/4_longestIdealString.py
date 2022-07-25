@@ -1,4 +1,5 @@
 class Solution:
+    # O(n * 2k)
     def longestIdealString(self, s: str, k: int) -> int:
         dp = [0] * 26
         for c in s:

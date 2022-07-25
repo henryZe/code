@@ -4,6 +4,7 @@ class Solution:
     def reachableNodes(self, n: int, edges: List[List[int]], restricted: List[int]) -> int:
         visited = [False] * n
         restricted = set(restricted)
+        # map edges into graph, optimization
         g = [[] for _ in range(n)]
         for v, w in edges:
             g[v].append(w)

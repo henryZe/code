@@ -93,6 +93,8 @@ FoodRatings* foodRatingsCreate(char ** foods, int foodsSize,
         it = VOS_StrHashFind(obj->c_heapq, cuisines[i]);
         if (it == VOS_HashIterEnd(obj->c_heapq)) {
             // empty
+            // create priority queue or rb-tree map are both OK
+            // here choose priority queue
             heapq = VOS_PriQueCreate(compare, &pair);
             VOS_StrHashInsert(obj->c_heapq, cuisines[i], (uintptr_t)heapq);
 

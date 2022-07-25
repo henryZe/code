@@ -3,6 +3,7 @@ from typing import List
 class Solution:
     def arithmeticTriplets(self, nums: List[int], diff: int) -> int:
         count = 0
+        # hash optimization
         nums = set(nums)
         for x in nums:
             if x - diff in nums and x + diff in nums:

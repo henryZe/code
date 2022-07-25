@@ -20,12 +20,14 @@ int main(void)
                 key_out = rand();
                 for (int i = 0; i < 100; i++) {
                         key1_out = rand();
-                        if (key == key_out && key1 == key1_out)
+                        if (key == key_out && key1 == key1_out) {
                                 printf("found! seed is %d, key3 is %d\n", seed, rand());
+                                goto end;
+                        }
                 }
                 key_out = key1_out;
         }
+end:
         printf("Done");
-
         return 0;
 }

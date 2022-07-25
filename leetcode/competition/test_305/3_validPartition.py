@@ -1,5 +1,6 @@
 from typing import List
 
+# O(n)
 class Solution:
     def validPartition(self, nums: List[int]) -> bool:
         n = len(nums)

@@ -133,7 +133,7 @@ static inline size_t VOS_PriQueSize(const VosPriQue *priQueue)
 static inline void VOS_PriQueClear(VosPriQue *priQueue)
 {
     if (priQueue == NULL) {
-        VOS_PRINTF([vos_priorityqueue]" priority queue is NULL. File = %s, line = %d.", __FILE__, __LINE__);
+        VOS_PRINTF("[vos_priorityqueue] priority queue is NULL. File = %s, line = %d.", __FILE__, __LINE__);
         return;
     }
 
@@ -151,7 +151,7 @@ static inline void VOS_PriQueClear(VosPriQue *priQueue)
 static inline void VOS_PriQueDestroy(VosPriQue *priQueue)
 {
     if (priQueue == NULL) {
-        VOS_PRINTF([vos_priorityqueue]" priority queue is NULL. File = %s, line = %d.", __FILE__, __LINE__);
+        VOS_PRINTF("[vos_priorityqueue] priority queue is NULL. File = %s, line = %d.", __FILE__, __LINE__);
         return;
     }
     VOS_PriQueClear(priQueue);
