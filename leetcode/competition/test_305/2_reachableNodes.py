@@ -3,7 +3,11 @@ from typing import List
 class Solution:
     def reachableNodes(self, n: int, edges: List[List[int]], restricted: List[int]) -> int:
         visited = [False] * n
-        e_visited = [False] * (n - 1)
+        restricted = set(restricted)
+        g = [[] for _ in range(n)]
+        for v, w in edges:
+            g[v].append(w)
+            g[w].append(v)
 
         visited[0] = True
         count = 1
@@ -11,17 +15,13 @@ class Solution:
 
         while q:
             v = q.pop(0)
-            for i in range(n - 1):
-                if e_visited[i] == False:
-                    if v in edges[i]:
-                        e_visited[i] = True
-                        w = edges[i][0] if edges[i][0] != v else edges[i][1]
-                        if w in restricted:
-                            continue
-
-                        visited[w] = True
-                        count += 1
-                        q.append(w)
+            for w in g[v]:
+                if not visited[w]:
+                    visited[w] = True
+                    if w in restricted:
+                        continue
+                    q.append(w)
+                    count += 1
 
         return count
 
