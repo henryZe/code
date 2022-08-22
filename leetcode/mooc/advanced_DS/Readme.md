@@ -109,6 +109,51 @@ Lemma: In a Red-Black tree, the path from the root to the farthest leaf is no mo
 
 Must add 1 black to the path of the replacing node.
 
+-----------------------------------------------------------------------------------------------------
+
+### 2.3 B+ Trees
+
+1. Definition: A B+ tree of order M is a tree with the following structural properties:
+   * The root is either a leaf or has between 2 and M children.
+   * All nonleaf nodes (except the root) have between [M/2] and M children.
+   * All leaves are at the same depth.
+
+2. Insertion
+
+~~~
+Btree Insert(ElementType X, Btree T)
+{
+    Search from root to leaf for X and find the proper leaf node;
+    Insert X;
+
+    while (this node has M+1 keys) {
+        split it into 2 nodes with [(M+1)/2] and [(M+1)/2] keys, respectively;
+        if (this node is the root)
+            create a new root with two children;
+        check its parent;
+    }
+}
+~~~
+
+3. Practically speaking, the best choice of M is either 3 or 4.
+
+## 3 Inverted File Index
+
+Index Generator
+
+~~~
+while (read a document D) {
+    while (read a term T in D) {
+        if (Find(Dictionary, T) == false) {
+            Insert(Dictionary, T);
+        }
+        Get T's posting list;
+        Insert a node to T's posting list;
+    }
+}
+Write the inverted index to disk;
+~~~
+
 ## 6 Backtracking 回溯法
 
 * exhaustive search
