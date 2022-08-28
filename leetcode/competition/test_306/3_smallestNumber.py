@@ -1,20 +1,24 @@
+from string import digits
+
 class Solution:
     def smallestNumber(self, pattern: str) -> str:
-        n = len(pattern) + 1
-        candidate = set(range(1, n + 1))
-        num = ['0'] * n
+        n = len(pattern)
+        num = list(digits[1 : n + 2])
 
-        for i, c in enumerate(pattern):
-            if c == 'I':
-                num[i] = min(candidate) + '0'
-                candidate.remove(num[i])
-
-        for i, c in enumerate(pattern):
-            if c == 'D':
-                num[i] = max(candidate) + '0'
-                candidate.remove(num[i])
+        i = 0
+        while i < n:
+            if pattern[i] == 'I':
+                i += 1
+                continue
+            # pattern[i] = 'D'
+            start = i
+            while i < n and pattern[i] == 'D':
+                i += 1
+            num[start : i + 1] = num[start : i + 1][::-1]
 
         return "".join(num)
 
-pattern = "DDD"
+
+pattern = "IIIDIDDD"
+# pattern = "DDD"
 print(Solution().smallestNumber(pattern))
