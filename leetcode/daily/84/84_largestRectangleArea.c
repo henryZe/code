@@ -29,7 +29,7 @@ int largestRectangleArea(int* heights, int heightsSize)
         VOS_StackPush(s_height, heights[i]);
         VOS_StackPush(s_pos, i);
     }
-    
+
     return res;
 }
 
