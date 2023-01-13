@@ -15,6 +15,7 @@
 
 #define MAX_NUM_SIZE 100
 #define NAME_BUF_LEN 11
+#define MAX_DEPART_NUM 5
 
 typedef struct {
     char city[NAME_BUF_LEN];
@@ -29,13 +30,13 @@ typedef struct {
 
 struct depart {
     char department[NAME_BUF_LEN];
-    int num;
+    int persons;
 };
 
 struct city {
     char city[NAME_BUF_LEN];
     int depart_num;
-    struct depart departName[5 + 1];
+    struct depart departName[MAX_DEPART_NUM + 1];
 };
 
 int compare_city(const void *a, const void *b)
@@ -46,25 +47,15 @@ int compare_city(const void *a, const void *b)
     return strcmp(city1->city, city2->city);
 }
 
-void insert_city(struct city *c_array, Department *input)
-{
-    strcpy(c_array->city, input->city);
-    c_array->depart_num = 1;
-    strcpy(c_array->departName[0].department,
-            input->departmentName);
-    c_array->departName[0].num = input->personNum;
-}
-
-int compare_depart(const void *a, const void *b)
+int compare_person(const void *a, const void *b)
 {
     struct depart *d1 = (struct depart *)a;
     struct depart *d2 = (struct depart *)b;
 
-    if (d1->num == d2->num) {
+    if (d1->persons == d2->persons)
         return strcmp(d1->department, d2->department);
-    }
 
-    return d2->num - d1->num;
+    return d2->persons - d1->persons;
 }
 
 void insert_depart(struct city *c_array, Department *input)
@@ -73,17 +64,22 @@ void insert_depart(struct city *c_array, Department *input)
 
     strcpy(c_array->departName[idx].department,
             input->departmentName);
-    c_array->departName[idx].num = input->personNum;
+    c_array->departName[idx].persons = input->personNum;
 
     qsort(c_array->departName, c_array->depart_num + 1,
-            sizeof(struct depart), compare_depart);
+            sizeof(struct depart), compare_person);
 
-    if (c_array->depart_num < 5) {
+    if (c_array->depart_num < MAX_DEPART_NUM)
         c_array->depart_num++;
-    }
 }
 
-int compare_output(const void *a, const void *b)
+void insert_city(struct city *c_array, Department *input)
+{
+    strcpy(c_array->city, input->city);
+    insert_depart(c_array, input);
+}
+
+int compare_depart(const void *a, const void *b)
 {
     struct depart *d1 = (struct depart *)a;
     struct depart *d2 = (struct depart *)b;
@@ -97,9 +93,9 @@ static int GetTopFive(Department *input, int num, Result *outBuf, int maxOutBufL
 {
     int city_num = 0;
     struct city city_array[100];
-    int i, j, k, ret, out_idx;
 
-    for (k = 0; k < num; k++) {
+    for (int k = 0; k < num; k++) {
+        int i;
         for (i = 0; i < city_num; i++) {
             if (!strcmp(input[k].city, city_array[i].city)) {
                 insert_depart(city_array + i, input + k);
@@ -107,8 +103,8 @@ static int GetTopFive(Department *input, int num, Result *outBuf, int maxOutBufL
             }
         }
 
+        // new city
         if (i == city_num) {
-            // insert new city
             debug("i = %d\n", i);
             insert_city(city_array + i, input + k);
             city_num++;
@@ -116,25 +112,23 @@ static int GetTopFive(Department *input, int num, Result *outBuf, int maxOutBufL
     }
 
     qsort(city_array, city_num, sizeof(struct city), compare_city);
-
     debug("city_num %d\n", city_num);
-    ret = 0;
-    out_idx = 0;
-    for (i = 0; i < city_num; i++) {
-        qsort(city_array[i].departName, city_array[i].depart_num,
-                sizeof(struct depart), compare_output);
 
-        for (j = 0; j < city_array[i].depart_num; j++) {
-            strcpy(outBuf[out_idx].city, city_array[i].city);
+    int out_idx = 0;
+    for (int i = 0; i < city_num; i++) {
+        qsort(city_array[i].departName, city_array[i].depart_num,
+                sizeof(struct depart), compare_depart);
+
+        for (int j = 0; j < city_array[i].depart_num; j++) {
+            strcpy(outBuf[out_idx].city,
+                    city_array[i].city);
             strcpy(outBuf[out_idx].departmentName,
                     city_array[i].departName[j].department);
             out_idx++;
         }
-
-        ret += city_array[i].depart_num;
     }
 
-    return ret;
+    return out_idx;
 }
 
 int main(void)

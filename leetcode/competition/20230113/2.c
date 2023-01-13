@@ -54,9 +54,7 @@ bool isKeyNode(int num, int numKeyNodes, const int *keyNodes)
 
 int compare(const void *a, const void *b)
 {
-    int int1 = *(int *)a;
-    int int2 = *(int *)b;
-    return int1 - int2;
+    return *(int *)a - *(int *)b;
 }
 
 void dfs(int v, bool graph[MAX_ID][MAX_ID], bool *visit)
@@ -64,31 +62,29 @@ void dfs(int v, bool graph[MAX_ID][MAX_ID], bool *visit)
     visit[v] = true;
 
     for (int i = 0; i < MAX_ID; i++) {
-        if (visit[i] == true) {
+        if (visit[i])
             continue;
-        }
 
-        if (graph[v][i] == true) {
+        if (graph[v][i])
             dfs(i, graph, visit);
-        }
     }
 }
 
 void travel_rev(int v, int numKeyNodes, const int *keyNodes, int *outBuf)
 {
+    if (!isKeyNode(v, numKeyNodes, keyNodes))
+        return;
+
+    // self
+    insert(outBuf, v);
+
     bool visit[MAX_ID] = {false};
+    dfs(v, g_rev, visit);
 
-    debug("rev %d\n", v);
-    if (isKeyNode(v, numKeyNodes, keyNodes)) {
-        // self
-        insert(outBuf, v);
-
-        dfs(v, g_rev, visit);
-        for (int i = 0; i < MAX_ID; i++) {
-            if (visit[i]) {
-                // insert rev
-                insert(outBuf, i);
-            }
+    for (int i = 0; i < MAX_ID; i++) {
+        if (visit[i]) {
+            // insert rev
+            insert(outBuf, i);
         }
     }
 }
@@ -98,32 +94,30 @@ void travel_rev(int v, int numKeyNodes, const int *keyNodes, int *outBuf)
 static int GetCheckPoints(int numNodes, const Node *nodes, int numKeyNodes, const int *keyNodes, int org,
                           int outBuf[], int outBufLen)
 {
-    int i, j;
-
-    for (i = 0; i < numNodes; i++) {
+    for (int i = 0; i < numNodes; i++) {
         debug("size %d\n", nodes[i].size);
 
-        for (j = 0; j < nodes[i].size; j++) {
+        for (int j = 0; j < nodes[i].size; j++) {
             g[nodes[i].id][nodes[i].nextNodes[j]] = true;
             g_rev[nodes[i].nextNodes[j]][nodes[i].id] = true;
+
             debug("g[%d][%d] = %d\n",
                     nodes[i].id, nodes[i].nextNodes[j],
                     g[nodes[i].id][nodes[i].nextNodes[j]]);
         }
     }
 
-    for (i = 0; i < numKeyNodes; i++)
-        debug("key %d\n", keyNodes[i]);
-
     insert(outBuf, org);
+    // insert rev
     travel_rev(org, numKeyNodes, keyNodes, outBuf);
 
     bool visit[MAX_ID] = {false};
+    // travel
     dfs(org, g, visit);
 
-    // travel g
-    for (i = 0; i < MAX_ID; i++) {
-        if (visit[i] == true) {
+    for (int i = 0; i < MAX_ID; i++) {
+        if (visit[i]) {
+            // insert rev
             travel_rev(i, numKeyNodes, keyNodes, outBuf);
         }
     }
