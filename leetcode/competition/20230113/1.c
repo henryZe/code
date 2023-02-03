@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// #include "securec.h"
+#include "securec.h"
 
 // #define debug printf
 #define debug(...)
@@ -62,7 +62,7 @@ void insert_depart(struct city *c_array, Department *input)
 {
     int idx = c_array->depart_num;
 
-    strcpy(c_array->departName[idx].department,
+    strcpy_s(c_array->departName[idx].department, NAME_BUF_LEN,
             input->departmentName);
     c_array->departName[idx].persons = input->personNum;
 
@@ -75,7 +75,7 @@ void insert_depart(struct city *c_array, Department *input)
 
 void insert_city(struct city *c_array, Department *input)
 {
-    strcpy(c_array->city, input->city);
+    strcpy_s(c_array->city, NAME_BUF_LEN, input->city);
     insert_depart(c_array, input);
 }
 
@@ -120,9 +120,9 @@ static int GetTopFive(Department *input, int num, Result *outBuf, int maxOutBufL
                 sizeof(struct depart), compare_depart);
 
         for (int j = 0; j < city_array[i].depart_num; j++) {
-            strcpy(outBuf[out_idx].city,
+            strcpy_s(outBuf[out_idx].city, NAME_BUF_LEN,
                     city_array[i].city);
-            strcpy(outBuf[out_idx].departmentName,
+            strcpy_s(outBuf[out_idx].departmentName, NAME_BUF_LEN,
                     city_array[i].departName[j].department);
             out_idx++;
         }
