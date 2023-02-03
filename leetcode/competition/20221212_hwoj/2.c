@@ -9,11 +9,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#if 0
-#define debug printf
-#else
-#define debug
-#endif
+// #define debug printf
+#define debug(...)
 
 #define MAX_DEPT_NUM 10
 #define MAX_CAND_NUM 10000
@@ -69,7 +66,7 @@ int choice_candidate(DeptDemand *deptDemands, DeptEmployee *deptEmployees,
 {
     int i;
     static int is_sorted = 0;
-    
+
     if (!is_sorted) {
         p_can = candidateAbilities;
         // init can_idx
@@ -161,7 +158,7 @@ static int GetRecruitmentResult(int deptNum, DeptDemand *deptDemands, int candid
             // hc not meets yet
             continue;
         }
-        
+
         int last_one = deptEmployees[i].employees[deptEmployees[i].size - 1];
         DeptDemand tmp = { 0, 0, candidateAbilities[last_one].progmGrade, candidateAbilities[last_one].techGrade};
 

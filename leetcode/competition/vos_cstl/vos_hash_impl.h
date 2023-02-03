@@ -234,7 +234,7 @@ static inline uint32_t VOS_HashPut(VosHash *hash, uintptr_t key, uintptr_t value
 
 static inline VosHashIterator VOS_HashFind(const VosHash *hash, uintptr_t key)
 {
-    VosHashNode cmpNode;
+    VosHashNode cmpNode = {};
     cmpNode.key = key;
     cmpNode.origHashTbl = (VosHash*)hash;
 

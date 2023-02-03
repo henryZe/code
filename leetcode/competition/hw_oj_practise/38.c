@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// #define debug printf
+#define debug(...)
+
 bool visit[101][1001] = {};
 
 int main()
@@ -15,21 +18,21 @@ int main()
 
     for (int i = 0; i < ob_n; i++) {
         scanf("%d", ob + i);
-        // printf("%d ", ob[i]);
+        debug("%d ", ob[i]);
     }
-    // printf("\n");
+    debug("\n");
 
     bool res = false;
     // item, weight
     visit[0][0] = true;
     for (int i = 1; i <= ob_n; i++) {
         for (int j = 0; j < kilo_max; j++) {
-            // printf("test i = %d j weight = %d ob[%d] = %d\n",
-            //         i, j, i - 1, ob[i - 1]);
+            debug("test i = %d j weight = %d ob[%d] = %d\n",
+                    i, j, i - 1, ob[i - 1]);
 
             if (visit[i - 1][j] == true) {
-                // printf("i = %d j weight = %d ob[%d] = %d\n",
-                //         i, j, i - 1, ob[i - 1]);
+                debug("i = %d j weight = %d ob[%d] = %d\n",
+                        i, j, i - 1, ob[i - 1]);
 
                 if (j + ob[i - 1] < kilo_max) {
                     visit[i][j + ob[i - 1]] = true;
