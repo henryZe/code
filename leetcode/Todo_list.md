@@ -1,7 +1,6 @@
 ## leecode test
 
 window:
-1208
 209
 1004
 159

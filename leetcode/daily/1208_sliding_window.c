@@ -17,20 +17,21 @@ int equalSubstring(char * s, char * t, int maxCost)
         // printf("%d ", array[i]);
     }
 
-    // O(n^2)
-    for (start = 0; start < len; start++) {
-        int cur_cost = 0;
+    // O(n)
+    int cur_cost = 0;
 
-        for (end = start; end < len; end++) {
-            cur_cost += array[end];
-            // printf("cur_cost %d\n", cur_cost);
+    start = end = 0;
+    while (end < len) {
+        cur_cost += array[end];
 
-            if (cur_cost > maxCost)
-                break;
+        while (cur_cost > maxCost) {
+            cur_cost -= array[start];
+            start++;
         }
 
-        i = end - start;
-        res = i > res ? i : res;
+        int cur = end - start + 1;
+        res = cur > res ? cur : res;
+        end++;
     }
 
     return res;
