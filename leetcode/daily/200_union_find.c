@@ -50,8 +50,10 @@ int numIslands(char** grid, int gridSize, int* gridColSize)
             if (grid[i][j] == '0')
                 continue;
 
+            // 1. count '1' islands
             count++;
 
+            // 2. if could be merged, then decrease the count
             if ((i + 1) < gridSize && grid[i + 1][j] == '1') {
                 if (union_set(gridSize, gridColSize, i, j, i + 1, j))
                     count--;

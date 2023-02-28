@@ -47,6 +47,7 @@ int maximumMinimumPath(int** grid, int gridSize, int* gridColSize)
     for (i = 0; i < count; i++)
         sort_idx[i] = i;
 
+    // initialize the array of nodes
     for (i = 0; i < gridSize; i++) {
         for (j = 0 ; j < gridColSize[i]; j++) {
             struct node *n = array + pos2idx(i, j, gridColSize[0]);
@@ -60,8 +61,10 @@ int maximumMinimumPath(int** grid, int gridSize, int* gridColSize)
         }
     }
 
+    // 1. sort the node by value
     qsort(sort_idx, count, sizeof(int), compare);
 
+    // 2. pick the max value edge, and union
     for (i = 0; i < count; i++) {
         int idx1 = sort_idx[i];
 
@@ -82,12 +85,14 @@ int maximumMinimumPath(int** grid, int gridSize, int* gridColSize)
             }
         }
 
+        // 3. check the head & end already union or not
         int head_root = find_set(array, pos2idx(0, 0, gridColSize[0]));
         int end_root = find_set(array, pos2idx(gridSize - 1, gridColSize[0] - 1, gridColSize[0]));
 
         // printf("check: head_root = %d, end_root = %d\n",
         //         head_root, end_root);
 
+        // 4. if union, then the current edge value is the answer
         if (head_root == end_root)
             return array[idx1].value;
     }

@@ -1,8 +1,6 @@
 ## leecode test
 
 find_union:
-1135
-924
 737
 
 window:
