@@ -1,8 +1,5 @@
 ## leecode test
 
-find_union:
-737
-
 window:
 1208
 209
