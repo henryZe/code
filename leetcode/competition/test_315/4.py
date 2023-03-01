@@ -12,7 +12,7 @@ class Solution:
                 pmin = r
             if x == maxK:
                 pmax = r
-            
+
             if minK <= x <= maxK:
                 if l <= min(pmax, pmin):
                     res += min(pmax, pmin) - l + 1

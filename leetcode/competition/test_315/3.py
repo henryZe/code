@@ -6,7 +6,7 @@ class Solution:
                 num_rev = num_rev * 10 + num % 10
                 num //= 10
             return num_rev
-        
+
         if num == 0:
             return True
 

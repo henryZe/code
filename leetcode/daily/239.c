@@ -70,6 +70,7 @@ int* top(struct Heap* obj)
     return obj->heap[1];
 }
 
+// O(N * logN)
 int* maxSlidingWindow(int* nums, int numsSize, int k, int* returnSize)
 {
     int len = numsSize - k + 1;

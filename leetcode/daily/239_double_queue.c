@@ -1,3 +1,4 @@
+// O(N)
 int* maxSlidingWindow(int* nums, int numsSize, int k, int* returnSize)
 {
     int *dequeue = malloc(sizeof(int) * numsSize);
@@ -7,6 +8,7 @@ int* maxSlidingWindow(int* nums, int numsSize, int k, int* returnSize)
     int len = 0;
 
     for (int i = 0; i < numsSize; i++) {
+        // if dequeue not empty, keep the queue decrease
         while (left < right && nums[dequeue[right - 1]] < nums[i]) {
             right--;
         }

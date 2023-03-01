@@ -26,18 +26,18 @@ Prefix-sum:
 * [] 560
 * [] 974
 
-diff:
+Difference:
 * [] 1094
 * [] 122
 * [] 1109
 * [] 253
 
-dp:
+DP:
 * [] 123
 * [] 309
 * [] 714
 
-topo:
+Topo-sort:
 
 ## mooc
 

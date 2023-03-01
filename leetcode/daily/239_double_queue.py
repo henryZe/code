@@ -9,6 +9,7 @@ class Solution:
 
         ans = []
         for idx in range(n):
+            # if dequeue not empty, keep the queue decrease
             while q and nums[q[-1]] < nums[idx]:
                 q.pop()
             q.append(idx)

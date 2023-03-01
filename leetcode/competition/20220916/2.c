@@ -61,5 +61,5 @@ int GetMinMovesNum(int **planks, int planksSize,
         int res = sum[0];
         for (i = 0; i < planksColSize[0]; i++)
                 res = fmin(res, sum[i]);
-        return res; 
+        return res;
 }
