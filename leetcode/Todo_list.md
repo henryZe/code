@@ -23,7 +23,7 @@ Sliding window:
 * [x] 438
 
 Prefix-sum:
-* [] 560
+* [x] 560
 * [] 974
 
 Difference:
