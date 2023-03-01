@@ -20,7 +20,7 @@ Sliding window:
 * [x] 159
 * [x] 1100
 * [x] 239
-* [] 438
+* [x] 438
 
 Prefix-sum:
 * [] 560
