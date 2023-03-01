@@ -33,7 +33,8 @@ void push(struct Heap* obj, int num0, int num1)
 
     (obj->heap[sub1])[0] = num0, (obj->heap[sub1])[1] = num1;
 
-    while (sub2 > 0 && cmp(obj->heap[sub2], obj->heap[sub1]) < 0) {
+    while (sub2 > 0 &&
+           cmp(obj->heap[sub2], obj->heap[sub1]) < 0) {
         swap(&(obj->heap[sub1]), &(obj->heap[sub2]));
         sub1 = sub2, sub2 = sub1 >> 1;
     }
@@ -48,10 +49,12 @@ void pop(struct Heap* obj)
     while (sub <= obj->size) {
         int sub1 = sub << 1, sub2 = sub << 1 | 1;
         int maxSub = sub;
-        if (sub1 <= obj->size && cmp(obj->heap[maxSub], obj->heap[sub1]) < 0) {
+        if (sub1 <= obj->size &&
+            cmp(obj->heap[maxSub], obj->heap[sub1]) < 0) {
             maxSub = sub1;
         }
-        if (sub2 <= obj->size && cmp(obj->heap[maxSub], obj->heap[sub2]) < 0) {
+        if (sub2 <= obj->size &&
+            cmp(obj->heap[maxSub], obj->heap[sub2]) < 0) {
             maxSub = sub2;
         }
         if (sub == maxSub) {
