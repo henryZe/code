@@ -26,7 +26,7 @@ Prefix-sum:
 * [x] 560
 * [x] 974
 
-Difference:
+Diff-array:
 * [x] 1094
 * [x] 122
 * [x] 1109
