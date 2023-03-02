@@ -24,7 +24,7 @@ Sliding window:
 
 Prefix-sum:
 * [x] 560
-* [] 974
+* [x] 974
 
 Difference:
 * [] 1094
