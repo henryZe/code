@@ -34,8 +34,8 @@ Diff-array:
 
 DP:
 * [x] 123
-* [] 309
-* [] 714
+* [x] 309
+* [x] 714
 
 Topological sorting:
 * [] 210
