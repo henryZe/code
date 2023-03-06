@@ -38,8 +38,8 @@ DP:
 * [x] 714
 
 Topological sorting:
-* [] 210
-* [] 444
+* [x] 210
+* [x] 444
 * [] 269
 
 Sort:
