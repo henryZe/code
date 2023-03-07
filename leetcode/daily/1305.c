@@ -6,6 +6,9 @@ struct TreeNode {
 
 int dfs(struct TreeNode* n, int len, int *res)
 {
+    if (!n)
+        return len;
+
     if (n->left)
         len = dfs(n->left, len, res);
 
@@ -27,7 +30,7 @@ int* getAllElements(struct TreeNode* root1, struct TreeNode* root2,
 
     // 1. walk tree1 & tree2
     len1 = dfs(root1, 0, res1);
-    len2 = dfs(root1, 0, res2);
+    len2 = dfs(root2, 0, res2);
 
     // 2. merge list1 & list2
     len = len1 + len2;

@@ -1,4 +1,4 @@
-## leecode test
+## leetcode test
 
 Monotonic stack:
 * [x] 503
@@ -45,7 +45,7 @@ Topological sorting:
 Sort:
 * [x] 179
 * [x] 1305
-* [] 1353
+* [x] 1353
 * [] 853
 * [] 1333
 
