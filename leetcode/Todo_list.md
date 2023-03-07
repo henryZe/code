@@ -40,7 +40,7 @@ DP:
 Topological sorting:
 * [x] 210
 * [x] 444
-* [] 269
+* [x] 269
 
 Sort:
 * [] 179

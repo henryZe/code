@@ -56,7 +56,6 @@ int* findOrder(int numCourses, int** prerequisites, int prerequisitesSize, int* 
     bool ret = true;
     int *res = malloc(sizeof(int) * numCourses);
     int res_len = 0;
-
     // 0: not visit yet
     // 1: searching
     // 2: visited
