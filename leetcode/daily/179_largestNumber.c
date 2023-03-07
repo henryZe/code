@@ -23,14 +23,15 @@ char * largestNumber(int* nums, int numsSize)
 
     qsort(nums, numsSize, sizeof(int), compare);
 
-    if (nums[0] == 0)
-        return "0";
-
+    char tmp[16];
     for (int i = 0; i < numsSize; i++) {
-        char tmp[16] = {0};
         sprintf(tmp, "%d", nums[i]);
         strcat(str, tmp);
     }
+
+    // not return '00' but '0'
+    while (str[0] == '0' && strlen(str) > 1)
+        str += 1;
 
     return str;
 }

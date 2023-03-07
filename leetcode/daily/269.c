@@ -13,6 +13,7 @@ enum {
 
 int out[26][26];
 
+// top_sort + dfs
 int dfs(char *res, int len, int *in_num, int *out_num, int *visited, int v)
 {
     int i;
