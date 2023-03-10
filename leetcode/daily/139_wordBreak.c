@@ -13,7 +13,7 @@ struct trie {
     struct trie *child[BRANCH];
 };
 
-struct trie *trieCreate(void) 
+struct trie *trieCreate(void)
 {
     struct trie *p = malloc(sizeof(struct trie));
     p->isEnd = false;
@@ -79,19 +79,21 @@ bool wordBreak(char * s, char ** wordDict, int wordDictSize)
     int n = strlen(s);
     struct trie *dict = create_tries(wordDict, wordDictSize);
 
-    bool *dp = (bool *)malloc((n + 1) * sizeof(bool));    
+    bool *dp = (bool *)malloc((n + 1) * sizeof(bool));
     for (int i = 1; i < n + 1; i++)
         dp[i] = false;
     dp[0] = true;
 
     char *str_cp = (char *)malloc(n + 1);
 
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j < i; j++) {
-            memcpy(str_cp, s + j, i - j);
-            str_cp[i - j] = 0;
-            if (dp[j] && trieSearch(dict, str_cp)) {
-                dp[i] = true;
+    for (int right = 1; right <= n; right++) {
+        for (int left = 0; left < right; left++) {
+
+            memcpy(str_cp, s + left, right - left);
+            str_cp[right - left] = 0;
+
+            if (dp[left] && trieSearch(dict, str_cp)) {
+                dp[right] = true;
                 break;
             }
             // printf("j = %d %s dp[%d] = %s\n",
