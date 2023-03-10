@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define debug printf
-// #define debug(...)
+// #define debug printf
+#define debug(...)
 
 char **res;
 int res_len;
