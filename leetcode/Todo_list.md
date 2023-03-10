@@ -13,7 +13,7 @@ Union-find set:
 * [x] 924
 * [x] 737
 
-Sliding window:
+Sliding window: (right + left)'s loop
 * [x] 1208
 * [x] 209
 * [x] 1004
@@ -22,11 +22,11 @@ Sliding window:
 * [x] 239
 * [x] 438
 
-Prefix-sum:
+Prefix-sum: hash + sum
 * [x] 560
 * [x] 974
 
-Diff-array:
+Diff-array: delta-value array
 * [x] 1094
 * [x] 122
 * [x] 1109
@@ -37,7 +37,7 @@ DP:
 * [x] 309
 * [x] 714
 
-Topological sorting:
+Topological sorting: graph + dfs
 * [x] 210
 * [x] 444
 * [x] 269
@@ -69,7 +69,7 @@ DFS & BFS:
 * [] 1043
 * [] 416
 
-Greedy algo:
+Greedy algo: qsort + greedy
 * [x] 452
 * [] 376
 

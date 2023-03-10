@@ -24,6 +24,9 @@ int subarraySum(int* nums, int numsSize, int k)
     set_count(sum);
     for (i = 0; i < numsSize; i++) {
         sum += nums[i];
+        //                left   right
+        // |-- (sum - k) --|-- k --|
+        // |--        sum        --|
         res += get_count(sum - k);
         // printf("sum %d - k %d : %d\n",
         //         sum, k, get_count(sum - k));
